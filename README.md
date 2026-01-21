@@ -12,7 +12,7 @@ This plugin adds custom abilities and items based on default Minecraft effects.
 - All craft recipes can be modified via the recipes.yml.
 - The plugin can be configured via the config.yml.
 
-BY DEFAULT THE PLUGINS LANGUAGE IS HUNGARIAN. CHANGE THA LANG
+**BY DEFAULT THE PLUGINS LANGUAGE IS HUNGARIAN. YOU CAN CHANGE THE LANGUAGE IN THE CONFIG.YML FILE!**
 
 ## Modification of plugin is allowed only if the creator ([me](https://github.com/mlnplus)) is credited for the base work.
 ## The plugins source code can be found on the github page of the plugin.
