@@ -1,4 +1,4 @@
-https://mlnplus.hu/assets/img/effectsmp.png
+<img width="2206" height="2206" alt="Effect_SMP_UNOFFICIAL" src="https://github.com/user-attachments/assets/db4982ae-ff09-45ca-9c53-2d764e4acdb9" />
 
 ## **The official plugin for Effect SMP : Reimagined.**
 
