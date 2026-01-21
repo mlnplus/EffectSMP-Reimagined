@@ -1,0 +1,20 @@
+name: EffectSMP
+version: '${project.version}'
+main: mlnplus.hu.effectsmp.Effectsmp
+api-version: '1.21'
+description: EffectSMP Reimagined Hivatalos Pluginja [Made by mlnplus]
+author: mlnplus
+
+commands:
+  e:
+    description: Main EffectSMP command
+    usage: /<command> [subcommand]
+    aliases: [effectsmp, esmp]
+
+permissions:
+  effectsmp.admin:
+    description: Access to all admin commands
+    default: op
+  effectsmp.teszter:
+    description: Tester - can use all commands except reload, /e set only on self
+    default: false

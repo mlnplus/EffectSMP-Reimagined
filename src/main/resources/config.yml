@@ -1,0 +1,30 @@
+
+# EffectSMP Configuration
+
+# Language setting (hu/en)
+language: hu
+
+# Database settings
+database:
+  # Type: yaml (local file) or mysql
+  type: yaml
+  
+  # MySQL settings (only used if type is mysql)
+  mysql:
+    host: localhost
+    port: 3306
+    database: effectsmp
+    username: root
+    password: ""
+
+# General settings
+settings:
+  # Show action bar messages
+  action-bar-enabled: true
+  
+  # Default hearts on first join
+  # Default hearts on first join
+  default-hearts: 1
+  
+  # Limit crafting of special weapons to 1 per server
+  limited-crafting-enabled: true

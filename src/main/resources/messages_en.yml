@@ -1,0 +1,394 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                    EffectSMP Messages                            ║
+# ║         Supports legacy (&) and MiniMessage (<grad>)             ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+prefix: "&8「&d✦&8」&7 "
+
+# ─────────────────────────────────────────────────────────────────────
+#                          EFFECT MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+effect-assigned-title: "%effect%"
+effect-assigned-subtitle: "You received your effect!"
+effect-assigned-chat: "&d▸ &fYou received: %effect%"
+effect-assigned-info: "&7Use the &e/e &7command!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          ABILITY MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+ability-cooldown: "&c✖ &fCooldown: &e%time%"
+ability-already-active: "&cYour ability is already active!"
+ability-ready: "&a⚡ Ability is ready!"
+
+# Specific Abilities
+ability-invisibility-activated: "&d▸ Invisibility Ability &aactivated! &7Full invisibility for 15s!"
+ability-invisibility-expired: "&d▸ Invisibility expired! &7You are visible again."
+
+ability-hero-activated: "&d▸ Hero of the Village Ability &aactivated! &7Hero level: 5, for 2 minutes!"
+
+ability-haste-activated: "&d▸ Haste Ability &aactivated! &73x3 mining with pickaxe/shovel for 20s!"
+ability-haste-expired: "&d▸ Haste 3x3 mining expired!"
+
+ability-fireres-activated: "&d▸ Fire Resistance Ability &aactivated! &7%count% enemies burn in inextinguishable fire for 15s!"
+ability-fireres-victim: "&c🔥 &lYOU ARE BURNING IN INEXTINGUISHABLE FIRE! &c🔥"
+
+ability-speed-info: "&b▸ Speed Ability: &7Use &bShift &7to dash! (3x)"
+ability-speed-hint: "&7Dash is automatically available with 3+ hearts."
+
+ability-dolphin-activated: "&d▸ Dolphin Grace Ability &aactivated! &7Water Breathing + Conduit Power for 1 minute!"
+
+ability-health-activated: "&d▸ Health Boost Ability &aactivated! &7+10 hearts (20 total) for 1 minute!"
+
+ability-resistance-activated: "&6▸ Resistance Ability &aactivated! &7FULL INVULNERABILITY for 5s!"
+ability-resistance-expired: "&6▸ Invulnerability expired!"
+
+ability-strength-activated: "&6▸ Strength Ability &aactivated! &7Strength 3 + Extended Reach (+3 blocks) for 5s!"
+ability-strength-expired: "&6▸ Strength + Extended Reach expired!"
+
+ability-regen-activated: "&6▸ Regeneration Ability &aactivated! &7Regen 2, 45s for you and %count% trusted players!"
+ability-regen-received: "&d▸ %player% &ashared their Regeneration ability with you!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          DASH MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+dash-charged: "&b➣ Dash charged! %status%"
+dash-activated: "&b➣ Dash! %status%"
+dash-empty: "&cNo dash charges! &7Wait %time%s."
+dash-status-recharging: "&cRecharging..."
+
+
+# ─────────────────────────────────────────────────────────────────────
+#                          PASSIVE MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+passive-toggle-on: "&a✔ Passive effect enabled!"
+passive-toggle-off: "&c✖ Passive effect disabled!"
+passive-not-enough-hearts: "&cYou need at least 1 Effect Heart!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          HEART MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+heart-used: "&a❤ You used an Effect Heart! &7Hearts: %hearts%"
+heart-lost: "&c❤ You lost an Effect Heart! &7Remaining: %hearts%"
+heart-gained: "&a❤ You gained an Effect Heart!"
+heart-depleted: "&4&l⚠ You have no more Effect Hearts! The /e command is unavailable until you get one!"
+# Upgrade/Downgrade
+heart-level-up: "&a⬆ Effect level: &l2"
+heart-level-down: "&c⬇ Effect level: &l1"
+
+# Withdraw
+heart-withdrawn: "&a✦ &f%amount% Effect Heart withdrawn!"
+heart-dropped: "&a✦ &f%amount% Effect Heart dropped! &7(Inventory full)"
+heart-not-enough: "&cNot enough Effect Hearts! &7(Have: %hearts%)"
+heart-downgrade-warning: "&e⚠ Your effect dropped to level 1! &7(Below 2 hearts)"
+heart-ability-lost: "&c⚠ You lost your active ability! &7(Need 3 hearts)"
+heart-passive-disabled: "&4⚠ No more Effect Hearts! Passive ability disabled!"
+heart-limit-reached: "&cReached maximum Effect Hearts! (3)"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          SHARD MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+shard-lost: "&b✧ You lost your Effect Shard!"
+shard-gained: "&a✧ You gained an Effect Shard!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          TRUST MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+trust-added: "&a✔ &f%player% &atrusted!"
+trust-added-mutual: "&a✔ &f%player% &7→ &aMutual trust!"
+# More specific trust messages from command
+trust-mutual-active-sender: "&a✦ &f%player% &atrusted! &7(Mutual trust active!)"
+trust-mutual-active-target: "&a✦ &f%player% &atrusted you! &7(Mutual trust active!)"
+trust-pending-sender: "&a✦ &f%player% &atrusted! &7(Wait for them to trust you!)"
+trust-pending-target: "&e✦ &f%player% &etrusted you! &7(/e trust %player%)"
+trust-removed: "&c✦ &f%player% &ctrust removed!"
+
+# Errors
+trust-not-found: "&cPlayer not found online!"
+trust-already-trusted: "&cYou already trusted this player!"
+trust-limit-reached: "&cYou reached the max trust limit (5 players)!"
+trust-not-trusted: "&cThis player is not trusted!"
+trust-self: "&cYou cannot trust yourself!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          REROLL MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+reroll-in-progress: "&cReroll in progress! Wait for it to finish."
+reroll-no-effect: "&cYou don't have an effect to reroll!"
+reroll-op-error: "&cOP effects cannot be rerolled with a normal reroll!"
+reroll-success: "&d▸ You received your effect: %effect%"
+
+# ─────────────────────────────────────────────────────────────────────
+#                        ITEM ABILITY MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+mace-activated: "&5⚔ Effect Mace &aactivated! &7Shockwave on impact!"
+mace-cooldown: "&cMace is on cooldown! &7(%time%)"
+mace-victim: "&5⚔ Shockwave!"
+mace-landing: "&5⚔ Shockwave activated!"
+
+sword-usage-hint: "&7Use &eShift + Right Click &7for sword ability!"
+sword-activated: "&c⚔ Effect Sword &aactivated! &71.5x damage for 10s!"
+sword-cooldown: "&cSword is on cooldown! &7(%time%)"
+sword-expired: "&c⚔ Effect Sword ability expired!"
+
+scythe-usage-hint: "&7Use &eShift + Right Click &7for scythe ability!"
+scythe-activated: "&3⚰ Effect Scythe &aactivated! &7%count% players completely immobilized for 5s!"
+scythe-no-enemies: "&3⚰ Effect Scythe &aactivated! &7No enemies nearby."
+scythe-cooldown: "&cScythe is on cooldown! &7(%time%)"
+scythe-victim: "&b❄ &lYOU ARE FROZEN! &b❄"
+scythe-thaw: "&b❄ You thawed from the ice!"
+
+bow-hit-victim: "&5☠ Hit by a curse arrow!"
+bow-activated: "&6➹ Curse Arrow! &7%count% enemies cursed!"
+
+
+# ─────────────────────────────────────────────────────────────────────
+#                        ITEM PROTECTION MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+item-clean-storage: "&cThis item cannot be put in storage!"
+item-clean-bundle: "&cThis item cannot be put in a bundle!"
+item-clean-flowerpot: "&cThis item cannot be put in a flower pot!"
+item-clean-itemframe: "&cThis item cannot be put in an item frame!"
+
+
+# ─────────────────────────────────────────────────────────────────────
+#                          CRAFTING MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+craft-limit-reached: "&cThis item has already been crafted on the server!"
+craft-legendary-broadcast: "&d&l✦ LEGENDARY CRAFT ✦ &f%player% crafted the only &e%item%&f!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          ADMIN MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+admin-set-success: "&a✦ Effect set: %effect%"
+admin-set-other: "&a✦ &f%player% &aeffect set: %effect%"
+admin-set-target: "&d✦ New effect: %effect% &7(by admin)"
+admin-give-sender: "&a✦ &f%item% &agiven to: %player%"
+admin-give-target: "&a✦ You received an item: %item% &7(by admin)"
+admin-reload-success: "&a✦ EffectSMP config reloaded!"
+admin-start-success: "&a✦ EffectSMP started! Everyone received an effect!"
+admin-already-started: "&cThe game has already started!"
+admin-no-permission: "&cYou do not have permission for this!"
+admin-tester-self-only: "&7(As a tester you can only use this on yourself)"
+
+admin-cooldown-cleared-self: "&a✦ %type% cooldown cleared!"
+admin-cooldown-cleared-sender: "&a✦ &f%player% &a%type% cooldown cleared!"
+admin-cooldown-cleared-target: "&a✦ %type% cooldown cleared! &7(by admin)"
+
+admin-craftreset-all: "&a✦ All crafting limits reset!"
+admin-craftreset-item: "&a✦ Crafting limit reset: &f%item%"
+
+# ─────────────────────────────────────────────────────────────────────
+#                         BROADCAST MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+game-started-broadcast: "&d&l✦ EffectSMP ✦ &fThe game has started! Everyone received an effect!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          ERROR MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+unknown-command: "&cUnknown command! Use: /e"
+unknown-effect: "&cUnknown effect: %effect%"
+unknown-item: "&cUnknown item: %item%"
+player-not-found: "&cPlayer not found online!"
+invalid-number: "&cInvalid number!"
+not-enough-hearts: "&cNot enough Effect Hearts! &7(Have: %hearts%)"
+no-hearts-simple: "&cNo Effect Hearts!"
+no-hearts-menu: "&cNo Effect Hearts! Get one to access the menu!"
+not-enough-hearts-active: "&cNeed at least 3 Effect Hearts for active ability!"
+active-cooldown: "&cYour ability is on cooldown! &7(%time%)"
+no-effect: "&cYou have no effect!"
+only-players: "&cThis command is only for players!"
+must-be-positive: "&cAmount must be positive!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          ACTION BAR
+# ─────────────────────────────────────────────────────────────────────
+
+actionbar-ability-active: "&d⚡ &fActive: &a%time%"
+actionbar-cooldown-ready: "&a⚡ ABILITY READY!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          DASH MESSAGES (Speed Effect)
+# ─────────────────────────────────────────────────────────────────────
+
+dash-empty: "&cNo charges! &7Wait %time% seconds!"
+dash-charged: "&a⚡ Dash charged! &7%status%"
+dash-activated: "&b➣ Dash! &7%status%"
+dash-status-recharging: "&8(Recharging...)"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          USAGE MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+usage-trust: "&cUsage: &7/e trust <player>"
+usage-untrust: "&cUsage: &7/e untrust <player>"
+usage-set: "&cUsage: &7/e set <effect> [player]"
+usage-give: "&cUsage: &7/e give <item> [player]"
+usage-give-list: "&7Items: heart, shard, reroll, op_reroll, mace, sword, bow, scythe"
+usage-removecooldown: "&cUsage: &7/e removecooldown [item|effect|all] [player]"
+usage-craftreset: "&cUsage: &7/e craftreset [item|all]"
+invalid-limited-item: "&cInvalid item! &7(effect_sword, effect_mace, effect_bow, effect_scythe)"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          ROLL ANIMATION
+# ─────────────────────────────────────────────────────────────────────
+
+roll-title-op: "&6&l%effect%"
+roll-title-normal: "&d&l%effect%"
+roll-subtitle-op: "&eYou received your effect!"
+roll-subtitle-normal: "&fYou received your effect!"
+roll-progress-filled-op: "&6▮"
+roll-progress-filled-normal: "&d▮"
+roll-progress-empty: "&7▯"
+roll-chat-border-op: "&6&m                                                "
+roll-chat-border-normal: "&d&m                                                "
+roll-chat-line-effect-op: "  &6&l%effect%"
+roll-chat-line-effect-normal: "  &d&l%effect%"
+roll-chat-line-passive: "  &e▸ Passive: %effect% effect"
+roll-chat-line-active: "  &e▸ Active: &7/e activate &f| &7From /e menu"
+roll-chat-line-passive-normal: "  &f▸ Passive: %effect% effect"
+roll-chat-line-active-normal: "  &f▸ Active: &7/e activate &f| &7From /e menu"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          MAIN GUI
+# ─────────────────────────────────────────────────────────────────────
+
+gui-main-title: "&5&lEffect Menu"
+gui-main-filler-name: " "
+gui-passive-on: "&a&lENABLED"
+gui-passive-off: "&c&lDISABLED"
+gui-passive-name: "&e&l⚡ Passive Effect"
+gui-passive-lore-effect: "&7Effect: %effect%"
+gui-passive-lore-none: "&7Effect: &cNone"
+gui-passive-lore-status: "&fStatus: %status%"
+gui-passive-lore-click: "&a▸ Click to toggle!"
+gui-passive-lore-locked: "&c▸ Need 1 Effect Heart!"
+
+gui-active-name: "&d&l⚡ Active Ability"
+gui-active-lore-desc-header: "&fAbility description:"
+gui-active-lore-cooldown: "&cCooldown: %time%"
+gui-active-lore-locked: "&c▸ Need 3 Effect Hearts!"
+gui-active-lore-cooldown-active: "&6▸ Cooldown: %time%"
+gui-active-lore-click: "&a▸ Click to activate!"
+
+gui-info-name: "&b&l📖 Information"
+gui-info-lore-1: "&7View your stats and"
+gui-info-lore-2: "&7trusted players."
+gui-info-lore-click: "&a▸ Click to open!"
+
+gui-error-passive-need-heart: "&cNeed at least 1 Effect Heart!"
+gui-error-active-need-heart: "&cNeed at least 3 Effect Hearts for active ability!"
+gui-error-active-cooldown: "&cYour ability is on cooldown! &7(%time%)"
+
+active-desc-invisibility: "&7Full invisibility for 15s"
+active-desc-hero-of-village: "&7Hero of the Village 5 (2 min)"
+active-desc-haste: "&7Haste 3 + 3x3 mining (20s)"
+active-desc-fire-resistance: "&7Enemies burn in inextinguishable fire (15s)"
+active-desc-speed: "&7Dash ability (Shift, 3x charges)"
+active-desc-dolphin-grace: "&7Water Breathing + Conduit Power + Regen 3 (1 min)"
+active-desc-health-boost: "&7+10 hearts (1 min)"
+active-desc-resistance: "&7FULL INVULNERABILITY (5s)"
+active-desc-strength: "&7Strength 3 + Extended Reach +3 blocks (5s)"
+active-desc-regeneration: "&7Regen 2 for all trusted players (45s)"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          INFO GUI
+# ─────────────────────────────────────────────────────────────────────
+
+gui-info-title: "&b&lInformation"
+gui-back-name: "&c&l⬅ Back"
+gui-info-filler-name: " "
+gui-info-effect-name: "&d&l⚡ Effect"
+gui-info-effect-lore-effect: "&7Effect: %effect%"
+gui-info-effect-lore-op: "&6OP Effect"
+gui-info-effect-lore-normal: "&7Normal Effect"
+gui-info-effect-lore-none: "&cYou have no effect!"
+
+gui-info-shard-name: "&b&l✧ Effect Shard"
+gui-info-shard-lore-status: "&fStatus: %status%"
+gui-info-shard-status-yes: "&a✔ Owned"
+gui-info-shard-status-no: "&c✖ Lost"
+gui-info-shard-lore-desc: "&7Lost on first death!"
+
+gui-info-hearts-name: "&c&l❤ Effect Hearts"
+gui-info-hearts-lore-count: "&7Hearts: &f%count%"
+gui-info-hearts-lore-1: "&71 - Passive available"
+gui-info-hearts-lore-2: "&73+ - Active also available"
+
+gui-info-stats-name: "&6&l⚔ Statistics"
+gui-info-stats-lore-kills: "&7Kills: &a%kills%"
+gui-info-stats-lore-deaths: "&7Deaths: &c%deaths%"
+gui-info-stats-lore-kd: "&7K/D: &e%kd%"
+
+gui-info-trust-name: "&a&l👥 Trusted Players"
+gui-info-trust-lore-count: "&7Mutual trust: &f%count%/5"
+gui-info-trust-none: "&7No active trusts"
+gui-info-trust-entry: "&a✔ %player%"
+gui-info-trust-lore-add: "&7/e trust <name> - Add trust"
+gui-info-trust-lore-remove: "&7/e untrust <name> - Remove trust"
+
+
+# ─────────────────────────────────────────────────────────────────────
+#                          CUSTOM ITEMS
+# ─────────────────────────────────────────────────────────────────────
+
+item-heart-name: "&d&lEffect Heart"
+item-heart-lore-1: "&7A precious heart that powers"
+item-heart-lore-2: "&7your effect abilities."
+item-heart-lore-usage: "&e▸ Right Click to use"
+
+item-shard-name: "&b&l✧ Effect Shard"
+item-shard-lore-1: "&7A rare shard containing"
+item-shard-lore-2: "&7effect energy."
+item-shard-lore-usage: "&e▸ Used for crafting"
+
+item-reroll-name: "&a&l⟳ Effect Reroll"
+item-reroll-lore-1: "&7You get a new normal effect,"
+item-reroll-lore-2: "&7but never your current one!"
+item-reroll-lore-usage: "&e▸ Right Click to use"
+
+item-op-reroll-name: "&6&l⟳ OP Effect Reroll"
+item-op-reroll-lore-1: "&7You get a strong OP effect:"
+item-op-reroll-lore-2: "&8• &cResistance &8| &4Strength &8| &dRegeneration"
+item-op-reroll-lore-usage: "&e▸ Right Click to use"
+
+item-mace-name: "&5&l⚔ Effect Mace"
+item-mace-lore-ability: "&dAbility:"
+item-mace-lore-1: "&7Launches you in air, shockwave"
+item-mace-lore-2: "&7on landing!"
+item-mace-lore-cooldown: "&cCooldown: 5 minutes"
+item-mace-lore-usage: "&e▸ Right Click to use"
+
+item-sword-name: "&c&l⚔ Effect Sword"
+item-sword-lore-ability: "&dAbility:"
+item-sword-lore-1: "&7For 10 seconds every hit"
+item-sword-lore-2: "&71.5x damage + 2x attack speed!"
+item-sword-lore-cooldown: "&cCooldown: 5 minutes"
+item-sword-lore-usage: "&e▸ Shift + Right Click to use"
+
+item-bow-name: "&6&l➹ Effect Bow"
+item-bow-lore-ability: "&dAbility:"
+item-bow-lore-1: "&7Curse arrow - enemies are"
+item-bow-lore-2: "&7slowed, weakened and glowing!"
+item-bow-lore-chance: "&c10% chance for curse arrow"
+item-bow-lore-usage: "&e▸ Passive ability"
+
+item-scythe-name: "&3&l⚰ Effect Scythe"
+item-scythe-lore-ability: "&dAbility:"
+item-scythe-lore-1: "&7Freezes all enemy players"
+item-scythe-lore-2: "&7for 5 seconds!"
+item-scythe-lore-cooldown: "&cCooldown: 5 minutes"
+item-scythe-lore-usage: "&e▸ Shift + Right Click to use"

@@ -1,0 +1,394 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                    EffectSMP Messages                            ║
+# ║         Supports legacy (&) and MiniMessage (<grad>)             ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+prefix: "&8「&d✦&8」&7 "
+
+# ─────────────────────────────────────────────────────────────────────
+#                          EFFECT MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+effect-assigned-title: "%effect%"
+effect-assigned-subtitle: "Megkaptad az effected!"
+effect-assigned-chat: "&d▸ &fMegkaptad: %effect%"
+effect-assigned-info: "&7Használd az &e/e &7parancsot!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          ABILITY MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+ability-cooldown: "&c✖ &fCooldown: &e%time%" # unified Key? No, code uses formatted message.
+ability-already-active: "&cA képességed már aktív!"
+ability-ready: "&a⚡ Az ability újra elérhető!"
+
+# Specific Abilities
+ability-invisibility-activated: "&d▸ Invisibility Ability &aaktivált! &7Teljes láthatatlanság 15 mp-re!"
+ability-invisibility-expired: "&d▸ Invisibility lejárt! &7Újra látható vagy."
+
+ability-hero-activated: "&d▸ Hero of the Village Ability &aaktivált! &7Hős szint: 5, 2 percre!"
+
+ability-haste-activated: "&d▸ Haste Ability &aaktivált! &73x3-ban bányász csákánnyal/ásóval 20 mp-ig!"
+ability-haste-expired: "&d▸ Haste 3x3 bányászás lejárt!"
+
+ability-fireres-activated: "&d▸ Fire Resistance Ability &aaktivált! &7%count% ellenség elolthatatlan tűzben ég 15 mp-ig!"
+ability-fireres-victim: "&c🔥 &lELOLTHATATLAN TŰZBEN ÉGSZ! &c🔥"
+
+ability-speed-info: "&b▸ Speed Ability: &7Használd a &bShift&7-et a dashhez! (3x)"
+ability-speed-hint: "&7A dash automatikusan elérhető 3+ szívvel."
+
+ability-dolphin-activated: "&d▸ Dolphin Grace Ability &aaktivált! &7Water Breathing + Conduit Power 1 percre!"
+
+ability-health-activated: "&d▸ Health Boost Ability &aaktivált! &7+10 szív (20 összesen) 1 percre!"
+
+ability-resistance-activated: "&6▸ Resistance Ability &aaktivált! &7TELJES HALHATATLANSÁG 5 mp-re!"
+ability-resistance-expired: "&6▸ Halhatatlanság lejárt!"
+
+ability-strength-activated: "&6▸ Strength Ability &aaktivált! &7Strength 3 + Extended Reach (+3 blokk) 5 mp-re!"
+ability-strength-expired: "&6▸ Strength + Extended Reach lejárt!"
+
+ability-regen-activated: "&6▸ Regeneration Ability &aaktivált! &7Regen 2, 45 mp neked és %count% trust-nak!"
+ability-regen-received: "&d▸ %player% &amegosztotta veled a Regeneration képességét!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          DASH MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+dash-charged: "&b➣ Dash feltöltve! %status%"
+dash-activated: "&b➣ Dash! %status%"
+dash-empty: "&cNincs dash töltésed! &7Várj %time% mp-et."
+dash-status-recharging: "&cFeltöltődés..."
+
+
+# ─────────────────────────────────────────────────────────────────────
+#                          PASSIVE MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+passive-toggle-on: "&a✔ Passzív effect bekapcsolva!"
+passive-toggle-off: "&c✖ Passzív effect kikapcsolva!"
+passive-not-enough-hearts: "&cLegalább 1 Effect Szív kell!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          HEART MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+heart-used: "&a❤ Felhasználtál egy Effect Szívet! &7Szívek: %hearts%"
+heart-lost: "&c❤ Elvesztettél egy Effect Szívet! &7Maradék: %hearts%"
+heart-gained: "&a❤ Effect Szívet szereztél!"
+heart-depleted: "&4&l⚠ Nincs több Effect Szíved! A /e parancs nem elérhető amíg nem szerzel egyet!"
+# Upgrade/Downgrade
+heart-level-up: "&a⬆ Effect szint: &l2"
+heart-level-down: "&c⬇ Effect szint: &l1"
+
+# Withdraw
+heart-withdrawn: "&a✦ &f%amount% Effect Szív withdraw-olva!"
+heart-dropped: "&a✦ &f%amount% Effect Szív kidobva! &7(Inventory tele)"
+heart-not-enough: "&cNincs elég Effect Szíved! &7(Van: %hearts%)"
+heart-downgrade-warning: "&e⚠ Az effekted 1-es szintre csökkent! &7(2 szív alatt)"
+heart-ability-lost: "&c⚠ Elvesztetted az aktív ability-det! &7(3 szív kell)"
+heart-passive-disabled: "&4⚠ Nincs több Effect Szíved! A passzív képesség letiltva!"
+heart-limit-reached: "&cElérted a maximális Effect Szív számot! (3)"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          SHARD MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+shard-lost: "&b✧ Elvesztetted az Effect Szilánkodat!"
+shard-gained: "&a✧ Effect Szilánkot szereztél!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          TRUST MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+trust-added: "&a✔ &f%player% &atrustolva!"
+trust-added-mutual: "&a✔ &f%player% &7→ &aKölcsönös trust!"
+# More specific trust messages from command
+trust-mutual-active-sender: "&a✦ &f%player% &atrustolva! &7(Kölcsönös trust aktív!)"
+trust-mutual-active-target: "&a✦ &f%player% &atrustolt téged! &7(Kölcsönös trust aktív!)"
+trust-pending-sender: "&a✦ &f%player% &atrustolva! &7(Várj amíg ő is trustol téged!)"
+trust-pending-target: "&e✦ &f%player% &etrustolt téged! &7(/e trust %player%)"
+trust-removed: "&c✦ &f%player% &ctrust eltávolítva!"
+
+# Errors
+trust-not-found: "&cNincs ilyen játékos online!"
+trust-already-trusted: "&cEzt a játékost már trustoltad!"
+trust-limit-reached: "&cElérted a maximális trust keretet (5 játékos)!"
+trust-not-trusted: "&cEz a játékos nincs trustolva!"
+trust-self: "&cNem trustolhatod magadat!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          REROLL MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+reroll-in-progress: "&cÉppen sorsolás alatt vagy! Várd meg a végét."
+reroll-no-effect: "&cNincs effected amit reroll-olhatnál!"
+reroll-op-error: "&cOP effectet nem lehet sima reroll-al újragörgetni!"
+reroll-success: "&d▸ Megkaptad az effekted: %effect%"
+
+# ─────────────────────────────────────────────────────────────────────
+#                        ITEM ABILITY MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+mace-activated: "&5⚔ Effect Buzogány &aaktivált! &7Érkezéskor lökéshullám!"
+mace-cooldown: "&cA buzogány cooldownon van! &7(%time%)"
+mace-victim: "&5⚔ Lökéshullám!"
+mace-landing: "&5⚔ Lökéshullám aktiválva!"
+
+sword-usage-hint: "&7Használd &eShift + Jobb klikk&7-et a kard képességéhez!"
+sword-activated: "&c⚔ Effect Kard &aaktivált! &71.5x sebzés 10 mp-ig!"
+sword-cooldown: "&cA kard cooldownon van! &7(%time%)"
+sword-expired: "&c⚔ Az Effect Kard képessége lejárt!"
+
+scythe-usage-hint: "&7Használd &eShift + Jobb klikk&7-et a kasza képességéhez!"
+scythe-activated: "&3⚰ Effect Kasza &aaktivált! &7%count% játékos teljesen immobilizálva 5 mp-re!"
+scythe-no-enemies: "&3⚰ Effect Kasza &aaktivált! &7Nem volt ellenség a közelben."
+scythe-cooldown: "&cA kasza cooldownon van! &7(%time%)"
+scythe-victim: "&b❄ &lLEFAGYASZTOTTAK! &b❄"
+scythe-thaw: "&b❄ Kiolvadtál a jégből!"
+
+bow-hit-victim: "&5☠ Eltalált egy átok nyíl!"
+bow-activated: "&6➹ Átok nyíl! &7%count% ellenség megátkozva!"
+
+
+# ─────────────────────────────────────────────────────────────────────
+#                        ITEM PROTECTION MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+item-clean-storage: "&cEzt az itemet nem lehet tárolókba tenni!"
+item-clean-bundle: "&cEzt az itemet nem lehet bundle-be tenni!"
+item-clean-flowerpot: "&cEzt az itemet nem lehet cserépbe tenni!"
+item-clean-itemframe: "&cEzt az itemet nem lehet item frame-be tenni!"
+
+
+# ─────────────────────────────────────────────────────────────────────
+#                          CRAFTING MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+craft-limit-reached: "&cEzt a tárgyat már valaki lecraftolta a szerveren!"
+craft-legendary-broadcast: "&d&l✦ LEGENDÁS CRAFT ✦ &f%player% elkészítette az egyetlen &e%item%&f-t!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          ADMIN MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+admin-set-success: "&a✦ Effekted beállítva: %effect%"
+admin-set-other: "&a✦ &f%player% &aeffectje beállítva: %effect%"
+admin-set-target: "&d✦ Új effekted: %effect% &7(admin által)"
+admin-give-sender: "&a✦ &f%item% &aodaadva: %player%"
+admin-give-target: "&a✦ Kaptál egy itemet: %item% &7(admin által)"
+admin-reload-success: "&a✦ EffectSMP config újratöltve!"
+admin-start-success: "&a✦ EffectSMP elindítva! Minden játékos effectet kapott!"
+admin-already-started: "&cA játék már elindult!"
+admin-no-permission: "&cNincs jogosultságod ehhez!"
+admin-tester-self-only: "&7(Teszterként csak magadra használhatod)"
+
+admin-cooldown-cleared-self: "&a✦ %type% cooldown törölve!"
+admin-cooldown-cleared-sender: "&a✦ &f%player% &a%type% cooldownja törölve!"
+admin-cooldown-cleared-target: "&a✦ %type% cooldownod törölve! &7(admin által)"
+
+admin-craftreset-all: "&a✦ Minden craftolási limit törölve!"
+admin-craftreset-item: "&a✦ Craftolási limit törölve: &f%item%"
+
+# ─────────────────────────────────────────────────────────────────────
+#                         BROADCAST MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+game-started-broadcast: "&d&l✦ EffectSMP ✦ &fA játék elkezdődött! Mindenki kapott egy effectet!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          ERROR MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+unknown-command: "&cIsmeretlen parancs! Használd: /e"
+unknown-effect: "&cIsmeretlen effect: %effect%"
+unknown-item: "&cIsmeretlen item: %item%"
+player-not-found: "&cNincs ilyen játékos online!"
+invalid-number: "&cÉrvénytelen szám!"
+not-enough-hearts: "&cNincs elég Effect Szíved! &7(Van: %hearts%)"
+no-hearts-simple: "&cNincs Effect Szíved!"
+no-hearts-menu: "&cNincs Effect Szíved! Szerezz egyet a menü eléréséhez!"
+not-enough-hearts-active: "&cLegalább 3 Effect Szív kell az aktív képességhez!"
+active-cooldown: "&cA képességed cooldownon van! &7(%time%)"
+no-effect: "&cNincs effekted!"
+only-players: "&cEz a parancs csak játékosoknak elérhető!"
+must-be-positive: "&cA mennyiségnek pozitívnak kell lennie!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          ACTION BAR
+# ─────────────────────────────────────────────────────────────────────
+
+actionbar-ability-active: "&d⚡ &fAktív: &a%time%"
+actionbar-cooldown-ready: "&a⚡ ABILITY ELÉRHETŐ!"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          DASH MESSAGES (Speed Effect)
+# ─────────────────────────────────────────────────────────────────────
+
+dash-empty: "&cNincs töltésed! &7Várj %time% másodpercet!"
+dash-charged: "&a⚡ Dash feltöltve! &7%status%"
+dash-activated: "&b➣ Dash! &7%status%"
+dash-status-recharging: "&8(Töltődik...)"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          USAGE MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+
+usage-trust: "&cHasználat: &7/e trust <játékos>"
+usage-untrust: "&cHasználat: &7/e untrust <játékos>"
+usage-set: "&cHasználat: &7/e set <effect> [játékos]"
+usage-give: "&cHasználat: &7/e give <item> [játékos]"
+usage-give-list: "&7Itemek: heart, shard, reroll, op_reroll, mace, sword, bow, scythe"
+usage-removecooldown: "&cHasználat: &7/e removecooldown [item|effect|all] [játékos]"
+usage-craftreset: "&cHasználat: &7/e craftreset [item|all]"
+invalid-limited-item: "&cÉrvénytelen item! &7(effect_sword, effect_mace, effect_bow, effect_scythe)"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          ROLL ANIMATION
+# ─────────────────────────────────────────────────────────────────────
+
+roll-title-op: "&6&l%effect%"
+roll-title-normal: "&d&l%effect%"
+roll-subtitle-op: "&eMegkaptad az effekted!"
+roll-subtitle-normal: "&fMegkaptad az effekted!"
+roll-progress-filled-op: "&6▮"
+roll-progress-filled-normal: "&d▮"
+roll-progress-empty: "&7▯"
+roll-chat-border-op: "&6&m                                                "
+roll-chat-border-normal: "&d&m                                                "
+roll-chat-line-effect-op: "  &6&l%effect%"
+roll-chat-line-effect-normal: "  &d&l%effect%"
+roll-chat-line-passive: "  &e▸ Passzív: %effect% effect"
+roll-chat-line-active: "  &e▸ Aktív: &7/e activate &f| &7/e menüből"
+roll-chat-line-passive-normal: "  &f▸ Passzív: %effect% effect"
+roll-chat-line-active-normal: "  &f▸ Aktív: &7/e activate &f| &7/e menüből"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          MAIN GUI
+# ─────────────────────────────────────────────────────────────────────
+
+gui-main-title: "&5&lEffect Menu"
+gui-main-filler-name: " "
+gui-passive-on: "&a&lBEKAPCSOLVA"
+gui-passive-off: "&c&lKIKAPCSOLVA"
+gui-passive-name: "&e&l⚡ Passzív Effect"
+gui-passive-lore-effect: "&7Effect: %effect%"
+gui-passive-lore-none: "&7Effect: &cNincs"
+gui-passive-lore-status: "&fStátusz: %status%"
+gui-passive-lore-click: "&a▸ Kattints a váltáshoz!"
+gui-passive-lore-locked: "&c▸ 1 Effect Szív kell!"
+
+gui-active-name: "&d&l⚡ Aktív Képesség"
+gui-active-lore-desc-header: "&fKépesség leírás:"
+gui-active-lore-cooldown: "&cCooldown: %time%"
+gui-active-lore-locked: "&c▸ 3 Effect Szív kell!"
+gui-active-lore-cooldown-active: "&6▸ Cooldown: %time%"
+gui-active-lore-click: "&a▸ Kattints az aktiváláshoz!"
+
+gui-info-name: "&b&l📖 Információk"
+gui-info-lore-1: "&7Statisztikáid és trustolt"
+gui-info-lore-2: "&7játékosaid megtekintése."
+gui-info-lore-click: "&a▸ Kattints a megnyitáshoz!"
+
+gui-error-passive-need-heart: "&cLegalább 1 Effect Szív kell!"
+gui-error-active-need-heart: "&cLegalább 3 Effect Szív kell az aktív képességhez!"
+gui-error-active-cooldown: "&cA képességed cooldownon van! &7(%time%)"
+
+active-desc-invisibility: "&7Teljes láthatatlanság 15 mp-re"
+active-desc-hero-of-village: "&7Hero of the Village 5 (2 perc)"
+active-desc-haste: "&7Haste 3 + 3x3 bányászás (20 mp)"
+active-desc-fire-resistance: "&7Ellenségek elolthatatlan tűzben égnek (15 mp)"
+active-desc-speed: "&7Dash képesség (Shift, 3x töltés)"
+active-desc-dolphin-grace: "&7Water Breathing + Conduit Power + Regen 3 (1 perc)"
+active-desc-health-boost: "&7+10 szív (1 perc)"
+active-desc-resistance: "&7TELJES HALHATATLANSÁG (5 mp)"
+active-desc-strength: "&7Strength 3 + Extended Reach +3 blokk (5 mp)"
+active-desc-regeneration: "&7Regen 2 minden trustodnak (45 mp)"
+
+# ─────────────────────────────────────────────────────────────────────
+#                          INFO GUI
+# ─────────────────────────────────────────────────────────────────────
+
+gui-info-title: "&b&lInformációk"
+gui-back-name: "&c&l⬅ Vissza"
+gui-info-filler-name: " "
+gui-info-effect-name: "&d&l⚡ Effect"
+gui-info-effect-lore-effect: "&7Effect: %effect%"
+gui-info-effect-lore-op: "&6OP Effect"
+gui-info-effect-lore-normal: "&7Alap Effect"
+gui-info-effect-lore-none: "&cNincs effekted!"
+
+gui-info-shard-name: "&b&l✧ Effect Szilánk"
+gui-info-shard-lore-status: "&fStátusz: %status%"
+gui-info-shard-status-yes: "&a✔ Megvan"
+gui-info-shard-status-no: "&c✖ Elvesztve"
+gui-info-shard-lore-desc: "&7Az első halálodkor elveszted!"
+
+gui-info-hearts-name: "&c&l❤ Effect Szívek"
+gui-info-hearts-lore-count: "&7Szívek: &f%count%"
+gui-info-hearts-lore-1: "&71 - Passzív elérhető"
+gui-info-hearts-lore-2: "&73+ - Aktív is elérhető"
+
+gui-info-stats-name: "&6&l⚔ Statisztikák"
+gui-info-stats-lore-kills: "&7Ölések: &a%kills%"
+gui-info-stats-lore-deaths: "&7Halálok: &c%deaths%"
+gui-info-stats-lore-kd: "&7K/D: &e%kd%"
+
+gui-info-trust-name: "&a&l👥 Trustolt Játékosok"
+gui-info-trust-lore-count: "&7Kölcsönös trust: &f%count%/5"
+gui-info-trust-none: "&7Nincs aktív trust"
+gui-info-trust-entry: "&a✔ %player%"
+gui-info-trust-lore-add: "&7/e trust <név> - Trust hozzáadás"
+gui-info-trust-lore-remove: "&7/e untrust <név> - Trust eltávolítás"
+
+
+# ─────────────────────────────────────────────────────────────────────
+#                          CUSTOM ITEMS
+# ─────────────────────────────────────────────────────────────────────
+
+item-heart-name: "&d&lEffect Szív"
+item-heart-lore-1: "&7Egy értékes szív, ami az effect"
+item-heart-lore-2: "&7képességeidet táplálja."
+item-heart-lore-usage: "&e▸ Jobb klikk a használathoz"
+
+item-shard-name: "&b&l✧ Effect Szilánk"
+item-shard-lore-1: "&7Egy ritka szilánk, ami effect"
+item-shard-lore-2: "&7energiát tartalmaz."
+item-shard-lore-usage: "&e▸ Craftoláshoz használható"
+
+item-reroll-name: "&a&l⟳ Effect Reroll"
+item-reroll-lore-1: "&7Új alap effectet kapsz, de"
+item-reroll-lore-2: "&7sosem a jelenlegi effectedet!"
+item-reroll-lore-usage: "&e▸ Jobb klikk a használathoz"
+
+item-op-reroll-name: "&6&l⟳ OP Effect Reroll"
+item-op-reroll-lore-1: "&7Erős OP effectet kapsz:"
+item-op-reroll-lore-2: "&8• &cResistance &8| &4Strength &8| &dRegeneration"
+item-op-reroll-lore-usage: "&e▸ Jobb klikk a használathoz"
+
+item-mace-name: "&5&l⚔ Effect Buzogány"
+item-mace-lore-ability: "&dKépesség:"
+item-mace-lore-1: "&7Fellök a levegőbe, lökéshullám"
+item-mace-lore-2: "&7érkezéskor!"
+item-mace-lore-cooldown: "&cCooldown: 5 perc"
+item-mace-lore-usage: "&e▸ Jobb klikk a használathoz"
+
+item-sword-name: "&c&l⚔ Effect Kard"
+item-sword-lore-ability: "&dKépesség:"
+item-sword-lore-1: "&710 másodpercig minden ütés"
+item-sword-lore-2: "&71.5x sebzés + 2x attack speed!"
+item-sword-lore-cooldown: "&cCooldown: 5 perc"
+item-sword-lore-usage: "&e▸ Shift + Jobb klikk a használathoz"
+
+item-bow-name: "&6&l➹ Effect Íj"
+item-bow-lore-ability: "&dKépesség:"
+item-bow-lore-1: "&7Átok nyíl - ellenségeket"
+item-bow-lore-2: "&7lassít, gyengít és megjelöl!"
+item-bow-lore-chance: "&c10% esély átok nyílra"
+item-bow-lore-usage: "&e▸ Passzív képesség"
+
+item-scythe-name: "&3&l⚰ Effect Kasza"
+item-scythe-lore-ability: "&dKépesség:"
+item-scythe-lore-1: "&7Lefagyasztja az összes"
+item-scythe-lore-2: "&7ellenséges játékost 5 mp-re!"
+item-scythe-lore-cooldown: "&cCooldown: 5 perc"
+item-scythe-lore-usage: "&e▸ Shift + Jobb klikk a használathoz"
