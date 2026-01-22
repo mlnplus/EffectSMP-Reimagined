@@ -36,7 +36,7 @@ public class ConfigManager {
         config = YamlConfiguration.loadConfiguration(configFile);
 
         // messages.yml (based on language)
-        String lang = config.getString("language", "hu");
+        String lang = config.getString("language", "en");
         String messageFileName = "messages_" + lang + ".yml";
 
         messagesFile = new File(plugin.getDataFolder(), messageFileName);

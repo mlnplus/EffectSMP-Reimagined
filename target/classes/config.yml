@@ -2,7 +2,7 @@
 # EffectSMP Configuration
 
 # Language setting (hu/en)
-language: hu
+language: en
 
 # Database settings
 database:
@@ -21,8 +21,7 @@ database:
 settings:
   # Show action bar messages
   action-bar-enabled: true
-  
-  # Default hearts on first join
+
   # Default hearts on first join
   default-hearts: 1
   
