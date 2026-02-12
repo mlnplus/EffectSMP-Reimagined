@@ -26,7 +26,6 @@ public class MainGUI {
     private static final int ACTIVE_ABILITY_SLOT = 15;
     private static final int INFO_SLOT = 22;
 
-    // Helper method to remove italics
     private Component getNoItalic(String key) {
         return plugin.getMessageUtils().getMessageComponent(key).decoration(TextDecoration.ITALIC, false);
     }
@@ -46,19 +45,15 @@ public class MainGUI {
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
         EffectType effect = data.getEffect();
 
-        // Fill with glass panes
         ItemStack filler = createFiller();
         for (int i = 0; i < 27; i++) {
             inv.setItem(i, filler);
         }
 
-        // Passive Toggle (slot 11)
         inv.setItem(PASSIVE_TOGGLE_SLOT, createPassiveToggleItem(data, effect));
 
-        // Active Ability (slot 15)
         inv.setItem(ACTIVE_ABILITY_SLOT, createActiveAbilityItem(data, effect));
 
-        // Info Button (slot 22)
         inv.setItem(INFO_SLOT, createInfoItem());
 
         return inv;

@@ -22,7 +22,6 @@ ability-cooldown: "&c✖ &fCooldown: &e%time%"
 ability-already-active: "&cYour ability is already active!"
 ability-ready: "&a⚡ Ability is ready!"
 
-# Specific Abilities
 ability-invisibility-activated: "&d▸ Invisibility Ability &aactivated! &7Full invisibility for 15s!"
 ability-invisibility-expired: "&d▸ Invisibility expired! &7You are visible again."
 
@@ -76,11 +75,10 @@ heart-used: "&a❤ You used an Effect Heart! &7Hearts: %hearts%"
 heart-lost: "&c❤ You lost an Effect Heart! &7Remaining: %hearts%"
 heart-gained: "&a❤ You gained an Effect Heart!"
 heart-depleted: "&4&l⚠ You have no more Effect Hearts! The /e command is unavailable until you get one!"
-# Upgrade/Downgrade
+
 heart-level-up: "&a⬆ Effect level: &l2"
 heart-level-down: "&c⬇ Effect level: &l1"
 
-# Withdraw
 heart-withdrawn: "&a✦ &f%amount% Effect Heart withdrawn!"
 heart-dropped: "&a✦ &f%amount% Effect Heart dropped! &7(Inventory full)"
 heart-not-enough: "&cNot enough Effect Hearts! &7(Have: %hearts%)"
@@ -102,14 +100,13 @@ shard-gained: "&a✧ You gained an Effect Shard!"
 
 trust-added: "&a✔ &f%player% &atrusted!"
 trust-added-mutual: "&a✔ &f%player% &7→ &aMutual trust!"
-# More specific trust messages from command
+
 trust-mutual-active-sender: "&a✦ &f%player% &atrusted! &7(Mutual trust active!)"
 trust-mutual-active-target: "&a✦ &f%player% &atrusted you! &7(Mutual trust active!)"
 trust-pending-sender: "&a✦ &f%player% &atrusted! &7(Wait for them to trust you!)"
 trust-pending-target: "&e✦ &f%player% &etrusted you! &7(/e trust %player%)"
 trust-removed: "&c✦ &f%player% &ctrust removed!"
 
-# Errors
 trust-not-found: "&cPlayer not found online!"
 trust-already-trusted: "&cYou already trusted this player!"
 trust-limit-reached: "&cYou reached the max trust limit (5 players)!"

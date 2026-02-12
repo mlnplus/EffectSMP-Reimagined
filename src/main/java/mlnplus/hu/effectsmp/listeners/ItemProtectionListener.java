@@ -31,7 +31,6 @@ public class ItemProtectionListener implements Listener {
         this.plugin = plugin;
     }
 
-    // Prevent putting items in containers via click
     @EventHandler(priority = EventPriority.HIGH)
     public void onInventoryClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player))
@@ -40,8 +39,6 @@ public class ItemProtectionListener implements Listener {
         Inventory topInv = event.getView().getTopInventory();
         InventoryType type = topInv.getType();
 
-        // Bundle Protection: Check for ANY interactions between Bundle and Custom Item
-        // This can happen in any inventory (including player's)
         ItemStack cursor = event.getCursor();
         ItemStack current = event.getCurrentItem();
 
@@ -51,17 +48,12 @@ public class ItemProtectionListener implements Listener {
         boolean cursorCustom = plugin.getCustomItems().isCustomItem(cursor);
         boolean currentCustom = plugin.getCustomItems().isCustomItem(current);
 
-        // Block ALL interactions between Bundle and Custom Item
-        // Case 1: Cursor is Bundle, Clicked is Custom Item
-        // Case 2: Cursor is Custom Item, Clicked is Bundle
         if ((cursorBundle && currentCustom) || (currentBundle && cursorCustom)) {
             event.setCancelled(true);
             plugin.getMessageUtils().sendMessage(player, "item-clean-bundle");
             return;
         }
 
-        // Additional Bundle Protection: Block hotbar key swaps involving Bundle +
-        // Custom Item
         if (event.getClick().name().contains("NUMBER_KEY")) {
             int hotbarSlot = event.getHotbarButton();
             if (hotbarSlot >= 0 && hotbarSlot < 9) {
@@ -70,7 +62,6 @@ public class ItemProtectionListener implements Listener {
                 boolean hotbarBundle = hotbarItem != null && hotbarItem.getType() == Material.BUNDLE;
                 boolean hotbarCustom = plugin.getCustomItems().isCustomItem(hotbarItem);
 
-                // Block if one is bundle and other is custom
                 if ((hotbarBundle && currentCustom) || (currentBundle && hotbarCustom) ||
                         (hotbarCustom && currentBundle) || (hotbarBundle && cursorCustom)) {
                     event.setCancelled(true);
@@ -80,11 +71,7 @@ public class ItemProtectionListener implements Listener {
             }
         }
 
-        // Additional Bundle Protection: Block shift-click into a bundle
         if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-            // If custom item is shift-clicked and there's a bundle anywhere in inventory,
-            // might go into it
-            // For safety, just block shift-click on custom items if player has ANY bundle
             if (currentCustom && playerHasBundle(player)) {
                 event.setCancelled(true);
                 plugin.getMessageUtils().sendMessage(player, "item-clean-bundle");
@@ -92,15 +79,12 @@ public class ItemProtectionListener implements Listener {
             }
         }
 
-        // Check if this is a storage inventory (not player's own)
         if (isStorageInventory(type)) {
             ItemStack currentItem = event.getCurrentItem();
             ItemStack cursorItem = event.getCursor();
 
-            // Check action types that could move items into container
             InventoryAction action = event.getAction();
 
-            // Clicking with custom item on cursor into container slot
             if (event.getRawSlot() < topInv.getSize()) {
                 if (plugin.getCustomItems().isCustomItem(cursorItem)) {
                     event.setCancelled(true);
@@ -109,7 +93,6 @@ public class ItemProtectionListener implements Listener {
                 }
             }
 
-            // Shift-clicking custom item from player inventory into container
             if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
                 if (plugin.getCustomItems().isCustomItem(currentItem)) {
                     event.setCancelled(true);
@@ -118,12 +101,10 @@ public class ItemProtectionListener implements Listener {
                 }
             }
 
-            // Hotbar number keys to swap items
             if (event.getClick().name().contains("NUMBER_KEY")) {
                 int hotbarSlot = event.getHotbarButton();
                 if (hotbarSlot >= 0 && hotbarSlot < 9) {
                     ItemStack hotbarItem = player.getInventory().getItem(hotbarSlot);
-                    // Moving from hotbar into container
                     if (event.getRawSlot() < topInv.getSize() && plugin.getCustomItems().isCustomItem(hotbarItem)) {
                         event.setCancelled(true);
                         plugin.getMessageUtils().sendMessage(player, "item-clean-storage");
@@ -131,17 +112,9 @@ public class ItemProtectionListener implements Listener {
                     }
                 }
             }
-
-            // Double-click collect action
-            if (action == InventoryAction.COLLECT_TO_CURSOR) {
-                // This action collects items from both inventories
-                // If cursor has custom item, it won't pull from container anyway
-                // No action needed
-            }
         }
     }
 
-    // Prevent putting items via drag
     @EventHandler(priority = EventPriority.HIGH)
     public void onInventoryDrag(InventoryDragEvent event) {
         if (!(event.getWhoClicked() instanceof Player player))
@@ -153,11 +126,9 @@ public class ItemProtectionListener implements Listener {
         if (!isStorageInventory(type))
             return;
 
-        // Check if dragging custom item
         if (!plugin.getCustomItems().isCustomItem(event.getOldCursor()))
             return;
 
-        // Check if any drag slot is in the storage inventory
         int topSize = topInv.getSize();
         for (int slot : event.getRawSlots()) {
             if (slot < topSize) {
@@ -168,7 +139,6 @@ public class ItemProtectionListener implements Listener {
         }
     }
 
-    // Prevent custom dropped items from burning
     @EventHandler(priority = EventPriority.HIGH)
     public void onItemBurn(EntityCombustEvent event) {
         if (!(event.getEntity() instanceof Item item))
@@ -179,7 +149,6 @@ public class ItemProtectionListener implements Listener {
         }
     }
 
-    // Prevent custom dropped items from taking damage (explosions, cactus, etc.)
     @EventHandler(priority = EventPriority.HIGH)
     public void onItemDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Item item))
@@ -190,7 +159,6 @@ public class ItemProtectionListener implements Listener {
         }
     }
 
-    // Prevent custom items from despawning
     @EventHandler(priority = EventPriority.HIGH)
     public void onItemDespawn(ItemDespawnEvent event) {
         if (plugin.getCustomItems().isCustomItem(event.getEntity().getItemStack())) {
@@ -198,13 +166,11 @@ public class ItemProtectionListener implements Listener {
         }
     }
 
-    // Prevent putting custom items into bundles
     @EventHandler(priority = EventPriority.HIGH)
     public void onBundleUse(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack mainHand = player.getInventory().getItemInMainHand();
         ItemStack offHand = player.getInventory().getItemInOffHand();
-        // Check if player is trying to put custom item into bundle
         if (mainHand.getType() == Material.BUNDLE && plugin.getCustomItems().isCustomItem(offHand)) {
             event.setCancelled(true);
             plugin.getMessageUtils().sendMessage(player, "item-clean-bundle");
@@ -216,7 +182,6 @@ public class ItemProtectionListener implements Listener {
             return;
         }
 
-        // Prevent putting custom items in decorated pots
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null) {
             Block block = event.getClickedBlock();
             if (block.getState() instanceof DecoratedPot) {
@@ -228,7 +193,6 @@ public class ItemProtectionListener implements Listener {
         }
     }
 
-    // Prevent putting custom items into item frames
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntityInteract(PlayerInteractEntityEvent event) {
         if (!(event.getRightClicked() instanceof ItemFrame))
@@ -244,7 +208,6 @@ public class ItemProtectionListener implements Listener {
         }
     }
 
-    // Helper to check if inventory is a storage type
     private boolean isStorageInventory(InventoryType type) {
         return switch (type) {
             case CHEST, ENDER_CHEST, SHULKER_BOX, BARREL, HOPPER,
@@ -257,7 +220,6 @@ public class ItemProtectionListener implements Listener {
         };
     }
 
-    // Helper to check if player has any bundle in inventory
     private boolean playerHasBundle(Player player) {
         for (ItemStack item : player.getInventory().getContents()) {
             if (item != null && item.getType() == Material.BUNDLE) {

@@ -25,7 +25,6 @@ public class PlayerDataManager {
             playersFolder.mkdirs();
         }
 
-        // Load game started state
         plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
             if (plugin.getConfigManager().isGameStarted()) {
                 plugin.setGameStarted(true);

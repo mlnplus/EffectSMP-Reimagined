@@ -29,40 +29,31 @@ public class MiningListener implements Listener {
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
-        // Check if already processing (prevent infinite loop)
         if (processingBlocks.contains(block))
             return;
 
-        // Check if player has haste 3x3 ability active
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
         if (!data.isHaste3x3Active())
             return;
 
-        // No tool check needed - works with hand too
-
-        // Get the face the player is looking at to determine mining direction
         BlockFace face = getPlayerFacingFace(player);
 
-        // Mine 3x3 area perpendicular to facing direction
         Set<Block> blocksToBreak = get3x3Blocks(block, face);
         ItemStack tool = player.getInventory().getItemInMainHand();
 
         for (Block b : blocksToBreak) {
             if (b.equals(block))
-                continue; // Skip center block (already being broken)
+                continue;
 
             Material type = b.getType();
             if (type == Material.AIR || type == Material.CAVE_AIR || type == Material.VOID_AIR)
                 continue;
 
-            // Safety: Don't break unbreakable blocks
             if (isUnbreakable(type))
                 continue;
 
-            // Prevent recursive calls
             processingBlocks.add(b);
 
-            // Break the block naturally with whatever tool (or hand) the player has
             b.breakNaturally(tool);
 
             processingBlocks.remove(b);
@@ -85,17 +76,14 @@ public class MiningListener implements Listener {
     }
 
     private BlockFace getPlayerFacingFace(Player player) {
-        // Get the direction player is looking
         float pitch = player.getLocation().getPitch();
         float yaw = player.getLocation().getYaw();
 
-        // If looking up or down
         if (pitch < -45)
-            return BlockFace.DOWN; // Looking up, break layer below
+            return BlockFace.DOWN;
         if (pitch > 45)
-            return BlockFace.UP; // Looking down, break layer above
+            return BlockFace.UP;
 
-        // Horizontal direction
         yaw = (yaw % 360 + 360) % 360;
         if (yaw >= 315 || yaw < 45)
             return BlockFace.SOUTH;
@@ -110,10 +98,8 @@ public class MiningListener implements Listener {
         Set<Block> blocks = new HashSet<>();
         blocks.add(center);
 
-        // Based on face, get perpendicular offsets
         switch (face) {
             case UP, DOWN -> {
-                // Mining up/down - get horizontal 3x3
                 for (int x = -1; x <= 1; x++) {
                     for (int z = -1; z <= 1; z++) {
                         blocks.add(center.getRelative(x, 0, z));
@@ -121,7 +107,6 @@ public class MiningListener implements Listener {
                 }
             }
             case NORTH, SOUTH -> {
-                // Mining north/south - get x and y offsets
                 for (int x = -1; x <= 1; x++) {
                     for (int y = -1; y <= 1; y++) {
                         blocks.add(center.getRelative(x, y, 0));
@@ -129,7 +114,6 @@ public class MiningListener implements Listener {
                 }
             }
             case EAST, WEST -> {
-                // Mining east/west - get z and y offsets
                 for (int z = -1; z <= 1; z++) {
                     for (int y = -1; y <= 1; y++) {
                         blocks.add(center.getRelative(0, y, z));
@@ -137,7 +121,6 @@ public class MiningListener implements Listener {
                 }
             }
             default -> {
-                // For diagonal directions, use horizontal 3x3
                 for (int x = -1; x <= 1; x++) {
                     for (int z = -1; z <= 1; z++) {
                         blocks.add(center.getRelative(x, 0, z));

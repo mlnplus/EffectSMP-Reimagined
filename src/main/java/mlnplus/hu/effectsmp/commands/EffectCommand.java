@@ -28,7 +28,6 @@ public class EffectCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            // Open main GUI
             return openMainGUI(player);
         }
 
@@ -52,7 +51,6 @@ public class EffectCommand implements CommandExecutor {
             case "toggle" -> {
                 return togglePassive(player);
             }
-            // Admin commands
             case "set" -> {
                 return adminSetEffect(player, args);
             }
@@ -126,13 +124,10 @@ public class EffectCommand implements CommandExecutor {
             return true;
         }
 
-        // Track old hearts before removal
         int oldHearts = data.getEffectHearts();
 
-        // Remove hearts from player data
         data.removeEffectHearts(amount);
 
-        // Give physical heart items
         ItemStack hearts = plugin.getCustomItems().createEffectHeart();
         hearts.setAmount(amount);
 
@@ -146,18 +141,15 @@ public class EffectCommand implements CommandExecutor {
                     "%amount%", String.valueOf(amount));
         }
 
-        // Check effect level and passive status
         if (data.getEffectHearts() == 0) {
             data.setPassiveEnabled(false);
             plugin.getEffectAbilityManager().removePassiveEffect(player);
             plugin.getMessageUtils().sendMessage(player, "heart-passive-disabled");
         } else if (oldHearts >= 3 && data.getEffectHearts() < 3) {
-            // Lost active ability access (3+ -> 2)
             plugin.getMessageUtils().sendMessage(player, "heart-ability-lost");
         } else if (oldHearts >= 2 && data.getEffectHearts() < 2) {
-            // Downgrade to level 1 (2 -> 1)
             plugin.getEffectAbilityManager().removePassiveEffect(player);
-            plugin.getEffectAbilityManager().applyPassiveEffect(player); // Reapply at correct level
+            plugin.getEffectAbilityManager().applyPassiveEffect(player);
             plugin.getMessageUtils().sendMessage(player, "heart-downgrade-warning");
         }
 
@@ -197,7 +189,6 @@ public class EffectCommand implements CommandExecutor {
         data.addTrustedPlayer(target.getUniqueId());
         plugin.getPlayerDataManager().savePlayerData(player.getUniqueId());
 
-        // Check if mutual
         PlayerData targetData = plugin.getPlayerDataManager().getPlayerData(target.getUniqueId());
         if (targetData.hasTrusted(player.getUniqueId())) {
             plugin.getMessageUtils().sendMessage(player, "trust-mutual-active-sender",
@@ -223,11 +214,9 @@ public class EffectCommand implements CommandExecutor {
         Player target = Bukkit.getPlayer(args[1]);
         UUID targetUuid = target != null ? target.getUniqueId() : null;
 
-        // Try to find by name in trusted list
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
 
         if (targetUuid == null) {
-            // Try to find offline player
             for (UUID uuid : data.getTrustedPlayers()) {
                 PlayerData trustedData = plugin.getPlayerDataManager().getPlayerData(uuid);
                 if (trustedData.getPlayerName() != null &&
@@ -264,7 +253,6 @@ public class EffectCommand implements CommandExecutor {
         return true;
     }
 
-    // Admin commands
     private boolean adminSetEffect(Player player, String[] args) {
         boolean isAdmin = player.hasPermission("effectsmp.admin");
         boolean isTester = player.hasPermission("effectsmp.teszter");
@@ -286,12 +274,10 @@ public class EffectCommand implements CommandExecutor {
             return true;
         }
 
-        // Determine target
         Player target;
         if (args.length >= 3) {
-            // Tester can only use on self
             if (isTester && !isAdmin) {
-                target = player; // Force self
+                target = player;
                 plugin.getMessageUtils().sendMessage(player, "admin-tester-self-only");
             } else {
                 target = Bukkit.getPlayer(args[2]);
@@ -301,19 +287,16 @@ public class EffectCommand implements CommandExecutor {
                 }
             }
         } else {
-            target = player; // Default to self
+            target = player;
         }
 
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(target.getUniqueId());
 
-        // Remove old passive
         plugin.getEffectAbilityManager().removePassiveEffect(target);
 
-        // Set new effect
         data.setEffect(effect);
         data.setPassiveEnabled(true);
 
-        // Apply new passive
         plugin.getEffectAbilityManager().applyPassiveEffect(target);
 
         plugin.getPlayerDataManager().savePlayerData(target.getUniqueId());
@@ -399,7 +382,6 @@ public class EffectCommand implements CommandExecutor {
 
         plugin.setGameStarted(true);
 
-        // Give effect to all online players
         for (Player online : Bukkit.getOnlinePlayers()) {
             PlayerData data = plugin.getPlayerDataManager().getPlayerData(online.getUniqueId());
             if (data.getEffect() == null) {
@@ -423,7 +405,6 @@ public class EffectCommand implements CommandExecutor {
             return true;
         }
 
-        // Usage: /e removecooldown [item|effect|all] [player]
         String type = "all";
         Player target = player;
 
@@ -433,7 +414,6 @@ public class EffectCommand implements CommandExecutor {
 
         if (args.length >= 3) {
             if (isTester && !isAdmin) {
-                // Tester can only remove own cooldown
                 plugin.getMessageUtils().sendMessage(player, "admin-tester-self-only");
             } else {
                 target = Bukkit.getPlayer(args[2]);
@@ -502,7 +482,6 @@ public class EffectCommand implements CommandExecutor {
             plugin.getConfigManager().resetAllGlobalCraftedItems();
             plugin.getMessageUtils().sendMessage(player, "admin-craftreset-all");
         } else {
-            // Check if it's a valid limited item
             if (!target.equals("effect_sword") && !target.equals("effect_mace") &&
                     !target.equals("effect_bow") && !target.equals("effect_scythe")) {
                 plugin.getMessageUtils().sendMessage(player, "invalid-limited-item");

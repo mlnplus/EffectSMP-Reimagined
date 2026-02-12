@@ -25,15 +25,15 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        plugin.getItemAbilityManager().removeFreezeAttribute(player); // Safety cleanup
+
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
         data.setPlayerName(player.getName());
 
-        // If game has started and player has no effect yet, assign one
         if (plugin.isGameStarted() && data.getEffect() == null) {
             plugin.getEffectAbilityManager().assignRandomEffect(player, false);
         }
 
-        // Re-apply passive effect if enabled
         if (data.getEffect() != null && data.isPassiveEnabled() && data.getEffectHearts() >= 1) {
             plugin.getEffectAbilityManager().applyPassiveEffect(player);
         }
@@ -44,6 +44,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
         plugin.getPlayerDataManager().savePlayerData(player.getUniqueId());
         plugin.getEffectAbilityManager().removeRolling(player.getUniqueId());
+        plugin.getItemAbilityManager().removeFreezeAttribute(player); // Remove freeze attribute
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -54,20 +55,16 @@ public class PlayerListener implements Listener {
 
         data.addDeath();
 
-        // Only drop items if killed by another player (PvP death)
         if (killer != null && !killer.equals(player)) {
-            // Track killer's kills
             PlayerData killerData = plugin.getPlayerDataManager().getPlayerData(killer.getUniqueId());
             killerData.addKill();
             plugin.getPlayerDataManager().savePlayerData(killer.getUniqueId());
 
-            // First death drops shard
             if (!data.isFirstDeathOccurred()) {
                 data.setFirstDeathOccurred(true);
                 if (data.hasEffectShard()) {
                     data.setHasEffectShard(false);
 
-                    // Drop the shard
                     ItemStack shard = plugin.getCustomItems().createEffectShard();
                     player.getWorld().dropItemNaturally(player.getLocation(), shard);
 
@@ -76,12 +73,10 @@ public class PlayerListener implements Listener {
                 }
             }
 
-            // All PvP deaths drop heart IF player has one
             if (data.getEffectHearts() > 0) {
                 int oldHearts = data.getEffectHearts();
                 data.removeEffectHearts(1);
 
-                // Drop the heart
                 ItemStack heart = plugin.getCustomItems().createEffectHeart();
                 player.getWorld().dropItemNaturally(player.getLocation(), heart);
 
@@ -89,16 +84,13 @@ public class PlayerListener implements Listener {
                         "%hearts%", String.valueOf(data.getEffectHearts()));
                 plugin.getMessageUtils().sendMessage(killer, "heart-gained");
 
-                // If no hearts left, disable passive
                 if (data.getEffectHearts() == 0) {
                     data.setPassiveEnabled(false);
                     plugin.getEffectAbilityManager().removePassiveEffect(player);
                     plugin.getMessageUtils().sendMessage(player, "heart-depleted");
                 } else if (oldHearts >= 3 && data.getEffectHearts() < 3) {
-                    // Lost active ability access (3+ -> 2)
                     plugin.getMessageUtils().sendMessage(player, "heart-ability-lost");
                 } else if (oldHearts >= 2 && data.getEffectHearts() < 2) {
-                    // Downgrade from level 2 to level 1
                     plugin.getEffectAbilityManager().removePassiveEffect(player);
                     plugin.getEffectAbilityManager().applyPassiveEffect(player);
                     plugin.getMessageUtils().sendMessage(player, "heart-level-down");
@@ -112,13 +104,12 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent event) {
         if (!event.isSneaking())
-            return; // Only trigger on sneak start
+            return;
 
         Player player = event.getPlayer();
         plugin.getDashManager().onSneak(player);
     }
 
-    // Prevent fall damage when landing from mace jump
     @EventHandler(priority = EventPriority.HIGH)
     public void onFallDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player))
@@ -126,7 +117,6 @@ public class PlayerListener implements Listener {
         if (event.getCause() != EntityDamageEvent.DamageCause.FALL)
             return;
 
-        // Check if player is mace flying (used mace ability)
         if (plugin.getItemAbilityManager().isMaceFlying(player.getUniqueId())) {
             event.setCancelled(true);
         }

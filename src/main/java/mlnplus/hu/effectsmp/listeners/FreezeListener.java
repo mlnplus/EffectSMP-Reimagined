@@ -29,15 +29,11 @@ public class FreezeListener implements Listener {
             if (to == null)
                 return;
 
-            // Check if X, Y, or Z changed (ignore rotation)
             if (from.getX() != to.getX() || from.getY() != to.getY() || from.getZ() != to.getZ()) {
                 Location frozenLoc = plugin.getItemAbilityManager().getFreezeLocation(player.getUniqueId());
                 if (frozenLoc != null) {
-                    // Cancel the movement and teleport on next tick
-                    // This allows combat to work properly
                     event.setCancelled(true);
 
-                    // Teleport on next tick to avoid combat issues
                     Bukkit.getScheduler().runTask(plugin, () -> {
                         if (player.isOnline() && plugin.getItemAbilityManager().isFrozen(player.getUniqueId())) {
                             Location targetLoc = frozenLoc.clone();

@@ -18,11 +18,10 @@ effect-assigned-info: "&7Használd az &e/e &7parancsot!"
 #                          ABILITY MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-ability-cooldown: "&c✖ &fCooldown: &e%time%" # unified Key? No, code uses formatted message.
+ability-cooldown: "&c✖ &fCooldown: &e%time%"
 ability-already-active: "&cA képességed már aktív!"
 ability-ready: "&a⚡ Az ability újra elérhető!"
 
-# Specific Abilities
 ability-invisibility-activated: "&d▸ Invisibility Ability &aaktivált! &7Teljes láthatatlanság 15 mp-re!"
 ability-invisibility-expired: "&d▸ Invisibility lejárt! &7Újra látható vagy."
 
@@ -76,11 +75,10 @@ heart-used: "&a❤ Felhasználtál egy Effect Szívet! &7Szívek: %hearts%"
 heart-lost: "&c❤ Elvesztettél egy Effect Szívet! &7Maradék: %hearts%"
 heart-gained: "&a❤ Effect Szívet szereztél!"
 heart-depleted: "&4&l⚠ Nincs több Effect Szíved! A /e parancs nem elérhető amíg nem szerzel egyet!"
-# Upgrade/Downgrade
+
 heart-level-up: "&a⬆ Effect szint: &l2"
 heart-level-down: "&c⬇ Effect szint: &l1"
 
-# Withdraw
 heart-withdrawn: "&a✦ &f%amount% Effect Szív withdraw-olva!"
 heart-dropped: "&a✦ &f%amount% Effect Szív kidobva! &7(Inventory tele)"
 heart-not-enough: "&cNincs elég Effect Szíved! &7(Van: %hearts%)"
@@ -102,14 +100,13 @@ shard-gained: "&a✧ Effect Szilánkot szereztél!"
 
 trust-added: "&a✔ &f%player% &atrustolva!"
 trust-added-mutual: "&a✔ &f%player% &7→ &aKölcsönös trust!"
-# More specific trust messages from command
+
 trust-mutual-active-sender: "&a✦ &f%player% &atrustolva! &7(Kölcsönös trust aktív!)"
 trust-mutual-active-target: "&a✦ &f%player% &atrustolt téged! &7(Kölcsönös trust aktív!)"
 trust-pending-sender: "&a✦ &f%player% &atrustolva! &7(Várj amíg ő is trustol téged!)"
 trust-pending-target: "&e✦ &f%player% &etrustolt téged! &7(/e trust %player%)"
 trust-removed: "&c✦ &f%player% &ctrust eltávolítva!"
 
-# Errors
 trust-not-found: "&cNincs ilyen játékos online!"
 trust-already-trusted: "&cEzt a játékost már trustoltad!"
 trust-limit-reached: "&cElérted a maximális trust keretet (5 játékos)!"

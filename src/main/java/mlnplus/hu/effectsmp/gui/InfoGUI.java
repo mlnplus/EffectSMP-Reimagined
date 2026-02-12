@@ -24,7 +24,6 @@ public class InfoGUI {
 
         private final Effectsmp plugin;
 
-        // Helper method to remove italics
         private Component getNoItalic(String key) {
                 return plugin.getMessageUtils().getMessageComponent(key).decoration(TextDecoration.ITALIC, false);
         }
@@ -43,24 +42,18 @@ public class InfoGUI {
 
                 PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
 
-                // Fill with glass panes
                 ItemStack filler = createFiller();
                 for (int i = 0; i < 45; i++) {
                         inv.setItem(i, filler);
                 }
 
-                // Stats section
                 inv.setItem(10, createEffectItem(data));
                 inv.setItem(12, createShardItem(data));
                 inv.setItem(14, createHeartsItem(data));
                 inv.setItem(16, createKillsItem(data));
 
-                // Trusted players section header
                 inv.setItem(31, createTrustedHeaderItem(data));
 
-                // Trusted players list is now in the header item lore
-
-                // Back button
                 inv.setItem(40, createBackItem());
 
                 return inv;
@@ -219,7 +212,7 @@ public class InfoGUI {
         public void handleClick(InventoryClickEvent event, Player player) {
                 int slot = event.getRawSlot();
 
-                if (slot == 40) { // Back button
+                if (slot == 40) {
                         player.closeInventory();
                         plugin.getGuiManager().openMainGUI(player);
                 }

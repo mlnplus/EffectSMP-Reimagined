@@ -32,7 +32,6 @@ public class MessageUtils {
     }
 
     public Component parse(String message) {
-        // Support both legacy (&) and MiniMessage formats
         if (message.contains("<") && message.contains(">")) {
             return miniMessage.deserialize(message);
         }
@@ -144,7 +143,6 @@ public class MessageUtils {
         return seconds + "s";
     }
 
-    // Color utility methods
     public static String colorize(String message) {
         return message.replace("&", "§");
     }

@@ -28,8 +28,8 @@ public class PlayerData {
         this.uuid = uuid;
         this.effect = null;
         this.passiveEnabled = true;
-        this.effectHearts = 1; // Start with 1 heart
-        this.hasEffectShard = true; // Start with shard
+        this.effectHearts = 1;
+        this.hasEffectShard = true;
         this.kills = 0;
         this.deaths = 0;
         this.firstDeathOccurred = false;
@@ -39,7 +39,6 @@ public class PlayerData {
         this.haste3x3ActiveUntil = 0;
     }
 
-    // Getters and Setters
     public UUID getUuid() {
         return uuid;
     }
@@ -184,14 +183,11 @@ public class PlayerData {
         return effectHearts >= 2 && !isAbilityOnCooldown() && !isAbilityActive();
     }
 
-    // Heart-based scaling methods
     public int getPassiveAmplifier() {
-        // 2+ hearts = level 2 effect (amplifier 1)
         return effectHearts >= 2 ? 1 : 0;
     }
 
     public double getCooldownMultiplier() {
-        // 3+ hearts = 25% shorter cooldown
         return effectHearts >= 3 ? 0.75 : 1.0;
     }
 
@@ -209,7 +205,6 @@ public class PlayerData {
         this.lastAbilityCooldown = 0;
     }
 
-    // Haste 3x3 mining ability
     public long getHaste3x3ActiveUntil() {
         return haste3x3ActiveUntil;
     }

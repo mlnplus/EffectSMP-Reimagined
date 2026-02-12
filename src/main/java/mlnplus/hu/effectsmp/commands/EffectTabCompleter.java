@@ -50,16 +50,12 @@ public class EffectTabCompleter implements TabCompleter {
                     .filter(cmd -> cmd.startsWith(input))
                     .collect(Collectors.toList());
 
-            // Filter commands based on permissions
             if (!isAdmin && !isTester) {
-                // Regular players: remove all admin/tester commands
                 completions.removeAll(
                         Arrays.asList("set", "give", "reload", "start", "removecooldown", "rc", "craftreset"));
             } else if (isTester && !isAdmin) {
-                // Testers: only remove reload (admin-only)
                 completions.remove("reload");
             }
-            // Admins see everything
         } else if (args.length == 2) {
             String subCommand = args[0].toLowerCase();
             String input = args[1].toLowerCase();
@@ -108,7 +104,6 @@ public class EffectTabCompleter implements TabCompleter {
             String subCommand = args[0].toLowerCase();
             String input = args[2].toLowerCase();
 
-            // Only admins can target other players
             if (isAdmin) {
                 if (subCommand.equals("set") || subCommand.equals("give") ||
                         subCommand.equals("removecooldown") || subCommand.equals("rc")) {

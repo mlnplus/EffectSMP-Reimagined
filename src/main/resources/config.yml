@@ -17,7 +17,6 @@ database:
     username: root
     password: ""
 
-# General settings
 settings:
   # Show action bar messages
   action-bar-enabled: true

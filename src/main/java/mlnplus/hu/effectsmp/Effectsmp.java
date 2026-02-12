@@ -37,7 +37,6 @@ public final class Effectsmp extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        // Initialize managers
         this.configManager = new ConfigManager(this);
         this.messageUtils = new MessageUtils(this);
         this.playerDataManager = new PlayerDataManager(this);
@@ -49,7 +48,6 @@ public final class Effectsmp extends JavaPlugin {
         this.actionBarManager = new ActionBarManager(this);
         this.dashManager = new DashManager(this);
 
-        // Register listeners
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         getServer().getPluginManager().registerEvents(new ItemListener(this), this);
         getServer().getPluginManager().registerEvents(new GUIListener(this), this);
@@ -58,7 +56,6 @@ public final class Effectsmp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MiningListener(this), this);
         getServer().getPluginManager().registerEvents(new FreezeListener(this), this);
 
-        // Register commands
         PluginCommand effectCommand = getCommand("e");
         if (effectCommand != null) {
             EffectCommand executor = new EffectCommand(this);
@@ -66,13 +63,10 @@ public final class Effectsmp extends JavaPlugin {
             effectCommand.setTabCompleter(new EffectTabCompleter(this));
         }
 
-        // Register custom recipes
         customItems.registerRecipes();
 
-        // Start action bar task
         actionBarManager.startTask();
 
-        // Load game started state from config
         this.gameStarted = configManager.isGameStarted();
 
         getLogger().info("§aEffectSMP Plugin enabled!");
@@ -83,12 +77,10 @@ public final class Effectsmp extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Save all player data
         if (playerDataManager != null) {
             playerDataManager.saveAll();
         }
 
-        // Stop action bar task
         if (actionBarManager != null) {
             actionBarManager.stopTask();
         }

@@ -3,7 +3,6 @@ package mlnplus.hu.effectsmp.effects;
 import org.bukkit.potion.PotionEffectType;
 
 public enum EffectType {
-    // Normal Effects
     INVISIBILITY("Invisibility", "§7✧ §fInvisibility", PotionEffectType.INVISIBILITY, false, 600, 1),
     HERO_OF_VILLAGE("Hero of the Village", "§6✦ §fHero of the Village", PotionEffectType.HERO_OF_THE_VILLAGE, false,
             600, 1),
@@ -13,7 +12,6 @@ public enum EffectType {
     DOLPHIN_GRACE("Dolphin Grace", "§3🌊 §fDolphin Grace", PotionEffectType.DOLPHINS_GRACE, false, 300, 1),
     HEALTH_BOOST("Health Boost", "§c❤ §fHealth Boost", PotionEffectType.HEALTH_BOOST, false, 1200, 1),
 
-    // OP Effects (gold/orange theme)
     RESISTANCE("Resistance", "§9⛊ §9Resistance", PotionEffectType.RESISTANCE, true, 900, 1),
     STRENGTH("Strength", "§4⚔ §4Strength", PotionEffectType.STRENGTH, true, 900, 1),
     REGENERATION("Regeneration", "§c❤ §cRegeneration", PotionEffectType.REGENERATION, true, 900, 1);

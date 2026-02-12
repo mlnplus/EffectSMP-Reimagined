@@ -29,7 +29,6 @@ public class CraftingListener implements Listener {
         String itemId = plugin.getCustomItems().getItemType(result);
         if (isLimitedItem(itemId)) {
             if (plugin.getConfigManager().isGlobalItemCrafted(itemId)) {
-                // Already crafted by someone, block it
                 event.getInventory().setResult(null);
             }
         }
@@ -47,16 +46,13 @@ public class CraftingListener implements Listener {
         String itemId = plugin.getCustomItems().getItemType(result);
         if (isLimitedItem(itemId)) {
             if (plugin.getConfigManager().isGlobalItemCrafted(itemId)) {
-                // Just in case check
                 event.setCancelled(true);
                 if (event.getWhoClicked() instanceof org.bukkit.entity.Player player) {
                     plugin.getMessageUtils().sendMessage(player, "craft-limit-reached");
                 }
             } else {
-                // Register craft
                 plugin.getConfigManager().setGlobalItemCrafted(itemId, true);
 
-                // Broadcast msg
                 if (event.getWhoClicked() instanceof org.bukkit.entity.Player player) {
                     String itemName = getDisplayName(itemId);
                     plugin.getMessageUtils().broadcast("craft-legendary-broadcast",

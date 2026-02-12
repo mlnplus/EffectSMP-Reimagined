@@ -28,21 +28,17 @@ public class ConfigManager {
     }
 
     private void loadConfigs() {
-        // config.yml
         configFile = new File(plugin.getDataFolder(), "config.yml");
         if (!configFile.exists()) {
             plugin.saveResource("config.yml", false);
         }
         config = YamlConfiguration.loadConfiguration(configFile);
 
-        // messages.yml (based on language)
         String lang = config.getString("language", "en");
         String messageFileName = "messages_" + lang + ".yml";
 
         messagesFile = new File(plugin.getDataFolder(), messageFileName);
         if (!messagesFile.exists()) {
-            // Try to save the resource. If the language doesn't exist in JAR, fallback to
-            // hu
             try {
                 plugin.saveResource(messageFileName, false);
             } catch (IllegalArgumentException e) {
@@ -57,14 +53,12 @@ public class ConfigManager {
         }
         messages = YamlConfiguration.loadConfiguration(messagesFile);
 
-        // recipes.yml
         recipesFile = new File(plugin.getDataFolder(), "recipes.yml");
         if (!recipesFile.exists()) {
             plugin.saveResource("recipes.yml", false);
         }
         recipes = YamlConfiguration.loadConfiguration(recipesFile);
 
-        // data.yml (for game state)
         dataFile = new File(plugin.getDataFolder(), "data.yml");
         if (!dataFile.exists()) {
             try {
@@ -79,16 +73,13 @@ public class ConfigManager {
     public void reload() {
         config = YamlConfiguration.loadConfiguration(configFile);
 
-        // Reload messages based on potentially new config
         String lang = config.getString("language", "hu");
         String messageFileName = "messages_" + lang + ".yml";
         messagesFile = new File(plugin.getDataFolder(), messageFileName);
-        // If it doesn't exist after a config switch, try to create it
         if (!messagesFile.exists()) {
             try {
                 plugin.saveResource(messageFileName, false);
             } catch (IllegalArgumentException e) {
-                // Fallback handled in loadConfigs usually, but here we just warn
                 plugin.getLogger().warning("Language file " + messageFileName + " not found in JAR.");
             }
         }
@@ -133,7 +124,6 @@ public class ConfigManager {
         saveData();
     }
 
-    // Global limited crafting
     public boolean isGlobalItemCrafted(String itemId) {
         return data.getStringList("global-crafted-items").contains(itemId);
     }
@@ -156,7 +146,6 @@ public class ConfigManager {
         saveData();
     }
 
-    // Database settings
     public String getDatabaseType() {
         return config.getString("database.type", "yaml");
     }

@@ -23,7 +23,6 @@ public class CustomItems {
 
         private final Effectsmp plugin;
 
-        // Custom Model Data IDs
         public static final int CMD_EFFECT_HEART = 1001;
         public static final int CMD_EFFECT_SHARD = 1002;
         public static final int CMD_REROLL = 1003;
@@ -33,7 +32,6 @@ public class CustomItems {
         public static final int CMD_EFFECT_BOW = 1007;
         public static final int CMD_EFFECT_SCYTHE = 1008;
 
-        // Item Keys
         public final NamespacedKey ITEM_KEY;
         public final NamespacedKey COOLDOWN_KEY;
 
@@ -47,7 +45,6 @@ public class CustomItems {
                 return plugin.getMessageUtils().getMessageComponent(key).decoration(TextDecoration.ITALIC, false);
         }
 
-        // Effect Heart
         public ItemStack createEffectHeart() {
                 ItemStack item = new ItemStack(Material.NETHER_STAR);
                 ItemMeta meta = item.getItemMeta();
@@ -70,7 +67,6 @@ public class CustomItems {
                 return item;
         }
 
-        // Effect Shard
         public ItemStack createEffectShard() {
                 ItemStack item = new ItemStack(Material.PRISMARINE_SHARD);
                 ItemMeta meta = item.getItemMeta();
@@ -93,7 +89,6 @@ public class CustomItems {
                 return item;
         }
 
-        // Reroll Item
         public ItemStack createReroll() {
                 ItemStack item = new ItemStack(Material.ENDER_EYE);
                 ItemMeta meta = item.getItemMeta();
@@ -116,7 +111,6 @@ public class CustomItems {
                 return item;
         }
 
-        // OP Reroll Item
         public ItemStack createOPReroll() {
                 ItemStack item = new ItemStack(Material.NETHER_STAR);
                 ItemMeta meta = item.getItemMeta();
@@ -139,7 +133,6 @@ public class CustomItems {
                 return item;
         }
 
-        // Effect Mace
         public ItemStack createEffectMace() {
                 ItemStack item = new ItemStack(Material.MACE);
                 ItemMeta meta = item.getItemMeta();
@@ -157,7 +150,6 @@ public class CustomItems {
                 lore.add(getNoItalic("item-mace-lore-usage"));
                 meta.lore(lore);
 
-                // Unbreakable + enchants
                 meta.setUnbreakable(true);
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                 meta.addEnchant(Enchantment.SHARPNESS, 5, true);
@@ -173,7 +165,6 @@ public class CustomItems {
                 return item;
         }
 
-        // Effect Sword
         public ItemStack createEffectSword() {
                 ItemStack item = new ItemStack(Material.NETHERITE_SWORD);
                 ItemMeta meta = item.getItemMeta();
@@ -191,7 +182,6 @@ public class CustomItems {
                 lore.add(getNoItalic("item-sword-lore-usage"));
                 meta.lore(lore);
 
-                // Unbreakable + enchants
                 meta.setUnbreakable(true);
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                 meta.addEnchant(Enchantment.SHARPNESS, 5, true);
@@ -207,7 +197,6 @@ public class CustomItems {
                 return item;
         }
 
-        // Effect Bow
         public ItemStack createEffectBow() {
                 ItemStack item = new ItemStack(Material.BOW);
                 ItemMeta meta = item.getItemMeta();
@@ -225,7 +214,6 @@ public class CustomItems {
                 lore.add(getNoItalic("item-bow-lore-usage"));
                 meta.lore(lore);
 
-                // Unbreakable + enchants
                 meta.setUnbreakable(true);
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                 meta.addEnchant(Enchantment.POWER, 5, true);
@@ -241,7 +229,6 @@ public class CustomItems {
                 return item;
         }
 
-        // Effect Scythe
         public ItemStack createEffectScythe() {
                 ItemStack item = new ItemStack(Material.NETHERITE_HOE);
                 ItemMeta meta = item.getItemMeta();
@@ -259,7 +246,6 @@ public class CustomItems {
                 lore.add(getNoItalic("item-scythe-lore-usage"));
                 meta.lore(lore);
 
-                // Unbreakable + enchants
                 meta.setUnbreakable(true);
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                 meta.addEnchant(Enchantment.SHARPNESS, 10, true);
@@ -301,7 +287,6 @@ public class CustomItems {
         public void registerRecipes() {
                 FileConfiguration recipes = plugin.getConfigManager().getRecipes();
 
-                // Register each recipe from config
                 registerRecipe("reroll", createReroll(), recipes);
                 registerRecipe("op_reroll", createOPReroll(), recipes);
                 registerRecipe("effect_mace", createEffectMace(), recipes);
@@ -317,14 +302,12 @@ public class CustomItems {
                         return;
 
                 if (!section.getBoolean("enabled", true)) {
-                        // If disabled, ensure we remove the recipe if it was previously registered
                         plugin.getServer().removeRecipe(new NamespacedKey(plugin, name));
                         return;
                 }
 
                 NamespacedKey key = new NamespacedKey(plugin, name);
 
-                // Remove existing recipe if present
                 plugin.getServer().removeRecipe(key);
 
                 ShapedRecipe recipe = new ShapedRecipe(key, result);
@@ -339,15 +322,12 @@ public class CustomItems {
                         for (String keyChar : ingredients.getKeys(false)) {
                                 String materialName = ingredients.getString(keyChar);
                                 if (materialName != null) {
-                                        // Check if it's a custom item reference
                                         ItemStack customItem = getItemByName(materialName.toLowerCase());
                                         if (customItem != null) {
-                                                // Use ExactChoice for custom items (matches NBT data)
                                                 recipe.setIngredient(keyChar.charAt(0),
                                                                 new org.bukkit.inventory.RecipeChoice.ExactChoice(
                                                                                 customItem));
                                         } else {
-                                                // Regular material
                                                 Material material = Material.matchMaterial(materialName);
                                                 if (material != null) {
                                                         recipe.setIngredient(keyChar.charAt(0), material);

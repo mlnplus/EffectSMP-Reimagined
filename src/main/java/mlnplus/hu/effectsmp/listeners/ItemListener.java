@@ -40,9 +40,8 @@ public class ItemListener implements Listener {
         if (itemType == null)
             return;
 
-        // Don't cancel bow - it needs to shoot arrows normally
         if ("effect_bow".equals(itemType)) {
-            return; // Let bow work normally, debuffs applied on projectile hit
+            return;
         }
 
         event.setCancelled(true);
@@ -53,7 +52,6 @@ public class ItemListener implements Listener {
             case "op_reroll" -> useOPReroll(player, item);
             case "effect_mace" -> plugin.getItemAbilityManager().activateMace(player);
             case "effect_sword" -> {
-                // Effect Sword requires shift+right click
                 if (player.isSneaking()) {
                     plugin.getItemAbilityManager().activateSword(player);
                 } else {
@@ -80,10 +78,8 @@ public class ItemListener implements Listener {
 
         int oldHearts = data.getEffectHearts();
 
-        // Add heart to player
         data.addEffectHearts(1);
 
-        // Remove one from inventory
         if (item.getAmount() > 1) {
             item.setAmount(item.getAmount() - 1);
         } else {
@@ -93,15 +89,10 @@ public class ItemListener implements Listener {
         plugin.getMessageUtils().sendMessage(player, "heart-used",
                 "%hearts%", String.valueOf(data.getEffectHearts()));
 
-        // Re-apply passive effect to update level (1 heart = level 1, 2+ hearts = level
-        // 2)
         if (data.isPassiveEnabled() && data.getEffect() != null) {
-            // Remove old effect first
             plugin.getEffectAbilityManager().removePassiveEffect(player);
-            // Apply with new level
             plugin.getEffectAbilityManager().applyPassiveEffect(player);
 
-            // Notify if level changed
             if (oldHearts < 2 && data.getEffectHearts() >= 2) {
                 plugin.getMessageUtils().sendMessage(player, "heart-level-up");
             }
@@ -111,7 +102,6 @@ public class ItemListener implements Listener {
     }
 
     private void useReroll(Player player, ItemStack item) {
-        // Prevent multiple rerolls
         if (plugin.getEffectAbilityManager().isRolling(player)) {
             plugin.getMessageUtils().sendMessage(player, "reroll-in-progress");
             return;
@@ -129,38 +119,31 @@ public class ItemListener implements Listener {
             return;
         }
 
-        // Remove the reroll item
         if (item.getAmount() > 1) {
             item.setAmount(item.getAmount() - 1);
         } else {
             player.getInventory().setItemInMainHand(null);
         }
 
-        // Remove old passive effect
         plugin.getEffectAbilityManager().removePassiveEffect(player);
 
-        // Assign new random effect (not OP)
         plugin.getEffectAbilityManager().assignRandomEffect(player, false);
     }
 
     private void useOPReroll(Player player, ItemStack item) {
-        // Prevent multiple rerolls
         if (plugin.getEffectAbilityManager().isRolling(player)) {
             plugin.getMessageUtils().sendMessage(player, "reroll-in-progress");
             return;
         }
 
-        // Remove the OP reroll item
         if (item.getAmount() > 1) {
             item.setAmount(item.getAmount() - 1);
         } else {
             player.getInventory().setItemInMainHand(null);
         }
 
-        // Remove old passive effect
         plugin.getEffectAbilityManager().removePassiveEffect(player);
 
-        // Assign OP effect
         plugin.getEffectAbilityManager().assignRandomEffect(player, true);
     }
 
@@ -171,12 +154,10 @@ public class ItemListener implements Listener {
         if (!(arrow.getShooter() instanceof Player player))
             return;
 
-        // Check if shot from Effect Bow
         ItemStack mainHand = player.getInventory().getItemInMainHand();
         String itemType = plugin.getCustomItems().getItemType(mainHand);
 
         if ("effect_bow".equals(itemType)) {
-            // 10% chance to fire cursed arrow
             if (Math.random() < 0.10) {
                 Location loc = event.getEntity().getLocation();
                 plugin.getItemAbilityManager().triggerBowDebuffs(player, loc);
@@ -192,10 +173,8 @@ public class ItemListener implements Listener {
         ItemStack mainHand = attacker.getInventory().getItemInMainHand();
         String itemType = plugin.getCustomItems().getItemType(mainHand);
 
-        // Effect Sword - 1.5x damage when ability is active
         if ("effect_sword".equals(itemType)) {
             if (plugin.getItemAbilityManager().isSwordAbilityActive(attacker)) {
-                // Apply 1.5x damage multiplier
                 event.setDamage(event.getDamage() * 1.5);
             }
         }
@@ -203,7 +182,6 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        // Check for mace landing
         plugin.getItemAbilityManager().checkMaceLanding(event.getPlayer());
     }
 }

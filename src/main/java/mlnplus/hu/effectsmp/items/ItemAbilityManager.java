@@ -29,16 +29,15 @@ public class ItemAbilityManager {
     private final Map<UUID, Long> bowCooldowns = new HashMap<>();
     private final Map<UUID, Long> scytheCooldowns = new HashMap<>();
 
-    // Freeze management
     private final Map<UUID, FreezeInfo> frozenPlayers = new HashMap<>();
 
     private final Map<UUID, Long> swordActiveUntil = new HashMap<>();
     private final Set<UUID> maceFlying = new HashSet<>();
 
-    private static final long MACE_COOLDOWN = 60 * 1000; // 1 minute
-    private static final long SWORD_COOLDOWN = 150 * 1000; // 2.5 minutes
-    private static final long SCYTHE_COOLDOWN = 150 * 1000; // 2.5 minutes
-    private static final long BOW_COOLDOWN = 90 * 1000; // 1.5 minutes
+    private static final long MACE_COOLDOWN = 60 * 1000;
+    private static final long SWORD_COOLDOWN = 150 * 1000;
+    private static final long SCYTHE_COOLDOWN = 150 * 1000;
+    private static final long BOW_COOLDOWN = 90 * 1000;
 
     public ItemAbilityManager(Effectsmp plugin) {
         this.plugin = plugin;
@@ -47,7 +46,6 @@ public class ItemAbilityManager {
     public boolean activateMace(Player player) {
         UUID uuid = player.getUniqueId();
 
-        // Check heart requirement
         mlnplus.hu.effectsmp.data.PlayerData data = plugin.getPlayerDataManager().getPlayerData(uuid);
         if (data.getEffectHearts() < 3) {
             plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
@@ -61,12 +59,10 @@ public class ItemAbilityManager {
             return false;
         }
 
-        // Launch player upward (nerfed from 2.5)
         Vector velocity = player.getVelocity();
-        velocity.setY(1.8); // Moderate upward boost
+        velocity.setY(1.8);
         player.setVelocity(velocity);
 
-        // Track player for landing shockwave
         maceFlying.add(uuid);
 
         maceCooldowns.put(uuid, System.currentTimeMillis());
@@ -81,25 +77,19 @@ public class ItemAbilityManager {
         if (!maceFlying.contains(uuid))
             return;
 
-        // Check if player is on ground
         if (player.isOnGround()) {
             maceFlying.remove(uuid);
 
-            // Create shockwave
             Location loc = player.getLocation();
 
-            // Visual effect
             loc.getWorld().spawnParticle(Particle.EXPLOSION, loc, 1);
             loc.getWorld().spawnParticle(Particle.CLOUD, loc, 30, 2, 0.5, 2, 0.1);
 
-            // Sound
             loc.getWorld().playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 0.8f);
 
-            // Knockback nearby enemies
             for (Entity entity : player.getNearbyEntities(6, 3, 6)) {
                 if (entity instanceof Player target && !target.equals(player)) {
                     if (!plugin.getPlayerDataManager().isMutualTrust(uuid, target.getUniqueId())) {
-                        // Calculate knockback direction (nerfed from 1.5)
                         Vector knockback = target.getLocation().toVector()
                                 .subtract(loc.toVector())
                                 .normalize()
@@ -118,7 +108,6 @@ public class ItemAbilityManager {
     public boolean activateSword(Player player) {
         UUID uuid = player.getUniqueId();
 
-        // Check heart requirement
         mlnplus.hu.effectsmp.data.PlayerData data = plugin.getPlayerDataManager().getPlayerData(uuid);
         if (data.getEffectHearts() < 3) {
             plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
@@ -132,15 +121,13 @@ public class ItemAbilityManager {
             return false;
         }
 
-        // Give haste for attack speed
         player.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 200, 1, false, true, true));
 
-        swordActiveUntil.put(uuid, System.currentTimeMillis() + 10000); // 10 seconds
+        swordActiveUntil.put(uuid, System.currentTimeMillis() + 10000);
         swordCooldowns.put(uuid, System.currentTimeMillis());
 
         plugin.getMessageUtils().sendMessage(player, "sword-activated");
 
-        // Schedule end notification
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             if (player.isOnline()) {
                 plugin.getMessageUtils().sendMessage(player, "sword-expired");
@@ -172,7 +159,6 @@ public class ItemAbilityManager {
     public boolean activateScythe(Player player) {
         UUID uuid = player.getUniqueId();
 
-        // Check heart requirement
         mlnplus.hu.effectsmp.data.PlayerData data = plugin.getPlayerDataManager().getPlayerData(uuid);
         if (data.getEffectHearts() < 3) {
             plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
@@ -188,44 +174,33 @@ public class ItemAbilityManager {
 
         int affected = 0;
 
-        // Full freeze all non-trusted players in radius
         for (Entity entity : player.getNearbyEntities(15, 15, 15)) {
             if (entity instanceof Player target && !target.equals(player)) {
-                // Check if mutually trusted
                 if (!plugin.getPlayerDataManager().isMutualTrust(uuid, target.getUniqueId())) {
 
-                    // TRUE FREEZE IMPLEMENTATION - Only freeze, no extra effects
-
-                    // 1. Stop all movement immediately
                     target.setVelocity(new Vector(0, 0, 0));
 
-                    // 2. Track freeze state
                     UUID targetUuid = target.getUniqueId();
                     frozenPlayers.put(targetUuid,
                             new FreezeInfo(target.getLocation()));
 
-                    // 3. Apply Knockback Resistance to prevent flying on hit (1.21 compatible)
                     try {
-                        // Use string lookup for compatibility
                         AttributeInstance kbResist = target
                                 .getAttribute(Attribute.valueOf("GENERIC_KNOCKBACK_RESISTANCE"));
                         if (kbResist != null) {
                             org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin,
                                     "freeze_kb_" + targetUuid);
-                            // Remove existing if present (refresh)
                             try {
                                 kbResist.removeModifier(key);
                             } catch (Exception ignored) {
                             }
 
-                            // Add 1.0 resistance (100%)
                             AttributeModifier modifier = new AttributeModifier(key, 1.0,
                                     AttributeModifier.Operation.ADD_NUMBER);
                             kbResist.addModifier(modifier);
                         }
                     } catch (Exception ignored) {
                         try {
-                            // Fallback for older/different names
                             AttributeInstance kbResist = target.getAttribute(Attribute.valueOf("KNOCKBACK_RESISTANCE"));
                             if (kbResist != null) {
                                 org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin,
@@ -238,38 +213,14 @@ public class ItemAbilityManager {
                         }
                     }
 
-                    // 4. Note: No periodic velocity reset - FreezeListener handles movement
-                    // Knockback resistance attribute prevents flying from hits
-
-                    // 5. Schedule removal
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
 
                         frozenPlayers.remove(targetUuid);
-                        // Remove attribute modifier
                         if (target.isOnline()) {
-                            try {
-                                AttributeInstance kb = target
-                                        .getAttribute(Attribute.valueOf("GENERIC_KNOCKBACK_RESISTANCE"));
-                                if (kb != null) {
-                                    org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin,
-                                            "freeze_kb_" + targetUuid);
-                                    kb.removeModifier(key);
-                                }
-                                plugin.getMessageUtils().sendMessage(target, "scythe-thaw");
-                            } catch (Exception ignored) {
-                                try {
-                                    AttributeInstance kb = target
-                                            .getAttribute(Attribute.valueOf("KNOCKBACK_RESISTANCE"));
-                                    if (kb != null) {
-                                        org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin,
-                                                "freeze_kb_" + targetUuid);
-                                        kb.removeModifier(key);
-                                    }
-                                } catch (Exception e) {
-                                }
-                            }
+                            removeFreezeAttribute(target);
+                            plugin.getMessageUtils().sendMessage(target, "scythe-thaw");
                         }
-                    }, 100L); // 5 seconds
+                    }, 100L);
 
                     plugin.getMessageUtils().sendMessage(target, "scythe-victim");
                     affected++;
@@ -290,7 +241,6 @@ public class ItemAbilityManager {
     }
 
     public boolean canBowApplyDebuffs(Player player) {
-        // Bow's debuff ability is passive when equipped, but on cooldown after use
         UUID uuid = player.getUniqueId();
         return !isOnCooldown(bowCooldowns, uuid, BOW_COOLDOWN);
     }
@@ -298,25 +248,21 @@ public class ItemAbilityManager {
     public void triggerBowDebuffs(Player player, Location location) {
         UUID uuid = player.getUniqueId();
 
-        // Spawn particle effect
         location.getWorld().spawnParticle(
                 org.bukkit.Particle.WITCH, location, 50, 2.5, 1.5, 2.5, 0.05);
         location.getWorld().spawnParticle(
                 org.bukkit.Particle.LARGE_SMOKE, location, 30, 2, 1, 2, 0.02);
 
-        // Apply debuffs to enemies in radius
         int affected = 0;
         for (Entity entity : location.getWorld().getNearbyEntities(location, 5, 5, 5)) {
             if (entity instanceof Player target && !target.equals(player)) {
-                // Check if not mutually trusted
                 if (!plugin.getPlayerDataManager().isMutualTrust(uuid, target.getUniqueId())) {
-                    // Apply debuffs
                     target.addPotionEffect(new PotionEffect(
-                            PotionEffectType.SLOWNESS, 160, 1, false, true, true)); // 8 seconds
+                            PotionEffectType.SLOWNESS, 160, 1, false, true, true));
                     target.addPotionEffect(new PotionEffect(
-                            PotionEffectType.WEAKNESS, 160, 0, false, true, true)); // 8 seconds
+                            PotionEffectType.WEAKNESS, 160, 0, false, true, true));
                     target.addPotionEffect(new PotionEffect(
-                            PotionEffectType.GLOWING, 200, 0, false, true, true)); // 10 seconds
+                            PotionEffectType.GLOWING, 200, 0, false, true, true));
 
                     plugin.getMessageUtils().sendMessage(target, "bow-hit-victim");
                     affected++;
@@ -380,8 +326,30 @@ public class ItemAbilityManager {
         frozenPlayers.remove(uuid);
     }
 
-    // Helper record for freeze info
-    // Helper record for freeze info
+    public void removeFreezeAttribute(Player player) {
+        if (player == null)
+            return;
+        UUID uuid = player.getUniqueId();
+
+        try {
+            AttributeInstance kbResist = player.getAttribute(Attribute.valueOf("GENERIC_KNOCKBACK_RESISTANCE"));
+            if (kbResist != null) {
+                org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin, "freeze_kb_" + uuid);
+                kbResist.removeModifier(key);
+            }
+        } catch (Exception ignored) {
+            try {
+                AttributeInstance kbResist = player.getAttribute(Attribute.valueOf("KNOCKBACK_RESISTANCE"));
+                if (kbResist != null) {
+                    org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin, "freeze_kb_" + uuid);
+                    kbResist.removeModifier(key);
+                }
+            } catch (Exception e) {
+                // Ignore
+            }
+        }
+    }
+
     private static class FreezeInfo {
         final Location location;
 

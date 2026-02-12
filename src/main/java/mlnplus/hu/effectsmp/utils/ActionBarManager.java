@@ -12,7 +12,6 @@ public class ActionBarManager {
     private final Effectsmp plugin;
     private BukkitTask task;
 
-    // Cool symbols and colors
     private static final String HEART = "❤";
     private static final String DIAMOND = "◆";
 
@@ -45,18 +44,15 @@ public class ActionBarManager {
         StringBuilder actionBar = new StringBuilder();
         MessageUtils msg = plugin.getMessageUtils();
 
-        // Effect display
         actionBar.append("§d").append(data.getEffect().getDisplayName());
 
         actionBar.append(" §8│  ");
 
-        // Heart count with color based on amount
         String heartColor = data.getEffectHearts() >= 3 ? "§d" : (data.getEffectHearts() >= 1 ? "§6" : "§8");
         actionBar.append(heartColor).append(HEART).append(" §f").append(data.getEffectHearts());
 
         actionBar.append(" §8│  ");
 
-        // Show ability status
         if (data.isAbilityActive()) {
             long remaining = data.getRemainingAbilityDuration();
             String progressBar = createMiniProgressBar(remaining, getAbilityDuration(data), "§a", "§2");
@@ -71,14 +67,12 @@ public class ActionBarManager {
                     .append(msg.formatTimeShort(remaining))
                     .append(" ").append(progressBar);
         } else if (data.getEffectHearts() >= 3) {
-            // For SPEED effect, show dash status instead of "Kész (/e activate)"
             if (data.getEffect() == EffectType.SPEED) {
                 int charges = plugin.getDashManager().getRemainingDashes(player.getUniqueId());
                 String readyColor = "§a";
                 String emptyColor = "§8";
                 String chargeDisplay = readyColor + "⚡".repeat(charges) + emptyColor + "⚡".repeat(3 - charges);
 
-                // Show remaining time until next charge if not full
                 String timeDisplay = "";
                 if (charges < 3) {
                     long remainingMs = plugin.getDashManager().getRemainingRechargeTime(player.getUniqueId());
@@ -102,7 +96,6 @@ public class ActionBarManager {
     }
 
     private long getAbilityDuration(PlayerData data) {
-        // Return typical ability durations for progress bar
         return switch (data.getEffect()) {
             case INVISIBILITY -> 10000;
             case HERO_OF_VILLAGE -> 120000;
