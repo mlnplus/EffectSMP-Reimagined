@@ -10,13 +10,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2277102d-d685-43b2-b9f2-1c88a9937baf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/effects/EffectAbilityManager$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/effects/EffectAbilityManager$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/EffectSMP_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/EffectSMP_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/config/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/config/ConfigManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/commands/EffectTabCompleter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/commands/EffectTabCompleter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/data/PlayerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/data/PlayerData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/effects/EffectAbilityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/effects/EffectAbilityManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/effects/RollAnimationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/effects/RollAnimationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/gui/GUIManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/gui/GUIManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/items/CustomItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/items/CustomItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/items/ItemAbilityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/items/ItemAbilityManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/listeners/PlayerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mlnplus/hu/effectsmp/listeners/PlayerListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/commands/EffectTabCompleter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/commands/EffectTabCompleter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/data/PlayerData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/data/PlayerData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/effects/EffectAbilityManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/effects/EffectAbilityManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/effects/EffectAbilityManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/effects/EffectAbilityManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/effects/RollAnimationManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/effects/RollAnimationManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/effects/RollAnimationManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/effects/RollAnimationManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/gui/GUIManager$GUIType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/gui/GUIManager$GUIType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/gui/GUIManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/gui/GUIManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/gui/MainGUI$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/items/CustomItems.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/items/CustomItems.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/items/ItemAbilityManager$FreezeInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/items/ItemAbilityManager$FreezeInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/items/ItemAbilityManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/items/ItemAbilityManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/listeners/ItemProtectionListener$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/listeners/MiningListener$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mlnplus/hu/effectsmp/utils/ActionBarManager$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,9 +77,12 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/mlnplus/IdeaProjects/EffectSMP&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
@@ -77,7 +104,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.240" />
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
       </set>
     </attachedChunks>
   </component>
@@ -90,5 +118,8 @@
       <updated>1768168746733</updated>
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

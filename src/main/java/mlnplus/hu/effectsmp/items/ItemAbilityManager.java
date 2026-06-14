@@ -72,6 +72,7 @@ public class ItemAbilityManager {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     public void checkMaceLanding(Player player) {
         UUID uuid = player.getUniqueId();
         if (!maceFlying.contains(uuid))
@@ -184,33 +185,18 @@ public class ItemAbilityManager {
                     frozenPlayers.put(targetUuid,
                             new FreezeInfo(target.getLocation()));
 
-                    try {
-                        AttributeInstance kbResist = target
-                                .getAttribute(Attribute.valueOf("GENERIC_KNOCKBACK_RESISTANCE"));
-                        if (kbResist != null) {
-                            org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin,
-                                    "freeze_kb_" + targetUuid);
-                            try {
-                                kbResist.removeModifier(key);
-                            } catch (Exception ignored) {
-                            }
-
-                            AttributeModifier modifier = new AttributeModifier(key, 1.0,
-                                    AttributeModifier.Operation.ADD_NUMBER);
-                            kbResist.addModifier(modifier);
-                        }
-                    } catch (Exception ignored) {
+                    AttributeInstance kbResist = target.getAttribute(Attribute.KNOCKBACK_RESISTANCE);
+                    if (kbResist != null) {
+                        org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin,
+                                "freeze_kb_" + targetUuid);
                         try {
-                            AttributeInstance kbResist = target.getAttribute(Attribute.valueOf("KNOCKBACK_RESISTANCE"));
-                            if (kbResist != null) {
-                                org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin,
-                                        "freeze_kb_" + targetUuid);
-                                AttributeModifier modifier = new AttributeModifier(key, 1.0,
-                                        AttributeModifier.Operation.ADD_NUMBER);
-                                kbResist.addModifier(modifier);
-                            }
-                        } catch (Exception e) {
+                            kbResist.removeModifier(key);
+                        } catch (Exception ignored) {
                         }
+
+                        AttributeModifier modifier = new AttributeModifier(key, 1.0,
+                                AttributeModifier.Operation.ADD_NUMBER);
+                        kbResist.addModifier(modifier);
                     }
 
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -331,21 +317,10 @@ public class ItemAbilityManager {
             return;
         UUID uuid = player.getUniqueId();
 
-        try {
-            AttributeInstance kbResist = player.getAttribute(Attribute.valueOf("GENERIC_KNOCKBACK_RESISTANCE"));
-            if (kbResist != null) {
-                org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin, "freeze_kb_" + uuid);
-                kbResist.removeModifier(key);
-            }
-        } catch (Exception ignored) {
-            try {
-                AttributeInstance kbResist = player.getAttribute(Attribute.valueOf("KNOCKBACK_RESISTANCE"));
-                if (kbResist != null) {
-                    org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin, "freeze_kb_" + uuid);
-                    kbResist.removeModifier(key);
-                }
-            } catch (Exception e) {
-            }
+        AttributeInstance kbResist = player.getAttribute(Attribute.KNOCKBACK_RESISTANCE);
+        if (kbResist != null) {
+            org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin, "freeze_kb_" + uuid);
+            kbResist.removeModifier(key);
         }
     }
 

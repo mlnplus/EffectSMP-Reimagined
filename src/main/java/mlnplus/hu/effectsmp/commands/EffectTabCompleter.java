@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
 
 public class EffectTabCompleter implements TabCompleter {
 
-    private final Effectsmp plugin;
-
     private static final List<String> MAIN_COMMANDS = Arrays.asList(
             "activate", "info", "withdraw", "trust", "untrust", "toggle",
             "set", "give", "reload", "start", "removecooldown", "rc", "craftreset");
@@ -30,7 +28,6 @@ public class EffectTabCompleter implements TabCompleter {
     private static final List<String> COOLDOWN_TYPES = Arrays.asList("item", "effect", "all");
 
     public EffectTabCompleter(Effectsmp plugin) {
-        this.plugin = plugin;
     }
 
     @Override

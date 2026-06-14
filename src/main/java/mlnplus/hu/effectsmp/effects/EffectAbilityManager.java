@@ -44,7 +44,21 @@ public class EffectAbilityManager {
         applyPassiveEffect(player);
         plugin.getPlayerDataManager().savePlayerData(player.getUniqueId());
 
-        plugin.getMessageUtils().sendMessage(player, "effect-assigned", "%effect%", effect.getDisplayName());
+        String titleKey = effect.isOP() ? "roll-title-op" : "roll-title-normal";
+        String subtitleKey = effect.isOP() ? "roll-subtitle-op" : "roll-subtitle-normal";
+        plugin.getMessageUtils().sendTitle(player, titleKey, subtitleKey, "%effect%", effect.getDisplayName());
+
+        String borderKey = effect.isOP() ? "roll-chat-border-op" : "roll-chat-border-normal";
+        String lineEffectKey = effect.isOP() ? "roll-chat-line-effect-op" : "roll-chat-line-effect-normal";
+        String linePassiveKey = effect.isOP() ? "roll-chat-line-passive" : "roll-chat-line-passive-normal";
+        String lineActiveKey = effect.isOP() ? "roll-chat-line-active" : "roll-chat-line-active-normal";
+
+        plugin.getMessageUtils().sendMessage(player, borderKey);
+        plugin.getMessageUtils().sendMessage(player, lineEffectKey, "%effect%", effect.getDisplayName());
+        plugin.getMessageUtils().sendMessage(player, linePassiveKey, "%effect%", effect.getDisplayName());
+        plugin.getMessageUtils().sendMessage(player, lineActiveKey);
+        plugin.getMessageUtils().sendMessage(player, borderKey);
+
         player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.0f);
     }
 
@@ -89,10 +103,10 @@ public class EffectAbilityManager {
 
         if (newState) {
             applyPassiveEffect(player);
-            plugin.getMessageUtils().sendMessage(player, "passive-enabled");
+            plugin.getMessageUtils().sendMessage(player, "passive-toggle-on");
         } else {
             removePassiveEffect(player);
-            plugin.getMessageUtils().sendMessage(player, "passive-disabled");
+            plugin.getMessageUtils().sendMessage(player, "passive-toggle-off");
         }
 
         plugin.getPlayerDataManager().savePlayerData(player.getUniqueId());
@@ -107,8 +121,8 @@ public class EffectAbilityManager {
         }
 
         if (!data.canUseAbility()) {
-            if (data.getEffectHearts() < 2) {
-                plugin.getMessageUtils().sendMessage(player, "ability-level-too-low");
+            if (data.getEffectHearts() < 3) {
+                plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
             } else if (data.isAbilityActive()) {
                 plugin.getMessageUtils().sendMessage(player, "ability-already-active");
             } else {
@@ -206,7 +220,24 @@ public class EffectAbilityManager {
                 player.addPotionEffect(
                         new PotionEffect(PotionEffectType.FIRE_RESISTANCE, (int) (duration / 50), 0, false, false));
                 player.setFireTicks(0);
-                plugin.getMessageUtils().sendMessage(player, "ability-fire-activated");
+
+                int affected = 0;
+                UUID uuid = player.getUniqueId();
+                for (org.bukkit.entity.Entity entity : player.getNearbyEntities(10, 10, 10)) {
+                    if (entity instanceof Player target && !target.equals(player)) {
+                        if (!plugin.getPlayerDataManager().isMutualTrust(uuid, target.getUniqueId())) {
+                            target.setFireTicks(300); // 15 seconds
+                            plugin.getMessageUtils().sendMessage(target, "ability-fireres-victim");
+                            affected++;
+                        }
+                    } else if (entity instanceof org.bukkit.entity.LivingEntity living && !(entity instanceof Player)) {
+                        living.setFireTicks(300);
+                        affected++;
+                    }
+                }
+
+                plugin.getMessageUtils().sendMessage(player, "ability-fireres-activated",
+                        "%count%", String.valueOf(affected));
                 player.playSound(player.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 1.0f, 1.0f);
                 return true;
             }
@@ -266,14 +297,29 @@ public class EffectAbilityManager {
             }
 
             case REGENERATION -> {
-                duration = 30000;
+                duration = 45000;
                 setAbilityActive(player, data, duration);
 
                 player.addPotionEffect(
                         new PotionEffect(PotionEffectType.REGENERATION, (int) (duration / 50), 2, false, false));
                 player.addPotionEffect(
                         new PotionEffect(PotionEffectType.ABSORPTION, (int) (duration / 50), 1, false, false));
-                plugin.getMessageUtils().sendMessage(player, "ability-regeneration-activated");
+
+                int affected = 0;
+                List<UUID> mutualTrusted = plugin.getPlayerDataManager().getMutualTrustedPlayers(player.getUniqueId());
+                for (UUID trustedUuid : mutualTrusted) {
+                    Player trustedPlayer = Bukkit.getPlayer(trustedUuid);
+                    if (trustedPlayer != null && trustedPlayer.isOnline()) {
+                        trustedPlayer.addPotionEffect(
+                                new PotionEffect(PotionEffectType.REGENERATION, (int) (duration / 50), 2, false, false));
+                        plugin.getMessageUtils().sendMessage(trustedPlayer, "ability-regen-received",
+                                "%player%", player.getName());
+                        affected++;
+                    }
+                }
+
+                plugin.getMessageUtils().sendMessage(player, "ability-regen-activated",
+                        "%count%", String.valueOf(affected));
                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.0f, 1.0f);
                 return true;
             }

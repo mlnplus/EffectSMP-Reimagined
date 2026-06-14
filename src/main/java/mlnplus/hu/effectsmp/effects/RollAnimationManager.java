@@ -58,7 +58,6 @@ public class RollAnimationManager {
 
                 if (tick % 5 == 0) {
                     EffectType display = effects[random.nextInt(effects.length)];
-                    String color = isOP ? "§6" : "§d";
 
                     String titleText = display.getName() + "...";
                     Component titleComp = plugin.getMessageUtils()

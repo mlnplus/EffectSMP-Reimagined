@@ -15,7 +15,6 @@ mlnplus\hu\effectsmp\listeners\ItemProtectionListener$1.class
 mlnplus\hu\effectsmp\effects\EffectType.class
 mlnplus\hu\effectsmp\data\PlayerDataManager.class
 mlnplus\hu\effectsmp\items\CustomItems.class
-mlnplus\hu\effectsmp\effects\RollAnimationManager$2.class
 mlnplus\hu\effectsmp\utils\MessageUtils.class
 mlnplus\hu\effectsmp\gui\InfoGUI.class
 mlnplus\hu\effectsmp\listeners\GUIListener.class
@@ -30,4 +29,5 @@ mlnplus\hu\effectsmp\effects\RollAnimationManager$1.class
 mlnplus\hu\effectsmp\items\ItemAbilityManager$FreezeInfo.class
 mlnplus\hu\effectsmp\listeners\CraftingListener.class
 mlnplus\hu\effectsmp\gui\GUIManager$GUIType.class
+mlnplus\hu\effectsmp\effects\EffectAbilityManager$4.class
 mlnplus\hu\effectsmp\gui\GUIManager.class

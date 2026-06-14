@@ -180,7 +180,7 @@ public class PlayerData {
     }
 
     public boolean canUseAbility() {
-        return effectHearts >= 2 && !isAbilityOnCooldown() && !isAbilityActive();
+        return effectHearts >= 3 && !isAbilityOnCooldown() && !isAbilityActive();
     }
 
     public int getPassiveAmplifier() {

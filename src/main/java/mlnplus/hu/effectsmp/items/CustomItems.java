@@ -19,6 +19,7 @@ import java.util.List;
 
 import net.kyori.adventure.text.format.TextDecoration;
 
+@SuppressWarnings("deprecation")
 public class CustomItems {
 
         private final Effectsmp plugin;

@@ -11,14 +11,12 @@ import java.util.UUID;
 
 public class GUIManager {
 
-    private final Effectsmp plugin;
     private final Map<UUID, GUIType> openGUIs = new HashMap<>();
 
     private final MainGUI mainGUI;
     private final InfoGUI infoGUI;
 
     public GUIManager(Effectsmp plugin) {
-        this.plugin = plugin;
         this.mainGUI = new MainGUI(plugin);
         this.infoGUI = new InfoGUI(plugin);
     }
