@@ -234,10 +234,10 @@ public class EffectAbilityManager {
                 setAbilityActive(player, data, duration);
 
                 player.addPotionEffect(
-                        new PotionEffect(PotionEffectType.HEALTH_BOOST, (int) (duration / 50), 4, false, false)); // +10
-                                                                                                                  // hearts
+                        new PotionEffect(PotionEffectType.HEALTH_BOOST, (int) (duration / 50), 4, false, false));
+
                 player.addPotionEffect(
-                        new PotionEffect(PotionEffectType.REGENERATION, 100, 2, false, false)); // Quick heal
+                        new PotionEffect(PotionEffectType.REGENERATION, 100, 2, false, false));
                 plugin.getMessageUtils().sendMessage(player, "ability-health-activated");
                 player.playSound(player.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1.0f, 1.0f);
                 return true;

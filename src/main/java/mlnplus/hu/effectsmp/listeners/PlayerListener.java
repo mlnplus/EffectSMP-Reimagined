@@ -25,7 +25,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        plugin.getItemAbilityManager().removeFreezeAttribute(player); // Safety cleanup
+        plugin.getItemAbilityManager().removeFreezeAttribute(player);
 
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
         data.setPlayerName(player.getName());
@@ -44,7 +44,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
         plugin.getPlayerDataManager().savePlayerData(player.getUniqueId());
         plugin.getEffectAbilityManager().removeRolling(player.getUniqueId());
-        plugin.getItemAbilityManager().removeFreezeAttribute(player); // Remove freeze attribute
+        plugin.getItemAbilityManager().removeFreezeAttribute(player);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)

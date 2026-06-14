@@ -345,7 +345,6 @@ public class ItemAbilityManager {
                     kbResist.removeModifier(key);
                 }
             } catch (Exception e) {
-                // Ignore
             }
         }
     }
