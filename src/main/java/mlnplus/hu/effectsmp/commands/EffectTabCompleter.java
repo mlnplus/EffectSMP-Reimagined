@@ -60,7 +60,7 @@ public class EffectTabCompleter implements TabCompleter {
             switch (subCommand) {
                 case "trust", "untrust" -> {
                     completions = Bukkit.getOnlinePlayers().stream()
-                            .map(Player::getName)
+                            .map(p -> p.getName())
                             .filter(name -> name.toLowerCase().startsWith(input))
                             .collect(Collectors.toList());
                 }
@@ -105,7 +105,7 @@ public class EffectTabCompleter implements TabCompleter {
                 if (subCommand.equals("set") || subCommand.equals("give") ||
                         subCommand.equals("removecooldown") || subCommand.equals("rc")) {
                     completions = Bukkit.getOnlinePlayers().stream()
-                            .map(Player::getName)
+                            .map(p -> p.getName())
                             .filter(name -> name.toLowerCase().startsWith(input))
                             .collect(Collectors.toList());
                 }
