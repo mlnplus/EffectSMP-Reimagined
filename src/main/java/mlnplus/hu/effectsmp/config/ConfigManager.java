@@ -5,7 +5,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class ConfigManager {
@@ -27,12 +30,21 @@ public class ConfigManager {
         loadConfigs();
     }
 
+    private YamlConfiguration loadUTF8Yaml(File file) {
+        try (InputStreamReader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
+            return YamlConfiguration.loadConfiguration(reader);
+        } catch (Exception e) {
+            plugin.getLogger().severe("Could not load YAML file " + file.getName() + ": " + e.getMessage());
+            return new YamlConfiguration();
+        }
+    }
+
     private void loadConfigs() {
         configFile = new File(plugin.getDataFolder(), "config.yml");
         if (!configFile.exists()) {
             plugin.saveResource("config.yml", false);
         }
-        config = YamlConfiguration.loadConfiguration(configFile);
+        config = loadUTF8Yaml(configFile);
 
         String lang = config.getString("language", "en");
         String messageFileName = "messages_" + lang + ".yml";
@@ -51,13 +63,13 @@ public class ConfigManager {
                 }
             }
         }
-        messages = YamlConfiguration.loadConfiguration(messagesFile);
+        messages = loadUTF8Yaml(messagesFile);
 
         recipesFile = new File(plugin.getDataFolder(), "recipes.yml");
         if (!recipesFile.exists()) {
             plugin.saveResource("recipes.yml", false);
         }
-        recipes = YamlConfiguration.loadConfiguration(recipesFile);
+        recipes = loadUTF8Yaml(recipesFile);
 
         dataFile = new File(plugin.getDataFolder(), "data.yml");
         if (!dataFile.exists()) {
@@ -67,11 +79,11 @@ public class ConfigManager {
                 plugin.getLogger().severe("Could not create data.yml: " + e.getMessage());
             }
         }
-        data = YamlConfiguration.loadConfiguration(dataFile);
+        data = loadUTF8Yaml(dataFile);
     }
 
     public void reload() {
-        config = YamlConfiguration.loadConfiguration(configFile);
+        config = loadUTF8Yaml(configFile);
 
         String lang = config.getString("language", "hu");
         String messageFileName = "messages_" + lang + ".yml";
@@ -84,11 +96,11 @@ public class ConfigManager {
             }
         }
         if (messagesFile.exists()) {
-            messages = YamlConfiguration.loadConfiguration(messagesFile);
+            messages = loadUTF8Yaml(messagesFile);
         }
 
-        recipes = YamlConfiguration.loadConfiguration(recipesFile);
-        data = YamlConfiguration.loadConfiguration(dataFile);
+        recipes = loadUTF8Yaml(recipesFile);
+        data = loadUTF8Yaml(dataFile);
     }
 
     public void saveData() {
