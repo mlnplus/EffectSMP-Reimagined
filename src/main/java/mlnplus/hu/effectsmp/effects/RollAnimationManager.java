@@ -59,9 +59,10 @@ public class RollAnimationManager {
                 if (tick % 5 == 0) {
                     EffectType display = effects[random.nextInt(effects.length)];
 
-                    String titleText = display.getName() + "...";
+                    String displayName = display.getDisplayName();
+                    String colorCode = (displayName.startsWith("§") && displayName.length() >= 2) ? displayName.substring(0, 2) : "";
                     Component titleComp = plugin.getMessageUtils()
-                            .parse(isOP ? "<gold>🎲 " + titleText : "<light_purple>🎲 " + titleText);
+                            .parse(colorCode + "🎲 " + displayName + "...");
 
                     player.showTitle(Title.title(titleComp, Component.empty(),
                             Title.Times.times(Duration.ZERO, Duration.ofMillis(500), Duration.ZERO)));
