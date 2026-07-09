@@ -17,7 +17,8 @@ public class LootListener implements Listener {
 
     @EventHandler
     public void onLootGenerate(LootGenerateEvent event) {
-        if (event.getLootTable() == null) return;
+        if (event.getLootTable() == null)
+            return;
         String lootTableKey = event.getLootTable().getKey().toString();
         double chance = 0.0;
 
