@@ -326,7 +326,7 @@ public class CustomItems {
         }
 
         public boolean isCustomItem(ItemStack item) {
-                return getItemType(item) != null;
+                return getItemType(item) != null || isInfiniteWindCharge(item);
         }
 
         public ItemStack getItemByName(String name) {

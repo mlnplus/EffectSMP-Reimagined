@@ -10,7 +10,7 @@ reroll:
     - "ESE"
   ingredients:
     E: ENDER_PEARL
-    S: PRISMARINE_SHARD
+    S: EFFECT_SHARD
     D: DIAMOND
 
 # OP Reroll - OP effect (Resistance, Strength, Regeneration)
@@ -22,8 +22,8 @@ op_reroll:
     - "ENE"
   ingredients:
     E: END_CRYSTAL
-    N: NETHER_STAR
-    S: PRISMARINE_SHARD
+    N: EFFECT_HEART
+    S: EFFECT_SHARD
 
 # Effect Mace - Wind charge launcher
 effect_mace:
@@ -35,7 +35,7 @@ effect_mace:
     - " S "
   ingredients:
     B: BREEZE_ROD
-    N: NETHER_STAR
+    N: EFFECT_HEART
     S: STICK
 
 # Effect Sword - Critical hit mode
@@ -48,7 +48,7 @@ effect_sword:
     - " S "
   ingredients:
     D: NETHERITE_INGOT
-    S: NETHER_STAR
+    S: EFFECT_HEART
 
 # Effect Bow - Explosion arrows
 effect_bow:
@@ -60,7 +60,7 @@ effect_bow:
     - " TN"
   ingredients:
     T: TNT
-    N: NETHER_STAR
+    N: EFFECT_HEART
 
 # Effect Scythe - Freeze enemies
 effect_scythe:
@@ -72,7 +72,7 @@ effect_scythe:
     - " S "
   ingredients:
     I: NETHERITE_INGOT
-    N: NETHER_STAR
+    N: EFFECT_HEART
     S: STICK
 
 # Effect Spear - Charge big lunge
@@ -84,7 +84,7 @@ effect_spear:
     - " I "
     - "S  "
   ingredients:
-    N: NETHER_STAR
+    N: EFFECT_HEART
     I: NETHERITE_INGOT
     S: STICK
 
@@ -96,5 +96,5 @@ effect_heart:
     - "SDS"
     - " S "
   ingredients:
-    S: effect_shard
+    S: EFFECT_SHARD
     D: DIAMOND

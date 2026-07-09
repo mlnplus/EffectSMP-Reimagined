@@ -56,16 +56,18 @@ public class ActionBarManager {
         if (data.isAbilityActive()) {
             long remaining = data.getRemainingAbilityDuration();
             String progressBar = createMiniProgressBar(remaining, getAbilityDuration(data), "§a", "§2");
-            actionBar.append("§a").append(DIAMOND).append(" §fAktív §a")
-                    .append(msg.formatTimeShort(remaining))
-                    .append(" ").append(progressBar);
+            String activeText = msg.getMessage("actionbar-active-format")
+                    .replace("%time%", msg.formatTimeShort(remaining))
+                    .replace("%progress%", progressBar);
+            actionBar.append(activeText);
         } else if (data.isAbilityOnCooldown()) {
             long remaining = data.getRemainingCooldown();
             long total = data.getEffect().getCooldownSeconds() * 1000L;
             String progressBar = createMiniProgressBar(total - remaining, total, "§c", "§4");
-            actionBar.append("§c").append(DIAMOND).append(" §fCooldown §c")
-                    .append(msg.formatTimeShort(remaining))
-                    .append(" ").append(progressBar);
+            String cooldownText = msg.getMessage("actionbar-cooldown-format")
+                    .replace("%time%", msg.formatTimeShort(remaining))
+                    .replace("%progress%", progressBar);
+            actionBar.append(cooldownText);
         } else if (data.getEffectHearts() >= 3) {
             if (data.getEffect() == EffectType.SPEED) {
                 int charges = plugin.getDashManager().getRemainingDashes(player.getUniqueId());
@@ -81,15 +83,17 @@ public class ActionBarManager {
                         timeDisplay = " §7(" + remainingSec + "s)";
                     }
                 }
-
-                actionBar.append("§a◆ &fDash: ").append(chargeDisplay).append(timeDisplay);
+                String dashText = msg.getMessage("actionbar-dash-format")
+                        .replace("%charges%", chargeDisplay)
+                        .replace("%time%", timeDisplay);
+                actionBar.append(dashText);
             } else {
-                actionBar.append("§a").append(DIAMOND).append(" §fElérhető! §7(/e activate)");
+                actionBar.append(msg.getMessage("actionbar-ready-format"));
             }
         } else if (data.getEffectHearts() >= 1) {
-            actionBar.append("&7🔒 &7(&f3 §c").append(HEART).append(" §fkell&7)");
+            actionBar.append(msg.getMessage("actionbar-locked-format"));
         } else {
-            actionBar.append("§c✖ §7Nincs szíved!");
+            actionBar.append(msg.getMessage("actionbar-no-hearts"));
         }
 
         msg.sendActionBar(player, actionBar.toString());
@@ -124,12 +128,12 @@ public class ActionBarManager {
 
     public void sendCooldownReady(Player player) {
         plugin.getMessageUtils().sendActionBar(player,
-                "§a§l⚡ ABILITY ELÉRHETŐ! ⚡");
+                plugin.getMessageUtils().getMessage("actionbar-ready-alert"));
     }
 
     public void sendAbilityExpired(Player player) {
         plugin.getMessageUtils().sendActionBar(player,
-                "§c§l⏱ ABILITY LEJÁRT! ⏱");
+                plugin.getMessageUtils().getMessage("actionbar-expired-alert"));
     }
 
     public void sendCustomMessage(Player player, String message) {

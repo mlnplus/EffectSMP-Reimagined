@@ -29,7 +29,5 @@ settings:
 
 # Updater settings
 updater:
-  # Check for updates on startup
+  # Check for updates on startup via Modrinth API
   check-updates: true
-  # Automatically download updates into the plugins/update folder (requires server restart to apply)
-  auto-download: false

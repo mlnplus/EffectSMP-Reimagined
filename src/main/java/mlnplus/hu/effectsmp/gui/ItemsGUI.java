@@ -87,9 +87,9 @@ public class ItemsGUI {
     private ItemStack createTitleItem() {
         ItemStack item = new ItemStack(Material.BOOK);
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(parseNoItalic("&d&l⚔ EGYEDI TÁRGYAK &7| &fCustom Items"));
+        meta.displayName(getNoItalic("gui-items-info-book-name"));
         List<Component> lore = new ArrayList<>();
-        lore.add(parseNoItalic("&7Tekintsd meg a receptek és tárgyak listáját!"));
+        lore.add(getNoItalic("gui-items-info-book-lore"));
         meta.lore(lore);
         item.setItemMeta(meta);
         return item;

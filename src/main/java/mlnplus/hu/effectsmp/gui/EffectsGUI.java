@@ -92,9 +92,9 @@ public class EffectsGUI {
     private ItemStack createTitleItem() {
         ItemStack item = new ItemStack(Material.BOOK);
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(parseNoItalic("&d&l⚔ EFFEKTEK TÁRA &7| &fLibrary"));
+        meta.displayName(getNoItalic("gui-effects-info-book-name"));
         List<Component> lore = new ArrayList<>();
-        lore.add(parseNoItalic("&7Tekintsd meg a megszerezhető képességeket!"));
+        lore.add(getNoItalic("gui-effects-info-book-lore"));
         meta.lore(lore);
         item.setItemMeta(meta);
         return item;

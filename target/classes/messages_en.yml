@@ -391,7 +391,7 @@ item-scythe-lore-2: "&7for 5 seconds!"
 item-scythe-lore-cooldown: "&cCooldown: %time%"
 item-scythe-lore-usage: "&e▸ Shift + Right Click to use"
 
-version: 5
+version: 6
 
 # ─────────────────────────────────────────────────────────────────────
 #                         SPEAR MESSAGES
@@ -459,3 +459,19 @@ gui-shard-info-warden-lore: "&7Drop chance: &e5.0%"
 cooldown-type-all: "All"
 cooldown-type-item: "Item"
 cooldown-type-effect: "Effect"
+
+wind-charge-cooldown: "&c✖ &fInfinite Wind Charge on cooldown: &e%time%"
+
+actionbar-active-format: "&a◆ &fActive &a%time% %progress%"
+actionbar-cooldown-format: "&c◆ &fCooldown &c%time% %progress%"
+actionbar-ready-format: "&a◆ &fReady! &7(/e activate)"
+actionbar-dash-format: "&a◆ &fDash: %charges%%time%"
+actionbar-locked-format: "&7🔒 &7(&f3 &c❤ &fneeded&7)"
+actionbar-no-hearts: "&c✖ &7No hearts!"
+actionbar-ready-alert: "&a&l⚡ ABILITY READY! ⚡"
+actionbar-expired-alert: "&c&l⏱ ABILITY EXPIRED! ⏱"
+
+gui-effects-info-book-name: "&d&lEFFECTS LIBRARY &7| &fLibrary"
+gui-effects-info-book-lore: "&7View the list of obtainable abilities!"
+gui-items-info-book-name: "&d&lCUSTOM ITEMS &7| &fCustom Items"
+gui-items-info-book-lore: "&7View the list of custom items and recipes!"

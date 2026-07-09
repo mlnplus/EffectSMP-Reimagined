@@ -391,7 +391,7 @@ item-scythe-lore-2: "&7ellenséges játékost 5 mp-re!"
 item-scythe-lore-cooldown: "&cCooldown: %time%"
 item-scythe-lore-usage: "&e▸ Shift + Jobb klikk a használathoz"
 
-version: 5
+version: 6
 
 # ─────────────────────────────────────────────────────────────────────
 #                         SPEAR MESSAGES
@@ -459,3 +459,19 @@ gui-shard-info-warden-lore: "&7Kiejtési esély: &e5.0%"
 cooldown-type-all: "Minden"
 cooldown-type-item: "Tárgy"
 cooldown-type-effect: "Effekt"
+
+wind-charge-cooldown: "&c✖ &fVégtelen Széltöltet cooldown: &e%time%"
+
+actionbar-active-format: "&a◆ &fAktív &a%time% %progress%"
+actionbar-cooldown-format: "&c◆ &fCooldown &c%time% %progress%"
+actionbar-ready-format: "&a◆ &fElérhető! &7(/e activate)"
+actionbar-dash-format: "&a◆ &fDash: %charges%%time%"
+actionbar-locked-format: "&7🔒 &7(&f3 &c❤ &fkell&7)"
+actionbar-no-hearts: "&c✖ &7Nincs szíved!"
+actionbar-ready-alert: "&a&l⚡ ABILITY ELÉRHETŐ! ⚡"
+actionbar-expired-alert: "&c&l⏱ ABILITY LEJÁRT! ⏱"
+
+gui-effects-info-book-name: "&d&lEFFEKTEK TÁRA &7| &fLibrary"
+gui-effects-info-book-lore: "&7Tekintsd meg a megszerezhető képességeket!"
+gui-items-info-book-name: "&d&lEGYEDI TÁRGYAK &7| &fCustom Items"
+gui-items-info-book-lore: "&7Tekintsd meg a receptek és tárgyak listáját!"

@@ -1,6 +1,7 @@
 package mlnplus.hu.effectsmp.listeners;
 
 import mlnplus.hu.effectsmp.Effectsmp;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.DecoratedPot;
@@ -17,6 +18,8 @@ import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -31,6 +34,41 @@ public class ItemProtectionListener implements Listener {
         this.plugin = plugin;
     }
 
+    private boolean cleanBundle(Player player, ItemStack bundle) {
+        if (bundle == null || bundle.getType() != Material.BUNDLE) return false;
+        if (bundle.getItemMeta() instanceof org.bukkit.inventory.meta.BundleMeta meta) {
+            boolean changed = false;
+            java.util.List<ItemStack> newItems = new java.util.ArrayList<>();
+            for (ItemStack item : meta.getItems()) {
+                if (plugin.getCustomItems().isCustomItem(item)) {
+                    changed = true;
+                    // Drop the custom item on the ground so it's not lost
+                    player.getWorld().dropItem(player.getLocation(), item);
+                } else {
+                    newItems.add(item);
+                }
+            }
+            if (changed) {
+                meta.setItems(newItems);
+                bundle.setItemMeta(meta);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasCustomItemInsideBundle(ItemStack bundle) {
+        if (bundle == null || bundle.getType() != Material.BUNDLE) return false;
+        if (bundle.getItemMeta() instanceof org.bukkit.inventory.meta.BundleMeta meta) {
+            for (ItemStack item : meta.getItems()) {
+                if (plugin.getCustomItems().isCustomItem(item)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onInventoryClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player))
@@ -42,34 +80,60 @@ public class ItemProtectionListener implements Listener {
         ItemStack cursor = event.getCursor();
         ItemStack current = event.getCurrentItem();
 
-        boolean cursorBundle = cursor != null && cursor.getType() == Material.BUNDLE;
-        boolean currentBundle = current != null && current.getType() == Material.BUNDLE;
+        boolean illegalBundleFound = false;
 
-        boolean cursorCustom = plugin.getCustomItems().isCustomItem(cursor);
-        boolean currentCustom = plugin.getCustomItems().isCustomItem(current);
-
-        if ((cursorBundle && currentCustom) || (currentBundle && cursorCustom)) {
-            event.setCancelled(true);
-            plugin.getMessageUtils().sendMessage(player, "item-clean-bundle");
-            return;
+        if (hasCustomItemInsideBundle(cursor) || hasCustomItemInsideBundle(current)) {
+            illegalBundleFound = true;
         }
 
         if (event.getClick().name().contains("NUMBER_KEY")) {
             int hotbarSlot = event.getHotbarButton();
             if (hotbarSlot >= 0 && hotbarSlot < 9) {
                 ItemStack hotbarItem = player.getInventory().getItem(hotbarSlot);
-
-                boolean hotbarBundle = hotbarItem != null && hotbarItem.getType() == Material.BUNDLE;
-                boolean hotbarCustom = plugin.getCustomItems().isCustomItem(hotbarItem);
-
-                if ((hotbarBundle && currentCustom) || (currentBundle && hotbarCustom) ||
-                        (hotbarCustom && currentBundle) || (hotbarBundle && cursorCustom)) {
-                    event.setCancelled(true);
-                    plugin.getMessageUtils().sendMessage(player, "item-clean-bundle");
-                    return;
+                if (hasCustomItemInsideBundle(hotbarItem)) {
+                    illegalBundleFound = true;
                 }
             }
         }
+
+        if (illegalBundleFound) {
+            // DO NOT cancel the event. Spigot 1.21.2 cancellation for bundles causes duplication/locking bugs.
+            // Clean it INSTANTLY so they cannot drop it before a tick passes.
+            plugin.getMessageUtils().sendMessage(player, "item-clean-bundle");
+            
+            boolean cleanedAny = false;
+            
+            if (cleanBundle(player, cursor)) cleanedAny = true;
+            if (cleanBundle(player, current)) cleanedAny = true;
+            
+            if (event.getClick().name().contains("NUMBER_KEY")) {
+                int hotbarSlot = event.getHotbarButton();
+                if (hotbarSlot >= 0 && hotbarSlot < 9) {
+                    ItemStack hotbarItem = player.getInventory().getItem(hotbarSlot);
+                    if (cleanBundle(player, hotbarItem)) cleanedAny = true;
+                }
+            }
+
+            // Also scan open inventory just in case Spigot swapped references
+            for (ItemStack item : player.getInventory().getContents()) {
+                if (cleanBundle(player, item)) cleanedAny = true;
+            }
+            if (topInv != null) {
+                for (ItemStack item : topInv.getContents()) {
+                    if (cleanBundle(player, item)) cleanedAny = true;
+                }
+            }
+            
+            if (cleanedAny) {
+                // Ensure client sees the instant wipe
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    if (player.isOnline()) player.updateInventory();
+                });
+            }
+            return;
+        }
+
+        boolean currentCustom = plugin.getCustomItems().isCustomItem(current);
 
         if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
             if (currentCustom && playerHasBundle(player)) {
@@ -119,6 +183,30 @@ public class ItemProtectionListener implements Listener {
     public void onInventoryDrag(InventoryDragEvent event) {
         if (!(event.getWhoClicked() instanceof Player player))
             return;
+
+        ItemStack oldCursor = event.getOldCursor();
+        boolean dragCustom = plugin.getCustomItems().isCustomItem(oldCursor);
+        boolean dragBundle = oldCursor != null && oldCursor.getType() == Material.BUNDLE;
+
+        if (dragCustom) {
+            for (int slot : event.getRawSlots()) {
+                ItemStack item = event.getView().getItem(slot);
+                if (item != null && item.getType() == Material.BUNDLE) {
+                    event.setCancelled(true);
+                    plugin.getMessageUtils().sendMessage(player, "item-clean-bundle");
+                    return;
+                }
+            }
+        } else if (dragBundle) {
+            for (int slot : event.getRawSlots()) {
+                ItemStack item = event.getView().getItem(slot);
+                if (plugin.getCustomItems().isCustomItem(item)) {
+                    event.setCancelled(true);
+                    plugin.getMessageUtils().sendMessage(player, "item-clean-bundle");
+                    return;
+                }
+            }
+        }
 
         Inventory topInv = event.getView().getTopInventory();
         InventoryType type = topInv.getType();
@@ -205,6 +293,32 @@ public class ItemProtectionListener implements Listener {
         if (plugin.getCustomItems().isCustomItem(mainHand) || plugin.getCustomItems().isCustomItem(offHand)) {
             event.setCancelled(true);
             plugin.getMessageUtils().sendMessage(player, "item-clean-itemframe");
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerDropItem(org.bukkit.event.player.PlayerDropItemEvent event) {
+        ItemStack item = event.getItemDrop().getItemStack();
+        if (item != null && item.getType() == Material.BUNDLE) {
+            if (hasCustomItemInsideBundle(item)) {
+                cleanBundle(event.getPlayer(), item);
+                event.getItemDrop().setItemStack(item);
+                plugin.getMessageUtils().sendMessage(event.getPlayer(), "item-clean-bundle");
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onHopperPickup(InventoryPickupItemEvent event) {
+        if (plugin.getCustomItems().isCustomItem(event.getItem().getItemStack())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onHopperMove(InventoryMoveItemEvent event) {
+        if (plugin.getCustomItems().isCustomItem(event.getItem())) {
+            event.setCancelled(true);
         }
     }
 

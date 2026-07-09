@@ -7,9 +7,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
@@ -18,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 public class UpdateManager {
 
     private final Effectsmp plugin;
-    private static final String GITHUB_API_URL = "https://api.github.com/repos/mlnplus/EffectSMP-Reimagined/releases/latest";
+    private static final String MODRINTH_API_URL = "https://api.modrinth.com/v2/project/effectsmp-reimagined/version";
     private static final String MODRINTH_URL = "https://modrinth.com/plugin/effectsmp-reimagined";
 
     public UpdateManager(Effectsmp plugin) {
@@ -32,7 +29,7 @@ public class UpdateManager {
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
-                HttpURLConnection connection = (HttpURLConnection) java.net.URI.create(GITHUB_API_URL).toURL().openConnection();
+                HttpURLConnection connection = (HttpURLConnection) java.net.URI.create(MODRINTH_API_URL).toURL().openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("User-Agent", "EffectSMP-Updater");
                 connection.setConnectTimeout(5000);
@@ -47,30 +44,32 @@ public class UpdateManager {
                 JsonElement rootElement = new JsonParser().parse(reader);
                 reader.close();
 
-                if (!rootElement.isJsonObject()) {
+                if (!rootElement.isJsonArray()) {
                     return;
                 }
 
-                JsonObject json = rootElement.getAsJsonObject();
-                if (!json.has("tag_name")) {
+                JsonArray versionsArray = rootElement.getAsJsonArray();
+                if (versionsArray.isEmpty()) {
                     return;
                 }
 
-                String latestVersionRaw = json.get("tag_name").getAsString();
+                // First version returned by Modrinth API is the latest one
+                JsonObject latestRelease = versionsArray.get(0).getAsJsonObject();
+                if (!latestRelease.has("version_number")) {
+                    return;
+                }
+
+                String latestVersionRaw = latestRelease.get("version_number").getAsString();
                 String latestVersion = latestVersionRaw.replace("v", "").trim();
                 String currentVersion = plugin.getDescription().getVersion().replace("v", "").trim();
 
                 if (isNewerVersion(currentVersion, latestVersion)) {
                     plugin.getLogger().warning("==================================================");
-                    plugin.getLogger().warning("A new version of EffectSMP is available!");
+                    plugin.getLogger().warning("A new version of EffectSMP is available on Modrinth!");
                     plugin.getLogger().warning("Latest Version: v" + latestVersion);
                     plugin.getLogger().warning("Current Version: v" + currentVersion);
                     plugin.getLogger().warning("Download here: " + MODRINTH_URL);
                     plugin.getLogger().warning("==================================================");
-
-                    if (plugin.getConfigManager().getConfig().getBoolean("updater.auto-download", false)) {
-                        downloadUpdate(json);
-                    }
                 } else {
                     plugin.getLogger().info("EffectSMP is up to date (v" + currentVersion + ").");
                 }
@@ -101,69 +100,5 @@ public class UpdateManager {
             return !current.equalsIgnoreCase(latest);
         }
         return false;
-    }
-
-    private void downloadUpdate(JsonObject releaseJson) {
-        if (!releaseJson.has("assets")) {
-            return;
-        }
-
-        JsonArray assets = releaseJson.getAsJsonArray("assets");
-        String downloadUrl = null;
-        for (JsonElement assetElement : assets) {
-            if (assetElement.isJsonObject()) {
-                JsonObject asset = assetElement.getAsJsonObject();
-                if (asset.has("name") && asset.get("name").getAsString().endsWith(".jar")) {
-                    downloadUrl = asset.get("browser_download_url").getAsString();
-                    break;
-                }
-            }
-        }
-
-        if (downloadUrl == null) {
-            plugin.getLogger().warning("No jar file asset found in the latest release. Auto-download aborted.");
-            return;
-        }
-
-        plugin.getLogger().info("Downloading new update from GitHub Releases...");
-
-        try {
-            File runningJar = new File(plugin.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
-            File updateFolder = new File(plugin.getDataFolder().getParentFile(), "update");
-            if (!updateFolder.exists()) {
-                updateFolder.mkdirs();
-            }
-
-            File targetFile = new File(updateFolder, runningJar.getName());
-
-            HttpURLConnection connection = (HttpURLConnection) java.net.URI.create(downloadUrl).toURL().openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("User-Agent", "EffectSMP-Updater");
-            connection.setConnectTimeout(10000);
-            connection.setReadTimeout(10000);
-
-            // Handle redirect if any
-            int status = connection.getResponseCode();
-            if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == 307 || status == 308) {
-                String newUrl = connection.getHeaderField("Location");
-                connection = (HttpURLConnection) java.net.URI.create(newUrl).toURL().openConnection();
-                connection.setRequestProperty("User-Agent", "EffectSMP-Updater");
-            }
-
-            try (BufferedInputStream in = new BufferedInputStream(connection.getInputStream());
-                 FileOutputStream fileOutputStream = new FileOutputStream(targetFile)) {
-                byte[] dataBuffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                    fileOutputStream.write(dataBuffer, 0, bytesRead);
-                }
-            }
-
-            plugin.getLogger().info("Update successfully downloaded to " + targetFile.getPath());
-            plugin.getLogger().info("The update will be applied automatically on the next server restart.");
-
-        } catch (Exception e) {
-            plugin.getLogger().warning("Failed to auto-download update: " + e.getMessage());
-        }
     }
 }

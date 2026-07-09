@@ -25,11 +25,11 @@ public class LootListener implements Listener {
         double chance = 0.0;
 
         if (lootTableKey.equals("minecraft:chests/ancient_city")) {
-            chance = 0.025; // 2.5%
+            chance = 0.075; // 2.5%
         } else if (lootTableKey.equals("minecraft:chests/end_city_treasure")) {
-            chance = 0.05; // 5%
+            chance = 0.075; // 5%
         } else if (lootTableKey.equals("minecraft:chests/woodland_mansion")) {
-            chance = 0.02; // 2%
+            chance = 0.075; // 2%
         }
 
         if (chance > 0.0 && Math.random() < chance) {
@@ -43,7 +43,7 @@ public class LootListener implements Listener {
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         if (event.getEntityType() == EntityType.WARDEN) {
-            if (Math.random() < 0.05) { // 5% chance
+            if (Math.random() < 0.15) { // 5% chance
                 ItemStack shard = plugin.getCustomItems().getItemByName("shard");
                 if (shard != null) {
                     event.getDrops().add(shard);

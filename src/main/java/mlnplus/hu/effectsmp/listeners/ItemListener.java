@@ -17,10 +17,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class ItemListener implements Listener {
 
     private final Effectsmp plugin;
+    private final Map<UUID, Long> windChargeCooldowns = new HashMap<>();
 
     public ItemListener(Effectsmp plugin) {
         this.plugin = plugin;
@@ -36,11 +40,27 @@ public class ItemListener implements Listener {
                 if (data.getEffect() == mlnplus.hu.effectsmp.effects.EffectType.WIND_CHARGED && data.getEffectHearts() >= 1) {
                     event.setCancelled(true);
                     
+                    // Check cooldown (3 seconds = 3000ms)
+                    long now = System.currentTimeMillis();
+                    UUID uuid = player.getUniqueId();
+                    if (windChargeCooldowns.containsKey(uuid)) {
+                        long elapsed = now - windChargeCooldowns.get(uuid);
+                        if (elapsed < 3000L) {
+                            long remaining = 3000L - elapsed;
+                            plugin.getMessageUtils().sendMessage(player, "wind-charge-cooldown",
+                                    "%time%", plugin.getMessageUtils().formatTime(remaining));
+                            return;
+                        }
+                    }
+                    
                     // Spawn the projectile manually
                     org.bukkit.entity.WindCharge wc = player.launchProjectile(org.bukkit.entity.WindCharge.class);
                     if (wc != null) {
                         wc.setVelocity(player.getLocation().getDirection().multiply(1.5));
                     }
+                    
+                    // Set cooldown
+                    windChargeCooldowns.put(uuid, now);
                     
                     // Play throw sound
                     player.getWorld().playSound(player.getLocation(), org.bukkit.Sound.ENTITY_WIND_CHARGE_THROW, 1.0f, 1.0f);
