@@ -6,7 +6,7 @@
         <autoDetectTypes>
           <platformType>PAPER</platformType>
         </autoDetectTypes>
-        <projectReimportVersion>1</projectReimportVersion>
+        <projectReimportVersion>1.3</projectReimportVersion>
       </configuration>
     </facet>
   </component>
