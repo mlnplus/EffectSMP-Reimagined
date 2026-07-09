@@ -2,6 +2,6 @@
 <project name="maven-antrun-" default="main">
   <target name="main">
     <mkdir dir="C:\mlnplus\IdeaArtifacts" />
-    <copy file="C:\mlnplus\mlnplus' Plugins\EffectSMP\target/effectsmp-1.3.jar" todir="C:\mlnplus\IdeaArtifacts" />
+    <copy file="C:\mlnplus\mlnplus' Plugins\EffectSMP\target/EffectSMP-Reimagined.jar" todir="C:\mlnplus\IdeaArtifacts" />
   </target>
 </project>
