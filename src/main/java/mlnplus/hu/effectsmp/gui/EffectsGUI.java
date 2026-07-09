@@ -32,34 +32,56 @@ public class EffectsGUI {
     }
 
     public Inventory create(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 27,
+        Inventory inv = Bukkit.createInventory(null, 45,
                 plugin.getMessageUtils().getMessageComponent("gui-effects-title"));
 
-        ItemStack filler = createFiller();
-        for (int i = 0; i < 27; i++) {
-            inv.setItem(i, filler);
+        // Build premium background grid
+        ItemStack border = createBorderFiller();
+        ItemStack innerFiller = createInnerFiller();
+
+        for (int i = 0; i < 45; i++) {
+            if (i < 9 || i >= 36 || i % 9 == 0 || i % 9 == 8) {
+                inv.setItem(i, border);
+            } else {
+                inv.setItem(i, innerFiller);
+            }
         }
 
-        // Normal effects
-        EffectType[] normals = EffectType.getNormalEffects();
-        int[] normalSlots = {9, 10, 11, 12, 13, 14, 15, 16};
-        for (int i = 0; i < Math.min(normals.length, normalSlots.length); i++) {
-            inv.setItem(normalSlots[i], createEffectItem(normals[i]));
-        }
+        // Title book at slot 4
+        inv.setItem(4, createTitleItem());
 
-        // OP effects
-        EffectType[] ops = EffectType.getOPEffects();
-        int[] opSlots = {21, 22, 23};
-        for (int i = 0; i < Math.min(ops.length, opSlots.length); i++) {
-            inv.setItem(opSlots[i], createEffectItem(ops[i]));
-        }
+        // 1. Common row (slots 11, 13, 15)
+        inv.setItem(11, createEffectItem(EffectType.HERO_OF_VILLAGE));
+        inv.setItem(13, createEffectItem(EffectType.FIRE_RESISTANCE));
+        inv.setItem(15, createEffectItem(EffectType.DOLPHIN_GRACE));
 
-        inv.setItem(26, createBackItem());
+        // 2. Rare row (slots 19, 21, 23, 25)
+        inv.setItem(19, createEffectItem(EffectType.INVISIBILITY));
+        inv.setItem(21, createEffectItem(EffectType.HASTE));
+        inv.setItem(23, createEffectItem(EffectType.SPEED));
+        inv.setItem(25, createEffectItem(EffectType.WIND_CHARGED));
+
+        // 3. OP row (slots 28, 30, 32, 34)
+        inv.setItem(28, createEffectItem(EffectType.HEALTH_BOOST));
+        inv.setItem(30, createEffectItem(EffectType.REGENERATION));
+        inv.setItem(32, createEffectItem(EffectType.STRENGTH));
+        inv.setItem(34, createEffectItem(EffectType.RESISTANCE));
+
+        // Back button on slot 40
+        inv.setItem(40, createBackItem());
 
         return inv;
     }
 
-    private ItemStack createFiller() {
+    private ItemStack createBorderFiller() {
+        ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(Component.text(" "));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack createInnerFiller() {
         ItemStack item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text(" "));
@@ -67,10 +89,21 @@ public class EffectsGUI {
         return item;
     }
 
+    private ItemStack createTitleItem() {
+        ItemStack item = new ItemStack(Material.BOOK);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(parseNoItalic("&d&l⚔ EFFEKTEK TÁRA &7| &fLibrary"));
+        List<Component> lore = new ArrayList<>();
+        lore.add(parseNoItalic("&7Tekintsd meg a megszerezhető képességeket!"));
+        meta.lore(lore);
+        item.setItemMeta(meta);
+        return item;
+    }
+
     private ItemStack createBackItem() {
         ItemStack item = new ItemStack(Material.ARROW);
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(getNoItalic("gui-back-name"));
+        meta.displayName(getNoItalic("gui-back-items-name"));
         item.setItemMeta(meta);
         return item;
     }
@@ -145,8 +178,9 @@ public class EffectsGUI {
 
     public void handleClick(InventoryClickEvent event, Player player) {
         int slot = event.getRawSlot();
-        if (slot == 26) {
+        if (slot == 40) {
             player.closeInventory();
+            plugin.getGuiManager().openMainGUI(player);
         }
     }
 }

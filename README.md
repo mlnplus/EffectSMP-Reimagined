@@ -49,10 +49,11 @@ The ultimate movement and defense archetype:
 Discover or craft legendary items to manipulate effects and dominate combat. *All recipes and cooldowns are fully customizable inside `items.yml`!*
 
 - ❤️ **Effect Heart**: Consumed to add +1 Heart. Requires a Shard + Diamond to craft.
-- 💎 **Effect Shard**: The core of all custom items. Found inside world loot chests:
+- 💎 **Effect Shard**: The core of all custom items. Found inside world loot chests and custom drops:
   - 🏛️ **Ancient City Chests**: 2.5% chance
   - 🚢 **End City Ship Chests**: 5.0% chance
   - 🏡 **Woodland Mansion Chests**: 2.0% chance
+  - 👹 **Warden Mobs**: 5.0% drop chance on death
 - 🔄 **Reroll**: Changes your active effect to a random Common/Rare effect.
 - 🌟 **OP Reroll**: Changes your active effect to a random Epic/Legendary effect.
 - ⚔️ **Custom Weapons** (Requires Level 3):

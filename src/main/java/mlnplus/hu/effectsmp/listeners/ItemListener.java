@@ -28,6 +28,34 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
+        ItemStack interactItem = event.getItem();
+        if (interactItem != null && plugin.getCustomItems().isInfiniteWindCharge(interactItem)) {
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                Player player = event.getPlayer();
+                PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
+                if (data.getEffect() == mlnplus.hu.effectsmp.effects.EffectType.WIND_CHARGED && data.getEffectHearts() >= 1) {
+                    event.setCancelled(true);
+                    
+                    // Spawn the projectile manually
+                    org.bukkit.entity.WindCharge wc = player.launchProjectile(org.bukkit.entity.WindCharge.class);
+                    if (wc != null) {
+                        wc.setVelocity(player.getLocation().getDirection().multiply(1.5));
+                    }
+                    
+                    // Play throw sound
+                    player.getWorld().playSound(player.getLocation(), org.bukkit.Sound.ENTITY_WIND_CHARGE_THROW, 1.0f, 1.0f);
+                    
+                    // Swing hand
+                    if (event.getHand() == EquipmentSlot.OFF_HAND) {
+                        player.swingOffHand();
+                    } else {
+                        player.swingMainHand();
+                    }
+                    return;
+                }
+            }
+        }
+
         if (event.getHand() != EquipmentSlot.HAND)
             return;
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
@@ -218,28 +246,6 @@ public class ItemListener implements Listener {
                 if ("effect_spear".equals(itemType)) {
                     event.setCancelled(true);
                     plugin.getItemAbilityManager().performSpearLunge(player);
-                }
-            }
-        } else if (event.getEntity() instanceof org.bukkit.entity.WindCharge windCharge) {
-            if (windCharge.getShooter() instanceof Player player) {
-                PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
-                if (data.getEffect() == mlnplus.hu.effectsmp.effects.EffectType.WIND_CHARGED && data.getEffectHearts() >= 1) {
-                    EquipmentSlot slot = player.getInventory().getItemInMainHand().getType() == Material.WIND_CHARGE ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND;
-                    ItemStack item = (slot == EquipmentSlot.HAND) ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
-                    if (item != null && item.getType() == Material.WIND_CHARGE) {
-                        Bukkit.getScheduler().runTask(plugin, () -> {
-                            ItemStack current = (slot == EquipmentSlot.HAND) ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
-                            if (current == null || current.getType() == Material.AIR) {
-                                if (slot == EquipmentSlot.HAND) {
-                                    player.getInventory().setItemInMainHand(plugin.getCustomItems().createInfiniteWindCharge());
-                                } else {
-                                    player.getInventory().setItemInOffHand(plugin.getCustomItems().createInfiniteWindCharge());
-                                }
-                            } else {
-                                current.setAmount(Math.min(current.getMaxStackSize(), current.getAmount() + 1));
-                            }
-                        });
-                    }
                 }
             }
         }

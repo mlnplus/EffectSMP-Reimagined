@@ -26,37 +26,71 @@ public class ItemsGUI {
         return plugin.getMessageUtils().getMessageComponent(key).decoration(TextDecoration.ITALIC, false);
     }
 
+    private Component parseNoItalic(String text) {
+        return plugin.getMessageUtils().parse(text).decoration(TextDecoration.ITALIC, false);
+    }
+
     public Inventory create(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 27,
+        Inventory inv = Bukkit.createInventory(null, 45,
                 plugin.getMessageUtils().getMessageComponent("gui-items-title"));
 
-        ItemStack filler = createFiller();
-        for (int i = 0; i < 27; i++) {
-            inv.setItem(i, filler);
+        // Build premium background grid
+        ItemStack border = createBorderFiller();
+        ItemStack innerFiller = createInnerFiller();
+
+        for (int i = 0; i < 45; i++) {
+            if (i < 9 || i >= 36 || i % 9 == 0 || i % 9 == 8) {
+                inv.setItem(i, border);
+            } else {
+                inv.setItem(i, innerFiller);
+            }
         }
 
-        // Consumables & Utility Row
+        // Title book at slot 4
+        inv.setItem(4, createTitleItem());
+
+        // Consumables Row (slots 10, 12, 14, 16)
         inv.setItem(10, createGuiItem("heart"));
-        inv.setItem(11, createGuiItem("shard"));
-        inv.setItem(12, createGuiItem("reroll"));
-        inv.setItem(13, createGuiItem("op_reroll"));
+        inv.setItem(12, createGuiItem("shard"));
+        inv.setItem(14, createGuiItem("reroll"));
+        inv.setItem(16, createGuiItem("op_reroll"));
 
-        // Weapons Row
-        inv.setItem(18, createGuiItem("mace"));
-        inv.setItem(19, createGuiItem("sword"));
-        inv.setItem(20, createGuiItem("bow"));
-        inv.setItem(21, createGuiItem("scythe"));
-        inv.setItem(22, createGuiItem("spear"));
+        // Weapons Row (slots 29, 30, 31, 32, 33)
+        inv.setItem(29, createGuiItem("mace"));
+        inv.setItem(30, createGuiItem("sword"));
+        inv.setItem(31, createGuiItem("bow"));
+        inv.setItem(32, createGuiItem("scythe"));
+        inv.setItem(33, createGuiItem("spear"));
 
-        inv.setItem(26, createBackItem());
+        // Back button at slot 40
+        inv.setItem(40, createBackItem());
 
         return inv;
     }
 
-    private ItemStack createFiller() {
+    private ItemStack createBorderFiller() {
+        ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(Component.text(" "));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack createInnerFiller() {
         ItemStack item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text(" "));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack createTitleItem() {
+        ItemStack item = new ItemStack(Material.BOOK);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(parseNoItalic("&d&l⚔ EGYEDI TÁRGYAK &7| &fCustom Items"));
+        List<Component> lore = new ArrayList<>();
+        lore.add(parseNoItalic("&7Tekintsd meg a receptek és tárgyak listáját!"));
+        meta.lore(lore);
         item.setItemMeta(meta);
         return item;
     }
@@ -98,22 +132,23 @@ public class ItemsGUI {
 
     public void handleClick(InventoryClickEvent event, Player player) {
         int slot = event.getRawSlot();
-        if (slot == 26) {
+        if (slot == 40) {
             player.closeInventory();
+            plugin.getGuiManager().openMainGUI(player);
             return;
         }
 
         String targetItem = null;
         switch (slot) {
             case 10 -> targetItem = "effect_heart";
-            case 11 -> targetItem = "effect_shard";
-            case 12 -> targetItem = "reroll";
-            case 13 -> targetItem = "op_reroll";
-            case 18 -> targetItem = "effect_mace";
-            case 19 -> targetItem = "effect_sword";
-            case 20 -> targetItem = "effect_bow";
-            case 21 -> targetItem = "effect_scythe";
-            case 22 -> targetItem = "effect_spear";
+            case 12 -> targetItem = "effect_shard";
+            case 14 -> targetItem = "reroll";
+            case 16 -> targetItem = "op_reroll";
+            case 29 -> targetItem = "effect_mace";
+            case 30 -> targetItem = "effect_sword";
+            case 31 -> targetItem = "effect_bow";
+            case 32 -> targetItem = "effect_scythe";
+            case 33 -> targetItem = "effect_spear";
         }
 
         if (targetItem != null) {

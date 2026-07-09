@@ -445,4 +445,17 @@ rarity-epic: "&dEpikus"
 rarity-legendary: "&6Legendás"
 
 gui-effects-rarity-format: "&7Ritkaság: %rarity%"
-gui-effects-pass-wind: "&7Végtelen széltöltetet kapsz (Lvl 1), nincs esési sebzés (Lvl 2)."
+gui-effects-pass-wind: "&7Végtelen széltöltet, guggolva landolva esésmentesség (Lvl 1), teljes esésmentesség (Lvl 2)."
+
+gui-shard-info-ancient-name: "&3&lŐsi Város Láda (Ancient City)"
+gui-shard-info-ancient-lore: "&7Megtalálási esély: &e2.5%"
+gui-shard-info-end-name: "&d&lVégváros Hajó (End City Ship)"
+gui-shard-info-end-lore: "&7Megtalálási esély: &e5.0%"
+gui-shard-info-mansion-name: "&2&lErdei Kastély (Woodland Mansion)"
+gui-shard-info-mansion-lore: "&7Megtalálási esély: &e2.0%"
+gui-shard-info-warden-name: "&4&lWarden Drop"
+gui-shard-info-warden-lore: "&7Kiejtési esély: &e5.0%"
+
+cooldown-type-all: "Minden"
+cooldown-type-item: "Tárgy"
+cooldown-type-effect: "Effekt"

@@ -198,11 +198,6 @@ public class EffectAbilityManager {
 
         switch (effect) {
             case WIND_CHARGED -> {
-                if (!player.isSneaking()) {
-                    plugin.getMessageUtils().sendMessage(player, "wind-charged-need-shift");
-                    return false;
-                }
-
                 org.bukkit.Location loc = player.getLocation();
                 if (loc == null) return false;
 

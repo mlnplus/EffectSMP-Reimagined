@@ -347,7 +347,7 @@ public class EffectCommand implements CommandExecutor {
         if (args.length >= 3) {
             target = Bukkit.getPlayer(args[2]);
             if (target == null) {
-                plugin.getMessageUtils().sendRawMessage(player, "&cNincs ilyen játékos online!");
+                plugin.getMessageUtils().sendMessage(player, "player-not-found");
                 return true;
             }
         }
@@ -459,7 +459,8 @@ public class EffectCommand implements CommandExecutor {
             }
         }
 
-        String what = removedItem && removedEffect ? "Minden" : (removedItem ? "Item" : "Effect");
+        String whatKey = removedItem && removedEffect ? "cooldown-type-all" : (removedItem ? "cooldown-type-item" : "cooldown-type-effect");
+        String what = plugin.getMessageUtils().getMessage(whatKey);
 
         if (target.equals(player)) {
             plugin.getMessageUtils().sendMessage(player, "admin-cooldown-cleared-self",

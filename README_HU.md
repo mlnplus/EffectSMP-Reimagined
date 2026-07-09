@@ -49,10 +49,11 @@ A legdinamikusabb mozgási és védelmi stílus:
 Készíts vagy keress legendás tárgyakat a képességek manipulálásához és a harcok irányításához. *Minden recept és cooldown teljesen testreszabható az `items.yml`-ben!*
 
 - ❤️ **Effect Szív (Heart)**: Elhasználva +1 Szívet ad. Shardból és Gyémántból készíthető.
-- 💎 **Effect Shard**: Minden egyedi tárgy alapja. Világszerte megtalálható ládákban:
+- 💎 **Effect Shard**: Minden egyedi tárgy alapja. Világszerte megtalálható ládákban és mob kiejtésekben:
   - 🏛️ **Ősi Város Láda (Ancient City)**: 2.5% esély
   - 🚢 **Végváros Hajó Láda (End City Ship)**: 5.0% esély
   - 🏡 **Erdei Kastély Láda (Woodland Mansion)**: 2.0% esély
+  - 👹 **Warden Szörnyek**: 5.0% kiejtési esély halálkor
 - 🔄 **Reroll**: Megváltoztatja az aktív effekted egy véletlenszerű Közönséges/Ritka effektre.
 - 🌟 **OP Reroll**: Megváltoztatja az aktív effekted egy véletlenszerű Epikus/Legendás effektre.
 - ⚔️ **Egyedi Fegyverek** (3. Szint szükséges):

@@ -112,40 +112,51 @@ public class RecipeGUI {
         // Ancient City
         ItemStack ancient = new ItemStack(Material.SCULK_SENSOR);
         ItemMeta ancientMeta = ancient.getItemMeta();
-        ancientMeta.displayName(parseNoItalic("&3&lŐsi Város Láda (Ancient City)"));
+        ancientMeta.displayName(getNoItalic("gui-shard-info-ancient-name"));
         List<Component> ancientLore = new ArrayList<>();
         ancientLore.add(Component.empty());
-        ancientLore.add(parseNoItalic("&7Megtalálási esély: &e2.5%"));
+        ancientLore.add(getNoItalic("gui-shard-info-ancient-lore"));
         ancientMeta.lore(ancientLore);
         ancient.setItemMeta(ancientMeta);
-        inv.setItem(10, ancient);
+        inv.setItem(9, ancient);
 
         // End City Ship
         ItemStack endCity = new ItemStack(Material.ELYTRA);
         ItemMeta endMeta = endCity.getItemMeta();
-        endMeta.displayName(parseNoItalic("&d&lVégváros Hajó Láda (End City Ship)"));
+        endMeta.displayName(getNoItalic("gui-shard-info-end-name"));
         List<Component> endLore = new ArrayList<>();
         endLore.add(Component.empty());
-        endLore.add(parseNoItalic("&7Megtalálási esély: &e5.0%"));
+        endLore.add(getNoItalic("gui-shard-info-end-lore"));
         endMeta.lore(endLore);
         endCity.setItemMeta(endMeta);
-        inv.setItem(12, endCity);
+        inv.setItem(11, endCity);
 
         // Woodland Mansion
         ItemStack mansion = new ItemStack(Material.DARK_OAK_LOG);
         ItemMeta mansionMeta = mansion.getItemMeta();
-        mansionMeta.displayName(parseNoItalic("&2&lErdei Kastély Láda (Woodland Mansion)"));
+        mansionMeta.displayName(getNoItalic("gui-shard-info-mansion-name"));
         List<Component> mansionLore = new ArrayList<>();
         mansionLore.add(Component.empty());
-        mansionLore.add(parseNoItalic("&7Megtalálási esély: &e2.0%"));
+        mansionLore.add(getNoItalic("gui-shard-info-mansion-lore"));
         mansionMeta.lore(mansionLore);
         mansion.setItemMeta(mansionMeta);
-        inv.setItem(14, mansion);
+        inv.setItem(13, mansion);
+
+        // Warden Drop
+        ItemStack warden = new ItemStack(Material.ECHO_SHARD);
+        ItemMeta wardenMeta = warden.getItemMeta();
+        wardenMeta.displayName(getNoItalic("gui-shard-info-warden-name"));
+        List<Component> wardenLore = new ArrayList<>();
+        wardenLore.add(Component.empty());
+        wardenLore.add(getNoItalic("gui-shard-info-warden-lore"));
+        wardenMeta.lore(wardenLore);
+        warden.setItemMeta(wardenMeta);
+        inv.setItem(15, warden);
 
         // Target shard
         ItemStack shard = plugin.getCustomItems().getItemByName("shard");
         if (shard != null) {
-            inv.setItem(16, shard);
+            inv.setItem(17, shard);
         }
 
         inv.setItem(26, createBackItem());

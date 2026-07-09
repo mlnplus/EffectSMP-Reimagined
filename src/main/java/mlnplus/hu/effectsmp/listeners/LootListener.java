@@ -3,6 +3,8 @@ package mlnplus.hu.effectsmp.listeners;
 import mlnplus.hu.effectsmp.Effectsmp;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.entity.EntityType;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -34,6 +36,18 @@ public class LootListener implements Listener {
             ItemStack shard = plugin.getCustomItems().getItemByName("shard");
             if (shard != null) {
                 event.getLoot().add(shard);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEntityDeath(EntityDeathEvent event) {
+        if (event.getEntityType() == EntityType.WARDEN) {
+            if (Math.random() < 0.05) { // 5% chance
+                ItemStack shard = plugin.getCustomItems().getItemByName("shard");
+                if (shard != null) {
+                    event.getDrops().add(shard);
+                }
             }
         }
     }

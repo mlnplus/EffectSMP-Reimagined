@@ -445,4 +445,17 @@ rarity-epic: "&dEpic"
 rarity-legendary: "&6Legendary"
 
 gui-effects-rarity-format: "&7Rarity: %rarity%"
-gui-effects-pass-wind: "&7Infinite wind charge (Lvl 1), fall damage immunity (Lvl 2)."
+gui-effects-pass-wind: "&7Infinite wind charge, sneak while landing to negate fall damage (Lvl 1), full fall immunity (Lvl 2)."
+
+gui-shard-info-ancient-name: "&3&lAncient City Chest"
+gui-shard-info-ancient-lore: "&7Spawn chance: &e2.5%"
+gui-shard-info-end-name: "&d&lEnd City Ship"
+gui-shard-info-end-lore: "&7Spawn chance: &e5.0%"
+gui-shard-info-mansion-name: "&2&lWoodland Mansion"
+gui-shard-info-mansion-lore: "&7Spawn chance: &e2.0%"
+gui-shard-info-warden-name: "&4&lWarden Drop"
+gui-shard-info-warden-lore: "&7Drop chance: &e5.0%"
+
+cooldown-type-all: "All"
+cooldown-type-item: "Item"
+cooldown-type-effect: "Effect"
