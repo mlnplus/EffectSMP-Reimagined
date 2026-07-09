@@ -67,6 +67,7 @@ public class ConfigManager {
         data = loadUTF8Yaml(dataFile);
     }
 
+    @SuppressWarnings("null")
     private void checkAndLoadMessages(String messageFileName) {
         messagesFile = new File(plugin.getDataFolder(), messageFileName);
         boolean updateNeeded = false;

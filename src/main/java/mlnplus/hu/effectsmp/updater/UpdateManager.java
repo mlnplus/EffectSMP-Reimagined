@@ -12,9 +12,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+@SuppressWarnings("deprecation")
 public class UpdateManager {
 
     private final Effectsmp plugin;
@@ -32,7 +32,7 @@ public class UpdateManager {
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
-                HttpURLConnection connection = (HttpURLConnection) new URL(GITHUB_API_URL).openConnection();
+                HttpURLConnection connection = (HttpURLConnection) java.net.URI.create(GITHUB_API_URL).toURL().openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("User-Agent", "EffectSMP-Updater");
                 connection.setConnectTimeout(5000);
@@ -44,7 +44,6 @@ public class UpdateManager {
                 }
 
                 InputStreamReader reader = new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8);
-                @SuppressWarnings("deprecation")
                 JsonElement rootElement = new JsonParser().parse(reader);
                 reader.close();
 
@@ -137,7 +136,7 @@ public class UpdateManager {
 
             File targetFile = new File(updateFolder, runningJar.getName());
 
-            HttpURLConnection connection = (HttpURLConnection) new URL(downloadUrl).openConnection();
+            HttpURLConnection connection = (HttpURLConnection) java.net.URI.create(downloadUrl).toURL().openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("User-Agent", "EffectSMP-Updater");
             connection.setConnectTimeout(10000);
@@ -147,7 +146,7 @@ public class UpdateManager {
             int status = connection.getResponseCode();
             if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == 307 || status == 308) {
                 String newUrl = connection.getHeaderField("Location");
-                connection = (HttpURLConnection) new URL(newUrl).openConnection();
+                connection = (HttpURLConnection) java.net.URI.create(newUrl).toURL().openConnection();
                 connection.setRequestProperty("User-Agent", "EffectSMP-Updater");
             }
 
