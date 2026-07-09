@@ -102,6 +102,7 @@ public class ActionBarManager {
             case HASTE, SPEED -> 30000;
             case FIRE_RESISTANCE, DOLPHIN_GRACE -> 15000;
             case HEALTH_BOOST -> 30000;
+            case WIND_CHARGED -> 0;
             case RESISTANCE -> 20000;
             case STRENGTH -> 15000;
             case REGENERATION -> 30000;
