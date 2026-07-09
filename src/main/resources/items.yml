@@ -1,0 +1,100 @@
+# EffectSMP Custom Items & Recipes
+# All custom items, their recipes, and cooldowns are defined here
+
+# Reroll - Normal effect reroll
+reroll:
+  enabled: true
+  shape:
+    - "ESE"
+    - "SDS"
+    - "ESE"
+  ingredients:
+    E: ENDER_PEARL
+    S: PRISMARINE_SHARD
+    D: DIAMOND
+
+# OP Reroll - OP effect (Resistance, Strength, Regeneration)
+op_reroll:
+  enabled: true
+  shape:
+    - "ENE"
+    - "NSN"
+    - "ENE"
+  ingredients:
+    E: END_CRYSTAL
+    N: NETHER_STAR
+    S: PRISMARINE_SHARD
+
+# Effect Mace - Wind charge launcher
+effect_mace:
+  enabled: true
+  cooldown: 60 # Cooldown in seconds
+  shape:
+    - "BNB"
+    - "BSB"
+    - " S "
+  ingredients:
+    B: BREEZE_ROD
+    N: NETHER_STAR
+    S: STICK
+
+# Effect Sword - Critical hit mode
+effect_sword:
+  enabled: true
+  cooldown: 150 # Cooldown in seconds
+  shape:
+    - " D "
+    - " D "
+    - " S "
+  ingredients:
+    D: NETHERITE_INGOT
+    S: NETHER_STAR
+
+# Effect Bow - Explosion arrows
+effect_bow:
+  enabled: true
+  cooldown: 90 # Cooldown in seconds
+  shape:
+    - " TN"
+    - "T N"
+    - " TN"
+  ingredients:
+    T: TNT
+    N: NETHER_STAR
+
+# Effect Scythe - Freeze enemies
+effect_scythe:
+  enabled: true
+  cooldown: 150 # Cooldown in seconds
+  shape:
+    - "IIN"
+    - " S "
+    - " S "
+  ingredients:
+    I: NETHERITE_INGOT
+    N: NETHER_STAR
+    S: STICK
+
+# Effect Spear - Charge big lunge
+effect_spear:
+  enabled: true
+  cooldown: 10 # Cooldown in seconds
+  shape:
+    - "  N"
+    - " I "
+    - "S  "
+  ingredients:
+    N: NETHER_STAR
+    I: NETHERITE_INGOT
+    S: STICK
+
+# Effect Heart - Extra life / currency
+effect_heart:
+  enabled: true
+  shape:
+    - " S "
+    - "SDS"
+    - " S "
+  ingredients:
+    S: effect_shard
+    D: DIAMOND

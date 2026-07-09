@@ -10,6 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.time.Duration;
 import java.util.Random;
 
+@SuppressWarnings("null")
 public class RollAnimationManager {
 
     private final Effectsmp plugin;
@@ -67,7 +68,10 @@ public class RollAnimationManager {
                     player.showTitle(Title.title(titleComp, Component.empty(),
                             Title.Times.times(Duration.ZERO, Duration.ofMillis(500), Duration.ZERO)));
 
-                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1.0f, 2.0f);
+                    org.bukkit.Location loc = player.getLocation();
+                    if (loc != null) {
+                        player.playSound(loc, Sound.UI_BUTTON_CLICK, 1.0f, 2.0f);
+                    }
                 }
 
                 tick++;

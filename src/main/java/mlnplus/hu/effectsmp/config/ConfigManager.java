@@ -17,12 +17,12 @@ public class ConfigManager {
 
     private FileConfiguration config;
     private FileConfiguration messages;
-    private FileConfiguration recipes;
+    private FileConfiguration items;
     private FileConfiguration data;
 
     private File configFile;
     private File messagesFile;
-    private File recipesFile;
+    private File itemsFile;
     private File dataFile;
 
     public ConfigManager(Effectsmp plugin) {
@@ -48,28 +48,13 @@ public class ConfigManager {
 
         String lang = config.getString("language", "en");
         String messageFileName = "messages_" + lang + ".yml";
+        checkAndLoadMessages(messageFileName);
 
-        messagesFile = new File(plugin.getDataFolder(), messageFileName);
-        if (!messagesFile.exists()) {
-            try {
-                plugin.saveResource(messageFileName, false);
-            } catch (IllegalArgumentException e) {
-                plugin.getLogger().warning(
-                        "Language file " + messageFileName + " not found in JAR. Falling back to messages_hu.yml");
-                messageFileName = "messages_hu.yml";
-                messagesFile = new File(plugin.getDataFolder(), messageFileName);
-                if (!messagesFile.exists()) {
-                    plugin.saveResource("messages_hu.yml", false);
-                }
-            }
+        itemsFile = new File(plugin.getDataFolder(), "items.yml");
+        if (!itemsFile.exists()) {
+            plugin.saveResource("items.yml", false);
         }
-        messages = loadUTF8Yaml(messagesFile);
-
-        recipesFile = new File(plugin.getDataFolder(), "recipes.yml");
-        if (!recipesFile.exists()) {
-            plugin.saveResource("recipes.yml", false);
-        }
-        recipes = loadUTF8Yaml(recipesFile);
+        items = loadUTF8Yaml(itemsFile);
 
         dataFile = new File(plugin.getDataFolder(), "data.yml");
         if (!dataFile.exists()) {
@@ -82,24 +67,46 @@ public class ConfigManager {
         data = loadUTF8Yaml(dataFile);
     }
 
+    private void checkAndLoadMessages(String messageFileName) {
+        messagesFile = new File(plugin.getDataFolder(), messageFileName);
+        boolean updateNeeded = false;
+        if (messagesFile.exists()) {
+            FileConfiguration temp = loadUTF8Yaml(messagesFile);
+            if (temp.getInt("version", 0) < 5) {
+                updateNeeded = true;
+                File backupFile = new File(plugin.getDataFolder(), messageFileName + ".old");
+                if (backupFile.exists()) {
+                    backupFile.delete();
+                }
+                messagesFile.renameTo(backupFile);
+                plugin.getLogger().info("Outdated " + messageFileName + " backed up as " + messageFileName + ".old and updated to version 5.");
+            }
+        }
+        if (!messagesFile.exists() || updateNeeded) {
+            try {
+                plugin.saveResource(messageFileName, true);
+                messagesFile = new File(plugin.getDataFolder(), messageFileName);
+            } catch (IllegalArgumentException e) {
+                plugin.getLogger().warning(
+                        "Language file " + messageFileName + " not found in JAR. Falling back to messages_hu.yml");
+                messageFileName = "messages_hu.yml";
+                messagesFile = new File(plugin.getDataFolder(), messageFileName);
+                if (!messagesFile.exists()) {
+                    plugin.saveResource("messages_hu.yml", false);
+                }
+            }
+        }
+        messages = loadUTF8Yaml(messagesFile);
+    }
+
     public void reload() {
         config = loadUTF8Yaml(configFile);
 
         String lang = config.getString("language", "hu");
         String messageFileName = "messages_" + lang + ".yml";
-        messagesFile = new File(plugin.getDataFolder(), messageFileName);
-        if (!messagesFile.exists()) {
-            try {
-                plugin.saveResource(messageFileName, false);
-            } catch (IllegalArgumentException e) {
-                plugin.getLogger().warning("Language file " + messageFileName + " not found in JAR.");
-            }
-        }
-        if (messagesFile.exists()) {
-            messages = loadUTF8Yaml(messagesFile);
-        }
+        checkAndLoadMessages(messageFileName);
 
-        recipes = loadUTF8Yaml(recipesFile);
+        items = loadUTF8Yaml(itemsFile);
         data = loadUTF8Yaml(dataFile);
     }
 
@@ -119,8 +126,8 @@ public class ConfigManager {
         return messages;
     }
 
-    public FileConfiguration getRecipes() {
-        return recipes;
+    public FileConfiguration getItemsConfig() {
+        return items;
     }
 
     public FileConfiguration getData() {

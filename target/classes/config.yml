@@ -26,3 +26,10 @@ settings:
   
   # Limit crafting of special weapons to 1 per server
   limited-crafting-enabled: true
+
+# Updater settings
+updater:
+  # Check for updates on startup
+  check-updates: true
+  # Automatically download updates into the plugins/update folder (requires server restart to apply)
+  auto-download: false

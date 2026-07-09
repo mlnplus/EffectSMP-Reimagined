@@ -366,14 +366,14 @@ item-mace-name: "&5&l⚔ Effect Mace"
 item-mace-lore-ability: "&dAbility:"
 item-mace-lore-1: "&7Launches you in air, shockwave"
 item-mace-lore-2: "&7on landing!"
-item-mace-lore-cooldown: "&cCooldown: 5 minutes"
+item-mace-lore-cooldown: "&cCooldown: %time%"
 item-mace-lore-usage: "&e▸ Right Click to use"
 
 item-sword-name: "&c&l⚔ Effect Sword"
 item-sword-lore-ability: "&dAbility:"
 item-sword-lore-1: "&7For 10 seconds every hit"
 item-sword-lore-2: "&71.5x damage + 2x attack speed!"
-item-sword-lore-cooldown: "&cCooldown: 5 minutes"
+item-sword-lore-cooldown: "&cCooldown: %time%"
 item-sword-lore-usage: "&e▸ Shift + Right Click to use"
 
 item-bow-name: "&6&l➹ Effect Bow"
@@ -381,11 +381,68 @@ item-bow-lore-ability: "&dAbility:"
 item-bow-lore-1: "&7Curse arrow - enemies are"
 item-bow-lore-2: "&7slowed, weakened and glowing!"
 item-bow-lore-chance: "&c10% chance for curse arrow"
+item-bow-lore-cooldown: "&cCooldown: %time%"
 item-bow-lore-usage: "&e▸ Passive ability"
 
 item-scythe-name: "&3&l⚰ Effect Scythe"
 item-scythe-lore-ability: "&dAbility:"
 item-scythe-lore-1: "&7Freezes all enemy players"
 item-scythe-lore-2: "&7for 5 seconds!"
-item-scythe-lore-cooldown: "&cCooldown: 5 minutes"
+item-scythe-lore-cooldown: "&cCooldown: %time%"
 item-scythe-lore-usage: "&e▸ Shift + Right Click to use"
+
+version: 5
+
+# ─────────────────────────────────────────────────────────────────────
+#                         SPEAR MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+spear-cooldown: "&cSpear is on cooldown! &7(%time%)"
+item-spear-name: "&6&l➹ Effect Spear"
+item-spear-lore-ability: "&dAbility:"
+item-spear-lore-1: "&7Hold right click to charge"
+item-spear-lore-2: "&7a really big lunge!"
+item-spear-lore-cooldown: "&cCooldown: %time%"
+item-spear-lore-usage: "&e▸ Hold Right Click to charge"
+
+# ─────────────────────────────────────────────────────────────────────
+#                         GUI MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+gui-effects-title: "&5&lEffects Description"
+gui-effects-passive-title: "&9&lPassive Ability:"
+gui-effects-active-title: "&d&lActive Ability:"
+gui-effects-cooldown-format: "&cCooldown: %time%"
+gui-effects-pass-invis: "&7Grants permanent invisibility (Invisibility I)."
+gui-effects-pass-hero: "&7Villagers offer trade discounts (Hero of the Village I)."
+gui-effects-pass-haste: "&7Increases mining speed (Haste I)."
+gui-effects-pass-fire: "&7Grants permanent fire resistance (Fire Resistance I)."
+gui-effects-pass-speed: "&7Increases movement speed (Speed I)."
+gui-effects-pass-dolphin: "&7Increases swimming speed (Dolphin Grace I)."
+gui-effects-pass-health: "&7Adds 2 permanent extra hearts (Health Boost I)."
+gui-effects-pass-resist: "&7Slightly reduces incoming damage (Resistance I)."
+gui-effects-pass-strength: "&7Increases melee attack damage (Strength I)."
+gui-effects-pass-regen: "&7Permanently regenerates health over time (Regeneration I)."
+
+gui-items-title: "&5&lCustom Items"
+gui-items-click-recipe: "&e▸ Click to view crafting recipe!"
+gui-items-click-how-to-get: "&e▸ Click to view how to get!"
+
+gui-recipe-title: "&5&lCrafting Recipe"
+gui-recipe-arrow-name: "&aCrafts into:"
+gui-back-items-name: "&c&l⬅ Back to items"
+gui-shard-info-title: "&5&lShard Obtain Details"
+
+wind-charged-need-shift: "&cYou must sneak (Shift) to activate the Wind Charged ability!"
+wind-charged-activated: "&b&l⚡ Wind Charged activated! All enemies knocked back!"
+wind-charged-victim: "&b&l⚡ A wind burst sent you flying!"
+active-desc-wind-charged: "&7Powerful wind burst that knocks back all enemies and launches you high"
+item-infinite-wind-charge-name: "&b&l⚡ Infinite Wind Charge"
+item-infinite-wind-charge-lore-1: "&7This wind charge is never consumed"
+item-infinite-wind-charge-lore-2: "&7and does not drop on death!"
+
+rarity-common: "&7Common"
+rarity-rare: "&bRare"
+rarity-epic: "&dEpic"
+rarity-legendary: "&6Legendary"
+
+gui-effects-rarity-format: "&7Rarity: %rarity%"
+gui-effects-pass-wind: "&7Infinite wind charge (Lvl 1), fall damage immunity (Lvl 2)."

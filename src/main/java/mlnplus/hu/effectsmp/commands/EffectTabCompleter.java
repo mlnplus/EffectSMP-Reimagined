@@ -13,17 +13,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("null")
 public class EffectTabCompleter implements TabCompleter {
 
     private static final List<String> MAIN_COMMANDS = Arrays.asList(
-            "activate", "info", "withdraw", "trust", "untrust", "toggle",
+            "activate", "info", "effects", "items", "withdraw", "trust", "untrust", "toggle",
             "set", "give", "reload", "start", "removecooldown", "rc", "craftreset");
 
     private static final List<String> ITEMS = Arrays.asList(
-            "heart", "shard", "reroll", "op_reroll", "mace", "sword", "bow", "scythe");
+            "heart", "shard", "reroll", "op_reroll", "mace", "sword", "bow", "scythe", "spear");
 
     private static final List<String> LIMITED_ITEMS = Arrays.asList(
-            "effect_sword", "effect_mace", "effect_bow", "effect_scythe", "all");
+            "effect_sword", "effect_mace", "effect_bow", "effect_scythe", "effect_spear", "all");
 
     private static final List<String> COOLDOWN_TYPES = Arrays.asList("item", "effect", "all");
 
@@ -56,11 +57,11 @@ public class EffectTabCompleter implements TabCompleter {
         } else if (args.length == 2) {
             String subCommand = args[0].toLowerCase();
             String input = args[1].toLowerCase();
-
             switch (subCommand) {
                 case "trust", "untrust" -> {
                     completions = Bukkit.getOnlinePlayers().stream()
-                            .map(p -> p.getName())
+                            .filter(p -> p != null && p.getName() != null)
+                            .map(Player::getName)
                             .filter(name -> name.toLowerCase().startsWith(input))
                             .collect(Collectors.toList());
                 }
@@ -105,7 +106,8 @@ public class EffectTabCompleter implements TabCompleter {
                 if (subCommand.equals("set") || subCommand.equals("give") ||
                         subCommand.equals("removecooldown") || subCommand.equals("rc")) {
                     completions = Bukkit.getOnlinePlayers().stream()
-                            .map(p -> p.getName())
+                            .filter(p -> p != null && p.getName() != null)
+                            .map(Player::getName)
                             .filter(name -> name.toLowerCase().startsWith(input))
                             .collect(Collectors.toList());
                 }

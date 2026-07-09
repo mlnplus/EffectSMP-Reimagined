@@ -19,7 +19,7 @@ import java.util.List;
 
 import net.kyori.adventure.text.format.TextDecoration;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "null"})
 public class CustomItems {
 
         private final Effectsmp plugin;
@@ -32,6 +32,7 @@ public class CustomItems {
         public static final int CMD_EFFECT_SWORD = 1006;
         public static final int CMD_EFFECT_BOW = 1007;
         public static final int CMD_EFFECT_SCYTHE = 1008;
+        public static final int CMD_EFFECT_SPEAR = 1009;
 
         public final NamespacedKey ITEM_KEY;
         public final NamespacedKey COOLDOWN_KEY;
@@ -44,6 +45,32 @@ public class CustomItems {
 
         private Component getNoItalic(String key) {
                 return plugin.getMessageUtils().getMessageComponent(key).decoration(TextDecoration.ITALIC, false);
+        }
+
+        private Component getNoItalicWithTime(String key, long cooldownMs) {
+                String timeStr = plugin.getMessageUtils().formatTime(cooldownMs);
+                String message = plugin.getMessageUtils().getMessage(key).replace("%time%", timeStr);
+                return plugin.getMessageUtils().parse(message)
+                                .decoration(TextDecoration.ITALIC, false);
+        }
+
+        public ItemStack createInfiniteWindCharge() {
+                ItemStack item = new ItemStack(Material.WIND_CHARGE);
+                ItemMeta meta = item.getItemMeta();
+                meta.displayName(getNoItalic("item-infinite-wind-charge-name"));
+                List<Component> lore = new ArrayList<>();
+                lore.add(Component.empty());
+                lore.add(getNoItalic("item-infinite-wind-charge-lore-1"));
+                lore.add(getNoItalic("item-infinite-wind-charge-lore-2"));
+                meta.lore(lore);
+                meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "infinite_wind_charge"), PersistentDataType.STRING, "true");
+                item.setItemMeta(meta);
+                return item;
+        }
+
+        public boolean isInfiniteWindCharge(ItemStack item) {
+                if (item == null || !item.hasItemMeta()) return false;
+                return item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(plugin, "infinite_wind_charge"), PersistentDataType.STRING);
         }
 
         public ItemStack createEffectHeart() {
@@ -146,7 +173,7 @@ public class CustomItems {
                 lore.add(getNoItalic("item-mace-lore-1"));
                 lore.add(getNoItalic("item-mace-lore-2"));
                 lore.add(Component.empty());
-                lore.add(getNoItalic("item-mace-lore-cooldown"));
+                lore.add(getNoItalicWithTime("item-mace-lore-cooldown", plugin.getItemAbilityManager().getMaceCooldown()));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-mace-lore-usage"));
                 meta.lore(lore);
@@ -178,7 +205,7 @@ public class CustomItems {
                 lore.add(getNoItalic("item-sword-lore-1"));
                 lore.add(getNoItalic("item-sword-lore-2"));
                 lore.add(Component.empty());
-                lore.add(getNoItalic("item-sword-lore-cooldown"));
+                lore.add(getNoItalicWithTime("item-sword-lore-cooldown", plugin.getItemAbilityManager().getSwordCooldown()));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-sword-lore-usage"));
                 meta.lore(lore);
@@ -211,6 +238,7 @@ public class CustomItems {
                 lore.add(getNoItalic("item-bow-lore-2"));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-bow-lore-chance"));
+                lore.add(getNoItalicWithTime("item-bow-lore-cooldown", plugin.getItemAbilityManager().getBowCooldown()));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-bow-lore-usage"));
                 meta.lore(lore);
@@ -242,7 +270,7 @@ public class CustomItems {
                 lore.add(getNoItalic("item-scythe-lore-1"));
                 lore.add(getNoItalic("item-scythe-lore-2"));
                 lore.add(Component.empty());
-                lore.add(getNoItalic("item-scythe-lore-cooldown"));
+                lore.add(getNoItalicWithTime("item-scythe-lore-cooldown", plugin.getItemAbilityManager().getScytheCooldown()));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-scythe-lore-usage"));
                 meta.lore(lore);
@@ -254,6 +282,36 @@ public class CustomItems {
 
                 meta.setCustomModelData(CMD_EFFECT_SCYTHE);
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_scythe");
+                meta.setMaxStackSize(1);
+
+                item.setItemMeta(meta);
+                return item;
+        }
+
+        public ItemStack createEffectSpear() {
+                ItemStack item = new ItemStack(Material.TRIDENT);
+                ItemMeta meta = item.getItemMeta();
+
+                meta.displayName(getNoItalic("item-spear-name"));
+
+                List<Component> lore = new ArrayList<>();
+                lore.add(Component.empty());
+                lore.add(getNoItalic("item-spear-lore-ability"));
+                lore.add(getNoItalic("item-spear-lore-1"));
+                lore.add(getNoItalic("item-spear-lore-2"));
+                lore.add(Component.empty());
+                lore.add(getNoItalicWithTime("item-spear-lore-cooldown", plugin.getItemAbilityManager().getSpearCooldown()));
+                lore.add(Component.empty());
+                lore.add(getNoItalic("item-spear-lore-usage"));
+                meta.lore(lore);
+
+                meta.setUnbreakable(true);
+                meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+                meta.addEnchant(Enchantment.SHARPNESS, 5, true);
+                meta.addEnchant(Enchantment.IMPALING, 5, true);
+
+                meta.setCustomModelData(CMD_EFFECT_SPEAR);
+                meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_spear");
                 meta.setMaxStackSize(1);
 
                 item.setItemMeta(meta);
@@ -281,24 +339,27 @@ public class CustomItems {
                         case "effect_sword", "sword" -> createEffectSword();
                         case "effect_bow", "bow" -> createEffectBow();
                         case "effect_scythe", "scythe" -> createEffectScythe();
+                        case "effect_spear", "spear" -> createEffectSpear();
+                        case "infinite_wind_charge", "wind_charge" -> createInfiniteWindCharge();
                         default -> null;
                 };
         }
 
         public void registerRecipes() {
-                FileConfiguration recipes = plugin.getConfigManager().getRecipes();
+                FileConfiguration itemsConfig = plugin.getConfigManager().getItemsConfig();
 
-                registerRecipe("reroll", createReroll(), recipes);
-                registerRecipe("op_reroll", createOPReroll(), recipes);
-                registerRecipe("effect_mace", createEffectMace(), recipes);
-                registerRecipe("effect_sword", createEffectSword(), recipes);
-                registerRecipe("effect_bow", createEffectBow(), recipes);
-                registerRecipe("effect_scythe", createEffectScythe(), recipes);
-                registerRecipe("effect_heart", createEffectHeart(), recipes);
+                registerRecipe("reroll", createReroll(), itemsConfig);
+                registerRecipe("op_reroll", createOPReroll(), itemsConfig);
+                registerRecipe("effect_mace", createEffectMace(), itemsConfig);
+                registerRecipe("effect_sword", createEffectSword(), itemsConfig);
+                registerRecipe("effect_bow", createEffectBow(), itemsConfig);
+                registerRecipe("effect_scythe", createEffectScythe(), itemsConfig);
+                registerRecipe("effect_spear", createEffectSpear(), itemsConfig);
+                registerRecipe("effect_heart", createEffectHeart(), itemsConfig);
         }
 
-        private void registerRecipe(String name, ItemStack result, FileConfiguration recipes) {
-                ConfigurationSection section = recipes.getConfigurationSection(name);
+        private void registerRecipe(String name, ItemStack result, FileConfiguration itemsConfig) {
+                ConfigurationSection section = itemsConfig.getConfigurationSection(name);
                 if (section == null)
                         return;
 

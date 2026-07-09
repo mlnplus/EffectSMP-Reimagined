@@ -50,6 +50,8 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
+        event.getDrops().removeIf(item -> plugin.getCustomItems().isInfiniteWindCharge(item));
+
         Player killer = player.getKiller();
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
 
@@ -119,6 +121,25 @@ public class PlayerListener implements Listener {
 
         if (plugin.getItemAbilityManager().isMaceFlying(player.getUniqueId())) {
             event.setCancelled(true);
+            return;
         }
+
+        PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
+        if (data.getEffect() == mlnplus.hu.effectsmp.effects.EffectType.WIND_CHARGED && data.getEffectHearts() >= 2) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onRespawn(org.bukkit.event.player.PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+            if (player.isOnline()) {
+                PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
+                if (data.getEffect() != null && data.isPassiveEnabled() && data.getEffectHearts() >= 1) {
+                    plugin.getEffectAbilityManager().applyPassiveEffect(player);
+                }
+            }
+        }, 5L);
     }
 }

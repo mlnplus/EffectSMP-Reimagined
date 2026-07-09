@@ -32,41 +32,48 @@ public class MessageUtils {
     }
 
     private boolean isMiniMessage(String message) {
-        if (message == null) return false;
-        if (!message.contains("<") || !message.contains(">")) return false;
+        if (message == null)
+            return false;
+        if (!message.contains("<") || !message.contains(">"))
+            return false;
 
-        // If it contains legacy colors, it's legacy, unless it has a gradient or rainbow tag
-        if (message.contains("&0") || message.contains("&1") || message.contains("&2") || message.contains("&3") || 
-            message.contains("&4") || message.contains("&5") || message.contains("&6") || message.contains("&7") || 
-            message.contains("&8") || message.contains("&9") || message.contains("&a") || message.contains("&b") || 
-            message.contains("&c") || message.contains("&d") || message.contains("&e") || message.contains("&f") || 
-            message.contains("&l") || message.contains("&m") || message.contains("&n") || message.contains("&o") || 
-            message.contains("&r") || message.contains("&A") || message.contains("&B") || message.contains("&C") ||
-            message.contains("&D") || message.contains("&E") || message.contains("&F") || message.contains("&L") ||
-            message.contains("&M") || message.contains("&N") || message.contains("&O") || message.contains("&R")) {
-            
+        // If it contains legacy colors, it's legacy, unless it has a gradient or
+        // rainbow tag
+        if (message.contains("&0") || message.contains("&1") || message.contains("&2") || message.contains("&3") ||
+                message.contains("&4") || message.contains("&5") || message.contains("&6") || message.contains("&7") ||
+                message.contains("&8") || message.contains("&9") || message.contains("&a") || message.contains("&b") ||
+                message.contains("&c") || message.contains("&d") || message.contains("&e") || message.contains("&f") ||
+                message.contains("&l") || message.contains("&m") || message.contains("&n") || message.contains("&o") ||
+                message.contains("&r") || message.contains("&A") || message.contains("&B") || message.contains("&C") ||
+                message.contains("&D") || message.contains("&E") || message.contains("&F") || message.contains("&L") ||
+                message.contains("&M") || message.contains("&N") || message.contains("&O") || message.contains("&R")) {
+
             return message.contains("<gradient") || message.contains("<rainbow");
         }
 
         // Check for common MiniMessage tags to be sure it's meant to be MiniMessage
         return message.contains("<gradient") || message.contains("<rainbow") ||
-               message.contains("<red>") || message.contains("<green>") || message.contains("<blue>") ||
-               message.contains("<yellow>") || message.contains("<gold>") || message.contains("<aqua>") ||
-               message.contains("<gray>") || message.contains("<white>") || message.contains("<black>") ||
-               message.contains("<bold>") || message.contains("<italic>") || message.contains("<underlined>") ||
-               message.contains("<hover:") || message.contains("<click:") || message.contains("<transition") ||
-               message.contains("<font");
+                message.contains("<red>") || message.contains("<green>") || message.contains("<blue>") ||
+                message.contains("<yellow>") || message.contains("<gold>") || message.contains("<aqua>") ||
+                message.contains("<gray>") || message.contains("<white>") || message.contains("<black>") ||
+                message.contains("<bold>") || message.contains("<italic>") || message.contains("<underlined>") ||
+                message.contains("<hover:") || message.contains("<click:") || message.contains("<transition") ||
+                message.contains("<font");
     }
 
     private String translateLegacyToMiniMessage(String message) {
-        if (message == null) return "";
+        if (message == null)
+            return "";
         String result = message;
-        String[] legacy = {"&0", "&1", "&2", "&3", "&4", "&5", "&6", "&7", "&8", "&9", 
-                           "&a", "&b", "&c", "&d", "&e", "&f", "&k", "&l", "&m", "&n", "&o", "&r",
-                           "&A", "&B", "&C", "&D", "&E", "&F", "&K", "&L", "&M", "&N", "&O", "&R"};
-        String[] mini = {"<black>", "<dark_blue>", "<dark_green>", "<dark_aqua>", "<dark_red>", "<dark_purple>", "<gold>", "<gray>", "<dark_gray>", "<blue>",
-                         "<green>", "<aqua>", "<red>", "<light_purple>", "<yellow>", "<white>", "<obfuscated>", "<bold>", "<strikethrough>", "<underlined>", "<italic>", "<reset>",
-                         "<green>", "<aqua>", "<red>", "<light_purple>", "<yellow>", "<white>", "<obfuscated>", "<bold>", "<strikethrough>", "<underlined>", "<italic>", "<reset>"};
+        String[] legacy = { "&0", "&1", "&2", "&3", "&4", "&5", "&6", "&7", "&8", "&9",
+                "&a", "&b", "&c", "&d", "&e", "&f", "&k", "&l", "&m", "&n", "&o", "&r",
+                "&A", "&B", "&C", "&D", "&E", "&F", "&K", "&L", "&M", "&N", "&O", "&R" };
+        String[] mini = { "<black>", "<dark_blue>", "<dark_green>", "<dark_aqua>", "<dark_red>", "<dark_purple>",
+                "<gold>", "<gray>", "<dark_gray>", "<blue>",
+                "<green>", "<aqua>", "<red>", "<light_purple>", "<yellow>", "<white>", "<obfuscated>", "<bold>",
+                "<strikethrough>", "<underlined>", "<italic>", "<reset>",
+                "<green>", "<aqua>", "<red>", "<light_purple>", "<yellow>", "<white>", "<obfuscated>", "<bold>",
+                "<strikethrough>", "<underlined>", "<italic>", "<reset>" };
         for (int i = 0; i < legacy.length; i++) {
             result = result.replace(legacy[i], mini[i]);
         }
@@ -175,12 +182,18 @@ public class MessageUtils {
 
     public String formatTime(long millis) {
         long seconds = millis / 1000;
+        String lang = plugin.getConfigManager().getConfig().getString("language", "en");
+        boolean isHu = "hu".equalsIgnoreCase(lang);
         if (seconds >= 60) {
             long minutes = seconds / 60;
             long remainingSeconds = seconds % 60;
-            return minutes + "p " + remainingSeconds + "mp";
+            if (isHu) {
+                return minutes + "p " + remainingSeconds + "mp";
+            } else {
+                return minutes + "m " + remainingSeconds + "s";
+            }
         }
-        return seconds + "mp";
+        return seconds + (isHu ? "mp" : "s");
     }
 
     public String formatTimeShort(long millis) {

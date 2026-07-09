@@ -8,9 +8,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
+@SuppressWarnings("null")
 public class EffectAbilityManager {
 
     private final Effectsmp plugin;
@@ -69,7 +71,16 @@ public class EffectAbilityManager {
             return;
         }
 
+        if (data.getEffect() == EffectType.WIND_CHARGED) {
+            giveInfiniteWindChargeIfNeeded(player);
+            return;
+        }
+
         PotionEffectType type = data.getEffect().getPotionEffect();
+        if (type == null) {
+            return;
+        }
+
         int amplifier = data.getPassiveAmplifier() + data.getEffect().getPassiveAmplifier();
 
         if (player.hasPotionEffect(type)) {
@@ -84,8 +95,36 @@ public class EffectAbilityManager {
 
         if (data.getEffect() != null) {
             PotionEffectType type = data.getEffect().getPotionEffect();
-            if (player.hasPotionEffect(type)) {
+            if (type != null && player.hasPotionEffect(type)) {
                 player.removePotionEffect(type);
+            }
+            if (data.getEffect() == EffectType.WIND_CHARGED) {
+                removeInfiniteWindCharge(player);
+            }
+        }
+    }
+
+    private void giveInfiniteWindChargeIfNeeded(Player player) {
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (plugin.getCustomItems().isInfiniteWindCharge(item)) {
+                return;
+            }
+        }
+        HashMap<Integer, ItemStack> remaining = player.getInventory().addItem(plugin.getCustomItems().createInfiniteWindCharge());
+        if (remaining != null) {
+            for (ItemStack item : remaining.values()) {
+                if (item != null) {
+                    player.getWorld().dropItemNaturally(player.getLocation(), item);
+                }
+            }
+        }
+    }
+
+    private void removeInfiniteWindCharge(Player player) {
+        ItemStack[] contents = player.getInventory().getContents();
+        for (int i = 0; i < contents.length; i++) {
+            if (plugin.getCustomItems().isInfiniteWindCharge(contents[i])) {
+                player.getInventory().setItem(i, null);
             }
         }
     }
@@ -158,6 +197,40 @@ public class EffectAbilityManager {
         long duration;
 
         switch (effect) {
+            case WIND_CHARGED -> {
+                if (!player.isSneaking()) {
+                    plugin.getMessageUtils().sendMessage(player, "wind-charged-need-shift");
+                    return false;
+                }
+
+                org.bukkit.Location loc = player.getLocation();
+                if (loc == null) return false;
+
+                loc.getWorld().spawnParticle(org.bukkit.Particle.EXPLOSION, loc, 1);
+                loc.getWorld().spawnParticle(org.bukkit.Particle.CLOUD, loc, 40, 3.0, 1.0, 3.0, 0.2);
+                loc.getWorld().playSound(loc, org.bukkit.Sound.ENTITY_BREEZE_WIND_BURST, 1.5f, 0.8f);
+
+                UUID uuid = player.getUniqueId();
+                for (org.bukkit.entity.Entity entity : player.getNearbyEntities(8, 4, 8)) {
+                    if (entity instanceof Player target && !target.equals(player)) {
+                        if (!plugin.getPlayerDataManager().isMutualTrust(uuid, target.getUniqueId())) {
+                            org.bukkit.util.Vector diff = target.getLocation().toVector().subtract(loc.toVector()).normalize();
+                            diff.setY(0.55);
+                            diff.multiply(2.2);
+                            target.setVelocity(diff);
+                            plugin.getMessageUtils().sendMessage(target, "wind-charged-victim");
+                        }
+                    }
+                }
+
+                org.bukkit.util.Vector vel = player.getVelocity();
+                vel.setY(2.2);
+                player.setVelocity(vel);
+
+                plugin.getMessageUtils().sendMessage(player, "wind-charged-activated");
+                return true;
+            }
+
             case INVISIBILITY -> {
                 duration = 10000;
                 setAbilityActive(player, data, duration);
@@ -166,6 +239,7 @@ public class EffectAbilityManager {
                         new PotionEffect(PotionEffectType.INVISIBILITY, (int) (duration / 50), 0, false, false));
 
                 for (Player online : Bukkit.getOnlinePlayers()) {
+                    if (online == null) continue;
                     if (!online.equals(player) && !plugin.getPlayerDataManager().isMutualTrust(player.getUniqueId(),
                             online.getUniqueId())) {
                         online.hidePlayer(plugin, player);
@@ -180,6 +254,7 @@ public class EffectAbilityManager {
                     public void run() {
                         if (player.isOnline()) {
                             for (Player online : Bukkit.getOnlinePlayers()) {
+                                if (online == null) continue;
                                 online.showPlayer(plugin, player);
                             }
                             plugin.getActionBarManager().sendAbilityExpired(player);

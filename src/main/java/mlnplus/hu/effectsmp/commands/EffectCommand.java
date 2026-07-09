@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
+@SuppressWarnings("null")
 public class EffectCommand implements CommandExecutor {
 
     private final Effectsmp plugin;
@@ -37,6 +38,14 @@ public class EffectCommand implements CommandExecutor {
             }
             case "info" -> {
                 plugin.getGuiManager().openInfoGUI(player);
+                return true;
+            }
+            case "effects" -> {
+                plugin.getGuiManager().openEffectsGUI(player);
+                return true;
+            }
+            case "items" -> {
+                plugin.getGuiManager().openItemsGUI(player);
                 return true;
             }
             case "withdraw" -> {
@@ -383,6 +392,7 @@ public class EffectCommand implements CommandExecutor {
         plugin.setGameStarted(true);
 
         for (Player online : Bukkit.getOnlinePlayers()) {
+            if (online == null) continue;
             PlayerData data = plugin.getPlayerDataManager().getPlayerData(online.getUniqueId());
             if (data.getEffect() == null) {
                 plugin.getEffectAbilityManager().assignRandomEffect(online, false);
@@ -483,7 +493,8 @@ public class EffectCommand implements CommandExecutor {
             plugin.getMessageUtils().sendMessage(player, "admin-craftreset-all");
         } else {
             if (!target.equals("effect_sword") && !target.equals("effect_mace") &&
-                    !target.equals("effect_bow") && !target.equals("effect_scythe")) {
+                    !target.equals("effect_bow") && !target.equals("effect_scythe") &&
+                    !target.equals("effect_spear")) {
                 plugin.getMessageUtils().sendMessage(player, "invalid-limited-item");
                 return true;
             }

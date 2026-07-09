@@ -84,6 +84,9 @@ public class MainGUI {
             lore.add(parseNoItalic(
                     plugin.getMessageUtils().getMessage("gui-passive-lore-effect").replace("%effect%",
                             effect.getDisplayName())));
+            String rarityStr = plugin.getMessageUtils().getMessage("rarity-" + effect.getRarity().getKey());
+            lore.add(parseNoItalic(
+                    plugin.getMessageUtils().getMessage("gui-effects-rarity-format").replace("%rarity%", rarityStr)));
         } else {
             lore.add(getNoItalic("gui-passive-lore-none"));
         }
@@ -119,13 +122,16 @@ public class MainGUI {
             lore.add(parseNoItalic(
                     plugin.getMessageUtils().getMessage("gui-passive-lore-effect").replace("%effect%",
                             effect.getDisplayName())));
+            String rarityStr = plugin.getMessageUtils().getMessage("rarity-" + effect.getRarity().getKey());
+            lore.add(parseNoItalic(
+                    plugin.getMessageUtils().getMessage("gui-effects-rarity-format").replace("%rarity%", rarityStr)));
             lore.add(Component.empty());
             lore.add(getNoItalic("gui-active-lore-desc-header"));
             lore.addAll(getAbilityDescription(effect));
             lore.add(Component.empty());
             lore.add(parseNoItalic(
                     plugin.getMessageUtils().getMessage("gui-active-lore-cooldown").replace("%time%",
-                            formatCooldown(effect.getCooldownSeconds()))));
+                            formatCooldown(data.getEffectiveCooldownSeconds()))));
         } else {
             lore.add(getNoItalic("gui-passive-lore-none"));
         }
@@ -176,6 +182,7 @@ public class MainGUI {
             case SPEED -> "active-desc-speed";
             case DOLPHIN_GRACE -> "active-desc-dolphin-grace";
             case HEALTH_BOOST -> "active-desc-health-boost";
+            case WIND_CHARGED -> "active-desc-wind-charged";
             case RESISTANCE -> "active-desc-resistance";
             case STRENGTH -> "active-desc-strength";
             case REGENERATION -> "active-desc-regeneration";
@@ -185,11 +192,24 @@ public class MainGUI {
     }
 
     private String formatCooldown(int seconds) {
+        String lang = plugin.getConfigManager().getConfig().getString("language", "en");
+        boolean isHu = "hu".equalsIgnoreCase(lang);
         if (seconds >= 60) {
             int minutes = seconds / 60;
-            return minutes + " perc";
+            int remaining = seconds % 60;
+            if (isHu) {
+                if (remaining > 0) {
+                    return minutes + " perc " + remaining + " mp";
+                }
+                return minutes + " perc";
+            } else {
+                if (remaining > 0) {
+                    return minutes + " min " + remaining + " sec";
+                }
+                return minutes + (minutes == 1 ? " minute" : " minutes");
+            }
         }
-        return seconds + " mp";
+        return seconds + (isHu ? " mp" : " sec");
     }
 
     public void handleClick(InventoryClickEvent event, Player player) {

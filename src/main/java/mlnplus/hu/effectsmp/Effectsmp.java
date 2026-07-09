@@ -13,6 +13,7 @@ import mlnplus.hu.effectsmp.listeners.*;
 import mlnplus.hu.effectsmp.effects.DashManager;
 import mlnplus.hu.effectsmp.utils.ActionBarManager;
 import mlnplus.hu.effectsmp.utils.MessageUtils;
+import mlnplus.hu.effectsmp.updater.UpdateManager;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,6 +31,7 @@ public final class Effectsmp extends JavaPlugin {
     private ActionBarManager actionBarManager;
     private MessageUtils messageUtils;
     private DashManager dashManager;
+    private UpdateManager updateManager;
 
     private boolean gameStarted = false;
 
@@ -47,6 +49,8 @@ public final class Effectsmp extends JavaPlugin {
         this.guiManager = new GUIManager(this);
         this.actionBarManager = new ActionBarManager(this);
         this.dashManager = new DashManager(this);
+        this.updateManager = new UpdateManager(this);
+        this.updateManager.checkForUpdates();
 
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         getServer().getPluginManager().registerEvents(new ItemListener(this), this);
@@ -55,6 +59,7 @@ public final class Effectsmp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ItemProtectionListener(this), this);
         getServer().getPluginManager().registerEvents(new MiningListener(this), this);
         getServer().getPluginManager().registerEvents(new FreezeListener(this), this);
+        getServer().getPluginManager().registerEvents(new LootListener(this), this);
 
         PluginCommand effectCommand = getCommand("e");
         if (effectCommand != null) {
@@ -137,6 +142,10 @@ public final class Effectsmp extends JavaPlugin {
 
     public DashManager getDashManager() {
         return dashManager;
+    }
+
+    public UpdateManager getUpdateManager() {
+        return updateManager;
     }
 
     public boolean isGameStarted() {

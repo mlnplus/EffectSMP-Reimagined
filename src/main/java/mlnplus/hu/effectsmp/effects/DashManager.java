@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@SuppressWarnings("null")
 public class DashManager {
 
     private final Effectsmp plugin;
@@ -31,6 +32,7 @@ public class DashManager {
     private void startChargeTask() {
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player == null) continue;
                 UUID uuid = player.getUniqueId();
                 PlayerData data = plugin.getPlayerDataManager().getPlayerData(uuid);
 
@@ -104,14 +106,16 @@ public class DashManager {
             return;
         }
 
-        Vector direction = player.getLocation().getDirection();
+        org.bukkit.Location loc = player.getLocation();
+        if (loc == null) return;
+        Vector direction = loc.getDirection();
         direction.setY(Math.max(0.1, direction.getY() * 0.3));
         direction.normalize().multiply(DASH_POWER);
 
         player.setVelocity(direction);
 
-        player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 20, 0.5, 0.5, 0.5, 0.1);
-        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.5f);
+        player.getWorld().spawnParticle(Particle.CLOUD, loc, 20, 0.5, 0.5, 0.5, 0.1);
+        player.playSound(loc, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.5f);
 
         charges--;
         dashCharges.put(uuid, charges);

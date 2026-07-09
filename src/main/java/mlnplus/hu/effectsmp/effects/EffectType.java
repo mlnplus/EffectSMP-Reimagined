@@ -3,32 +3,55 @@ package mlnplus.hu.effectsmp.effects;
 import org.bukkit.potion.PotionEffectType;
 
 public enum EffectType {
-    INVISIBILITY("Invisibility", "§7✧ §fInvisibility", PotionEffectType.INVISIBILITY, false, 600, 1),
-    HERO_OF_VILLAGE("Hero of the Village", "§6✦ §fHero of the Village", PotionEffectType.HERO_OF_THE_VILLAGE, false,
-            600, 1),
-    HASTE("Haste", "§e⚡ §fHaste", PotionEffectType.HASTE, false, 300, 1),
-    FIRE_RESISTANCE("Fire Resistance", "§c🔥 §fFire Resistance", PotionEffectType.FIRE_RESISTANCE, false, 900, 1),
-    SPEED("Speed", "§b➣ §fSpeed", PotionEffectType.SPEED, false, 300, 1),
-    DOLPHIN_GRACE("Dolphin Grace", "§3🌊 §fDolphin Grace", PotionEffectType.DOLPHINS_GRACE, false, 300, 1),
-    HEALTH_BOOST("Health Boost", "§c❤ §fHealth Boost", PotionEffectType.HEALTH_BOOST, false, 1200, 1),
+    INVISIBILITY("Invisibility", "§7✧ §fInvisibility", PotionEffectType.INVISIBILITY, Rarity.RARE, 600, 1),
+    HERO_OF_VILLAGE("Hero of the Village", "§6✦ §fHero of the Village", PotionEffectType.HERO_OF_THE_VILLAGE, Rarity.COMMON, 600, 1),
+    HASTE("Haste", "§e⚡ §fHaste", PotionEffectType.HASTE, Rarity.RARE, 300, 1),
+    FIRE_RESISTANCE("Fire Resistance", "§c🔥 §fFire Resistance", PotionEffectType.FIRE_RESISTANCE, Rarity.COMMON, 900, 1),
+    SPEED("Speed", "§b➣ §fSpeed", PotionEffectType.SPEED, Rarity.RARE, 300, 1),
+    DOLPHIN_GRACE("Dolphin Grace", "§3🌊 §fDolphin Grace", PotionEffectType.DOLPHINS_GRACE, Rarity.COMMON, 300, 1),
+    HEALTH_BOOST("Health Boost", "§c❤ §fHealth Boost", PotionEffectType.HEALTH_BOOST, Rarity.EPIC, 1200, 1),
+    WIND_CHARGED("Wind Charged", "§b⚡ §fWind Charged", null, Rarity.RARE, 60, 0),
 
-    RESISTANCE("Resistance", "§9⛊ §9Resistance", PotionEffectType.RESISTANCE, true, 900, 1),
-    STRENGTH("Strength", "§4⚔ §4Strength", PotionEffectType.STRENGTH, true, 900, 1),
-    REGENERATION("Regeneration", "§c❤ §cRegeneration", PotionEffectType.REGENERATION, true, 900, 1);
+    RESISTANCE("Resistance", "§9⛊ §9Resistance", PotionEffectType.RESISTANCE, Rarity.LEGENDARY, 900, 1),
+    STRENGTH("Strength", "§4⚔ §4Strength", PotionEffectType.STRENGTH, Rarity.LEGENDARY, 900, 1),
+    REGENERATION("Regeneration", "§c❤ §cRegeneration", PotionEffectType.REGENERATION, Rarity.EPIC, 900, 1);
+
+    public enum Rarity {
+        COMMON("§8[§7Közönséges§8]", "common"),
+        RARE("§8[§bRitka§8]", "rare"),
+        EPIC("§8[§dEpikus§8]", "epic"),
+        LEGENDARY("§8[§6Legendás§8]", "legendary");
+
+        private final String displayName;
+        private final String key;
+
+        Rarity(String displayName, String key) {
+            this.displayName = displayName;
+            this.key = key;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public String getKey() {
+            return key;
+        }
+    }
 
     private final String name;
     private final String displayName;
     private final PotionEffectType potionEffect;
-    private final boolean isOP;
+    private final Rarity rarity;
     private final int cooldownSeconds;
     private final int passiveAmplifier;
 
-    EffectType(String name, String displayName, PotionEffectType potionEffect, boolean isOP, int cooldownSeconds,
+    EffectType(String name, String displayName, PotionEffectType potionEffect, Rarity rarity, int cooldownSeconds,
             int passiveAmplifier) {
         this.name = name;
         this.displayName = displayName;
         this.potionEffect = potionEffect;
-        this.isOP = isOP;
+        this.rarity = rarity;
         this.cooldownSeconds = cooldownSeconds;
         this.passiveAmplifier = passiveAmplifier;
     }
@@ -46,7 +69,11 @@ public enum EffectType {
     }
 
     public boolean isOP() {
-        return isOP;
+        return rarity == Rarity.EPIC || rarity == Rarity.LEGENDARY;
+    }
+
+    public Rarity getRarity() {
+        return rarity;
     }
 
     public int getCooldownSeconds() {
@@ -67,11 +94,22 @@ public enum EffectType {
     }
 
     public static EffectType[] getNormalEffects() {
-        return new EffectType[] { INVISIBILITY, HERO_OF_VILLAGE, HASTE, FIRE_RESISTANCE, SPEED, DOLPHIN_GRACE,
-                HEALTH_BOOST };
+        java.util.List<EffectType> list = new java.util.ArrayList<>();
+        for (EffectType type : values()) {
+            if (type.getRarity() == Rarity.COMMON || type.getRarity() == Rarity.RARE) {
+                list.add(type);
+            }
+        }
+        return list.toArray(new EffectType[0]);
     }
 
     public static EffectType[] getOPEffects() {
-        return new EffectType[] { RESISTANCE, STRENGTH, REGENERATION };
+        java.util.List<EffectType> list = new java.util.ArrayList<>();
+        for (EffectType type : values()) {
+            if (type.getRarity() == Rarity.EPIC || type.getRarity() == Rarity.LEGENDARY) {
+                list.add(type);
+            }
+        }
+        return list.toArray(new EffectType[0]);
     }
 }

@@ -1,24 +1,29 @@
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\commands\EffectCommand.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\commands\EffectTabCompleter.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\config\ConfigManager.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\data\PlayerData.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\data\PlayerDataManager.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\effects\DashManager.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\effects\EffectAbilityManager.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\effects\EffectType.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\effects\RollAnimationManager.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\Effectsmp.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\gui\GUIManager.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\gui\InfoGUI.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\gui\MainGUI.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\items\CustomItems.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\items\ItemAbilityManager.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\CraftingListener.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\FreezeListener.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\GUIListener.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\ItemListener.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\ItemProtectionListener.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\MiningListener.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\PlayerListener.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\utils\ActionBarManager.java
-C:\mlnplus\IdeaProjects\EffectSMP\src\main\java\mlnplus\hu\effectsmp\utils\MessageUtils.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\commands\EffectCommand.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\commands\EffectTabCompleter.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\config\ConfigManager.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\data\PlayerData.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\data\PlayerDataManager.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\effects\DashManager.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\effects\EffectAbilityManager.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\effects\EffectType.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\effects\RollAnimationManager.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\Effectsmp.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\gui\EffectsGUI.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\gui\GUIManager.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\gui\InfoGUI.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\gui\ItemsGUI.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\gui\MainGUI.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\gui\RecipeGUI.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\items\CustomItems.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\items\ItemAbilityManager.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\CraftingListener.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\FreezeListener.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\GUIListener.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\ItemListener.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\ItemProtectionListener.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\LootListener.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\MiningListener.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\listeners\PlayerListener.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\updater\UpdateManager.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\utils\ActionBarManager.java
+C:\mlnplus\mlnplus' Plugins\EffectSMP\src\main\java\mlnplus\hu\effectsmp\utils\MessageUtils.java

@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashSet;
 import java.util.Set;
 
+@SuppressWarnings("null")
 public class MiningListener implements Listener {
 
     private final Effectsmp plugin;
@@ -76,8 +78,9 @@ public class MiningListener implements Listener {
     }
 
     private BlockFace getPlayerFacingFace(Player player) {
-        float pitch = player.getLocation().getPitch();
-        float yaw = player.getLocation().getYaw();
+        Location loc = player.getLocation();
+        float pitch = loc != null ? loc.getPitch() : 0.0f;
+        float yaw = loc != null ? loc.getYaw() : 0.0f;
 
         if (pitch < -45)
             return BlockFace.DOWN;

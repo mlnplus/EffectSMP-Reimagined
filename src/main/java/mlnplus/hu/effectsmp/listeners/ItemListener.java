@@ -3,6 +3,8 @@ package mlnplus.hu.effectsmp.listeners;
 import mlnplus.hu.effectsmp.Effectsmp;
 import mlnplus.hu.effectsmp.data.PlayerData;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -41,6 +43,24 @@ public class ItemListener implements Listener {
             return;
 
         if ("effect_bow".equals(itemType)) {
+            return;
+        }
+
+        if ("effect_spear".equals(itemType)) {
+            if (plugin.getItemAbilityManager().isSpearOnCooldown(player.getUniqueId())) {
+                long remaining = plugin.getItemAbilityManager().getSpearRemainingCooldown(player.getUniqueId());
+                plugin.getMessageUtils().sendMessage(player, "spear-cooldown",
+                        "%time%", plugin.getMessageUtils().formatTime(remaining));
+                event.setCancelled(true);
+                return;
+            }
+            PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
+            if (data.getEffectHearts() < 3) {
+                plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
+                event.setCancelled(true);
+                return;
+            }
+            plugin.getItemAbilityManager().startSpearCharge(player.getUniqueId());
             return;
         }
 
@@ -183,5 +203,54 @@ public class ItemListener implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         plugin.getItemAbilityManager().checkMaceLanding(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onProjectileLaunch(org.bukkit.event.entity.ProjectileLaunchEvent event) {
+        if (event.getEntity() instanceof org.bukkit.entity.Trident trident) {
+            if (trident.getShooter() instanceof Player player) {
+                ItemStack item = player.getInventory().getItemInMainHand();
+                String itemType = plugin.getCustomItems().getItemType(item);
+                if (!"effect_spear".equals(itemType)) {
+                    item = player.getInventory().getItemInOffHand();
+                    itemType = plugin.getCustomItems().getItemType(item);
+                }
+                if ("effect_spear".equals(itemType)) {
+                    event.setCancelled(true);
+                    plugin.getItemAbilityManager().performSpearLunge(player);
+                }
+            }
+        } else if (event.getEntity() instanceof org.bukkit.entity.WindCharge windCharge) {
+            if (windCharge.getShooter() instanceof Player player) {
+                PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
+                if (data.getEffect() == mlnplus.hu.effectsmp.effects.EffectType.WIND_CHARGED && data.getEffectHearts() >= 1) {
+                    EquipmentSlot slot = player.getInventory().getItemInMainHand().getType() == Material.WIND_CHARGE ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND;
+                    ItemStack item = (slot == EquipmentSlot.HAND) ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
+                    if (item != null && item.getType() == Material.WIND_CHARGE) {
+                        Bukkit.getScheduler().runTask(plugin, () -> {
+                            ItemStack current = (slot == EquipmentSlot.HAND) ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
+                            if (current == null || current.getType() == Material.AIR) {
+                                if (slot == EquipmentSlot.HAND) {
+                                    player.getInventory().setItemInMainHand(plugin.getCustomItems().createInfiniteWindCharge());
+                                } else {
+                                    player.getInventory().setItemInOffHand(plugin.getCustomItems().createInfiniteWindCharge());
+                                }
+                            } else {
+                                current.setAmount(Math.min(current.getMaxStackSize(), current.getAmount() + 1));
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onFoodLevelChange(org.bukkit.event.entity.FoodLevelChangeEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (plugin.getItemAbilityManager().isSpearLunging(player.getUniqueId())) {
+                event.setCancelled(true);
+            }
+        }
     }
 }

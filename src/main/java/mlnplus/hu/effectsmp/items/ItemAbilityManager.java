@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+@SuppressWarnings("null")
 public class ItemAbilityManager {
 
     private final Effectsmp plugin;
@@ -28,16 +29,34 @@ public class ItemAbilityManager {
     private final Map<UUID, Long> swordCooldowns = new HashMap<>();
     private final Map<UUID, Long> bowCooldowns = new HashMap<>();
     private final Map<UUID, Long> scytheCooldowns = new HashMap<>();
+    private final Map<UUID, Long> spearCooldowns = new HashMap<>();
+    private final Map<UUID, Long> spearChargeStart = new HashMap<>();
+    private final Set<UUID> spearLunging = new HashSet<>();
 
     private final Map<UUID, FreezeInfo> frozenPlayers = new HashMap<>();
 
     private final Map<UUID, Long> swordActiveUntil = new HashMap<>();
     private final Set<UUID> maceFlying = new HashSet<>();
 
-    private static final long MACE_COOLDOWN = 60 * 1000;
-    private static final long SWORD_COOLDOWN = 150 * 1000;
-    private static final long SCYTHE_COOLDOWN = 150 * 1000;
-    private static final long BOW_COOLDOWN = 90 * 1000;
+    public long getMaceCooldown() {
+        return plugin.getConfigManager().getItemsConfig().getLong("effect_mace.cooldown", 60) * 1000L;
+    }
+
+    public long getSwordCooldown() {
+        return plugin.getConfigManager().getItemsConfig().getLong("effect_sword.cooldown", 150) * 1000L;
+    }
+
+    public long getScytheCooldown() {
+        return plugin.getConfigManager().getItemsConfig().getLong("effect_scythe.cooldown", 150) * 1000L;
+    }
+
+    public long getBowCooldown() {
+        return plugin.getConfigManager().getItemsConfig().getLong("effect_bow.cooldown", 90) * 1000L;
+    }
+
+    public long getSpearCooldown() {
+        return plugin.getConfigManager().getItemsConfig().getLong("effect_spear.cooldown", 10) * 1000L;
+    }
 
     public ItemAbilityManager(Effectsmp plugin) {
         this.plugin = plugin;
@@ -52,8 +71,8 @@ public class ItemAbilityManager {
             return false;
         }
 
-        if (isOnCooldown(maceCooldowns, uuid, MACE_COOLDOWN)) {
-            long remaining = getRemainingCooldown(maceCooldowns, uuid, MACE_COOLDOWN);
+        if (isOnCooldown(maceCooldowns, uuid, getMaceCooldown())) {
+            long remaining = getRemainingCooldown(maceCooldowns, uuid, getMaceCooldown());
             plugin.getMessageUtils().sendMessage(player, "mace-cooldown",
                     "%time%", plugin.getMessageUtils().formatTime(remaining));
             return false;
@@ -82,6 +101,7 @@ public class ItemAbilityManager {
             maceFlying.remove(uuid);
 
             Location loc = player.getLocation();
+            if (loc == null) return;
 
             loc.getWorld().spawnParticle(Particle.EXPLOSION, loc, 1);
             loc.getWorld().spawnParticle(Particle.CLOUD, loc, 30, 2, 0.5, 2, 0.1);
@@ -91,13 +111,16 @@ public class ItemAbilityManager {
             for (Entity entity : player.getNearbyEntities(6, 3, 6)) {
                 if (entity instanceof Player target && !target.equals(player)) {
                     if (!plugin.getPlayerDataManager().isMutualTrust(uuid, target.getUniqueId())) {
-                        Vector knockback = target.getLocation().toVector()
-                                .subtract(loc.toVector())
-                                .normalize()
-                                .multiply(1.2)
-                                .setY(0.4);
-                        target.setVelocity(knockback);
-                        plugin.getMessageUtils().sendMessage(target, "mace-victim");
+                        Location targetLoc = target.getLocation();
+                        if (targetLoc != null) {
+                            Vector knockback = targetLoc.toVector()
+                                    .subtract(loc.toVector())
+                                    .normalize()
+                                    .multiply(1.2)
+                                    .setY(0.4);
+                            target.setVelocity(knockback);
+                            plugin.getMessageUtils().sendMessage(target, "mace-victim");
+                        }
                     }
                 }
             }
@@ -115,8 +138,8 @@ public class ItemAbilityManager {
             return false;
         }
 
-        if (isOnCooldown(swordCooldowns, uuid, SWORD_COOLDOWN)) {
-            long remaining = getRemainingCooldown(swordCooldowns, uuid, SWORD_COOLDOWN);
+        if (isOnCooldown(swordCooldowns, uuid, getSwordCooldown())) {
+            long remaining = getRemainingCooldown(swordCooldowns, uuid, getSwordCooldown());
             plugin.getMessageUtils().sendMessage(player, "sword-cooldown",
                     "%time%", plugin.getMessageUtils().formatTime(remaining));
             return false;
@@ -166,8 +189,8 @@ public class ItemAbilityManager {
             return false;
         }
 
-        if (isOnCooldown(scytheCooldowns, uuid, SCYTHE_COOLDOWN)) {
-            long remaining = getRemainingCooldown(scytheCooldowns, uuid, SCYTHE_COOLDOWN);
+        if (isOnCooldown(scytheCooldowns, uuid, getScytheCooldown())) {
+            long remaining = getRemainingCooldown(scytheCooldowns, uuid, getScytheCooldown());
             plugin.getMessageUtils().sendMessage(player, "scythe-cooldown",
                     "%time%", plugin.getMessageUtils().formatTime(remaining));
             return false;
@@ -228,7 +251,7 @@ public class ItemAbilityManager {
 
     public boolean canBowApplyDebuffs(Player player) {
         UUID uuid = player.getUniqueId();
-        return !isOnCooldown(bowCooldowns, uuid, BOW_COOLDOWN);
+        return !isOnCooldown(bowCooldowns, uuid, getBowCooldown());
     }
 
     public void triggerBowDebuffs(Player player, Location location) {
@@ -270,6 +293,7 @@ public class ItemAbilityManager {
             case "effect_sword" -> swordCooldowns;
             case "effect_bow" -> bowCooldowns;
             case "effect_scythe" -> scytheCooldowns;
+            case "effect_spear" -> spearCooldowns;
             default -> null;
         };
 
@@ -281,6 +305,7 @@ public class ItemAbilityManager {
             case "effect_sword" -> SWORD_COOLDOWN;
             case "effect_bow" -> BOW_COOLDOWN;
             case "effect_scythe" -> SCYTHE_COOLDOWN;
+            case "effect_spear" -> SPEAR_COOLDOWN;
             default -> 0;
         };
 
@@ -308,8 +333,68 @@ public class ItemAbilityManager {
         swordActiveUntil.remove(uuid);
         scytheCooldowns.remove(uuid);
         bowCooldowns.remove(uuid);
+        spearCooldowns.remove(uuid);
+        spearChargeStart.remove(uuid);
+        spearLunging.remove(uuid);
         maceFlying.remove(uuid);
         frozenPlayers.remove(uuid);
+    }
+
+    public void startSpearCharge(UUID uuid) {
+        spearChargeStart.put(uuid, System.currentTimeMillis());
+    }
+
+    public boolean isSpearOnCooldown(UUID uuid) {
+        return isOnCooldown(spearCooldowns, uuid, getSpearCooldown());
+    }
+
+    public long getSpearRemainingCooldown(UUID uuid) {
+        return getRemainingCooldown(spearCooldowns, uuid, getSpearCooldown());
+    }
+
+    public boolean isSpearLunging(UUID uuid) {
+        return spearLunging.contains(uuid);
+    }
+
+    public void performSpearLunge(Player player) {
+        UUID uuid = player.getUniqueId();
+
+        mlnplus.hu.effectsmp.data.PlayerData data = plugin.getPlayerDataManager().getPlayerData(uuid);
+        if (data.getEffectHearts() < 3) {
+            plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
+            return;
+        }
+
+        if (isSpearOnCooldown(uuid)) {
+            long remaining = getSpearRemainingCooldown(uuid);
+            plugin.getMessageUtils().sendMessage(player, "spear-cooldown",
+                    "%time%", plugin.getMessageUtils().formatTime(remaining));
+            return;
+        }
+
+        Long start = spearChargeStart.remove(uuid);
+        long elapsed = (start != null) ? (System.currentTimeMillis() - start) : 500;
+
+        double basePower = 1.2;
+        double extraPower = Math.min(2.3, (elapsed / 1000.0) * 2.3);
+        double power = basePower + extraPower;
+
+        Location loc = player.getLocation();
+        if (loc == null) return;
+
+        Vector direction = loc.getDirection().normalize().multiply(power);
+        player.setVelocity(direction);
+
+        spearCooldowns.put(uuid, System.currentTimeMillis());
+        spearLunging.add(uuid);
+
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            spearLunging.remove(uuid);
+        }, 30L);
+
+        loc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, loc, 5, 1.0, 1.0, 1.0, 0.1);
+        loc.getWorld().spawnParticle(Particle.CLOUD, loc, 25, 0.5, 0.5, 0.5, 0.25);
+        loc.getWorld().playSound(loc, Sound.ITEM_TRIDENT_RIPTIDE_3, 1.2f, 0.9f);
     }
 
     public void removeFreezeAttribute(Player player) {

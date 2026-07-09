@@ -366,14 +366,14 @@ item-mace-name: "&5&l⚔ Effect Buzogány"
 item-mace-lore-ability: "&dKépesség:"
 item-mace-lore-1: "&7Fellök a levegőbe, lökéshullám"
 item-mace-lore-2: "&7érkezéskor!"
-item-mace-lore-cooldown: "&cCooldown: 5 perc"
+item-mace-lore-cooldown: "&cCooldown: %time%"
 item-mace-lore-usage: "&e▸ Jobb klikk a használathoz"
 
 item-sword-name: "&c&l⚔ Effect Kard"
 item-sword-lore-ability: "&dKépesség:"
 item-sword-lore-1: "&710 másodpercig minden ütés"
 item-sword-lore-2: "&71.5x sebzés + 2x attack speed!"
-item-sword-lore-cooldown: "&cCooldown: 5 perc"
+item-sword-lore-cooldown: "&cCooldown: %time%"
 item-sword-lore-usage: "&e▸ Shift + Jobb klikk a használathoz"
 
 item-bow-name: "&6&l➹ Effect Íj"
@@ -381,11 +381,68 @@ item-bow-lore-ability: "&dKépesség:"
 item-bow-lore-1: "&7Átok nyíl - ellenségeket"
 item-bow-lore-2: "&7lassít, gyengít és megjelöl!"
 item-bow-lore-chance: "&c10% esély átok nyílra"
+item-bow-lore-cooldown: "&cCooldown: %time%"
 item-bow-lore-usage: "&e▸ Passzív képesség"
 
 item-scythe-name: "&3&l⚰ Effect Kasza"
 item-scythe-lore-ability: "&dKépesség:"
 item-scythe-lore-1: "&7Lefagyasztja az összes"
 item-scythe-lore-2: "&7ellenséges játékost 5 mp-re!"
-item-scythe-lore-cooldown: "&cCooldown: 5 perc"
+item-scythe-lore-cooldown: "&cCooldown: %time%"
 item-scythe-lore-usage: "&e▸ Shift + Jobb klikk a használathoz"
+
+version: 5
+
+# ─────────────────────────────────────────────────────────────────────
+#                         SPEAR MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+spear-cooldown: "&cA dárda cooldownon van! &7(%time%)"
+item-spear-name: "&6&l➹ Effect Dárda"
+item-spear-lore-ability: "&dKépesség:"
+item-spear-lore-1: "&7Hosszan nyomva tölthetsz"
+item-spear-lore-2: "&7egy óriási vetődést (lunge)!"
+item-spear-lore-cooldown: "&cCooldown: %time%"
+item-spear-lore-usage: "&e▸ Jobb klikk nyomva tartásával tölthető"
+
+# ─────────────────────────────────────────────────────────────────────
+#                         GUI MESSAGES
+# ─────────────────────────────────────────────────────────────────────
+gui-effects-title: "&5&lEffektek Leírása"
+gui-effects-passive-title: "&9&lPasszív Képesség:"
+gui-effects-active-title: "&d&lAktív Képesség:"
+gui-effects-cooldown-format: "&cTöltési idő: %time%"
+gui-effects-pass-invis: "&7Láthatatlanná tesz (Invisibility I)."
+gui-effects-pass-hero: "&7Falusiak kedvezményt adnak (Hero of the Village I)."
+gui-effects-pass-haste: "&7Gyorsabb bányászás (Haste I)."
+gui-effects-pass-fire: "&7Tűzállóságot biztosít (Fire Resistance I)."
+gui-effects-pass-speed: "&7Gyorsabb mozgás (Speed I)."
+gui-effects-pass-dolphin: "&7Gyorsabb úszás (Dolphin Grace I)."
+gui-effects-pass-health: "&7Plusz 2 állandó szív (Health Boost I)."
+gui-effects-pass-resist: "&7Kisebb sebződés (Resistance I)."
+gui-effects-pass-strength: "&7Nagyobb sebzés (Strength I)."
+gui-effects-pass-regen: "&7Folyamatos életerő regeneráció (Regeneration I)."
+
+gui-items-title: "&5&lEgyedi Tárgyak"
+gui-items-click-recipe: "&e▸ Kattints a recept megtekintéséhez!"
+gui-items-click-how-to-get: "&e▸ Kattints a beszerzés megtekintéséhez!"
+
+gui-recipe-title: "&5&lBarkácsolási Recept"
+gui-recipe-arrow-name: "&aElkészül:"
+gui-back-items-name: "&c&l⬅ Vissza a tárgyakhoz"
+gui-shard-info-title: "&5&lShard Beszerzése"
+
+wind-charged-need-shift: "&cA Széltöltet képesség aktiválásához guggolnod (Shift) kell!"
+wind-charged-activated: "&b&l⚡ Széltöltet aktiválva! Minden ellenség fellökve!"
+wind-charged-victim: "&b&l⚡ Egy szélörvény elrepített!"
+active-desc-wind-charged: "&7Hatalmas széllökés, ami fellöki az ellenségeket és téged magasra repít"
+item-infinite-wind-charge-name: "&b&l⚡ Végtelen Széltöltet"
+item-infinite-wind-charge-lore-1: "&7Ez a széltöltet soha nem fogy el,"
+item-infinite-wind-charge-lore-2: "&7és nem esik ki halálkor!"
+
+rarity-common: "&7Közönséges"
+rarity-rare: "&bRitka"
+rarity-epic: "&dEpikus"
+rarity-legendary: "&6Legendás"
+
+gui-effects-rarity-format: "&7Ritkaság: %rarity%"
+gui-effects-pass-wind: "&7Végtelen széltöltetet kapsz (Lvl 1), nincs esési sebzés (Lvl 2)."

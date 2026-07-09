@@ -1,7 +1,5 @@
-# EffectSMP Custom Recipes
-# All custom items have their crafting recipes defined here
-# Shape uses 3 lines of 3 characters each
-# Ingredients map characters to materials
+# EffectSMP Custom Items & Recipes
+# All custom items, their recipes, and cooldowns are defined here
 
 # Reroll - Normal effect reroll
 reroll:
@@ -30,6 +28,7 @@ op_reroll:
 # Effect Mace - Wind charge launcher
 effect_mace:
   enabled: true
+  cooldown: 60 # Cooldown in seconds
   shape:
     - "BNB"
     - "BSB"
@@ -42,6 +41,7 @@ effect_mace:
 # Effect Sword - Critical hit mode
 effect_sword:
   enabled: true
+  cooldown: 150 # Cooldown in seconds
   shape:
     - " D "
     - " D "
@@ -53,6 +53,7 @@ effect_sword:
 # Effect Bow - Explosion arrows
 effect_bow:
   enabled: true
+  cooldown: 90 # Cooldown in seconds
   shape:
     - " TN"
     - "T N"
@@ -64,6 +65,7 @@ effect_bow:
 # Effect Scythe - Freeze enemies
 effect_scythe:
   enabled: true
+  cooldown: 150 # Cooldown in seconds
   shape:
     - "IIN"
     - " S "
@@ -71,6 +73,19 @@ effect_scythe:
   ingredients:
     I: NETHERITE_INGOT
     N: NETHER_STAR
+    S: STICK
+
+# Effect Spear - Charge big lunge
+effect_spear:
+  enabled: true
+  cooldown: 10 # Cooldown in seconds
+  shape:
+    - "  N"
+    - " I "
+    - "S  "
+  ingredients:
+    N: NETHER_STAR
+    I: NETHERITE_INGOT
     S: STICK
 
 # Effect Heart - Extra life / currency

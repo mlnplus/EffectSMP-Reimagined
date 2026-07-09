@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
+@SuppressWarnings("null")
 public class FreezeListener implements Listener {
 
     private final Effectsmp plugin;
@@ -37,8 +38,11 @@ public class FreezeListener implements Listener {
                     Bukkit.getScheduler().runTask(plugin, () -> {
                         if (player.isOnline() && plugin.getItemAbilityManager().isFrozen(player.getUniqueId())) {
                             Location targetLoc = frozenLoc.clone();
-                            targetLoc.setYaw(player.getLocation().getYaw());
-                            targetLoc.setPitch(player.getLocation().getPitch());
+                            Location currentLoc = player.getLocation();
+                            if (currentLoc != null) {
+                                targetLoc.setYaw(currentLoc.getYaw());
+                                targetLoc.setPitch(currentLoc.getPitch());
+                            }
                             player.teleport(targetLoc);
                             player.setVelocity(new Vector(0, 0, 0));
                         }
