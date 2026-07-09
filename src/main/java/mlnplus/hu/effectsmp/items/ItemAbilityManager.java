@@ -301,11 +301,11 @@ public class ItemAbilityManager {
             return 0;
 
         long duration = switch (itemType) {
-            case "effect_mace" -> MACE_COOLDOWN;
-            case "effect_sword" -> SWORD_COOLDOWN;
-            case "effect_bow" -> BOW_COOLDOWN;
-            case "effect_scythe" -> SCYTHE_COOLDOWN;
-            case "effect_spear" -> SPEAR_COOLDOWN;
+            case "effect_mace" -> getMaceCooldown();
+            case "effect_sword" -> getSwordCooldown();
+            case "effect_bow" -> getBowCooldown();
+            case "effect_scythe" -> getScytheCooldown();
+            case "effect_spear" -> getSpearCooldown();
             default -> 0;
         };
 

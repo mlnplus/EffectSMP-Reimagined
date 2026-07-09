@@ -1,3 +1,15 @@
-mlnplus\hu\effectsmp\config\ConfigManager.class
+mlnplus\hu\effectsmp\effects\EffectAbilityManager$2.class
 mlnplus\hu\effectsmp\data\PlayerDataManager.class
+mlnplus\hu\effectsmp\items\CustomItems.class
+mlnplus\hu\effectsmp\effects\EffectAbilityManager$1.class
 mlnplus\hu\effectsmp\Effectsmp.class
+mlnplus\hu\effectsmp\items\ItemAbilityManager.class
+mlnplus\hu\effectsmp\effects\RollAnimationManager.class
+mlnplus\hu\effectsmp\config\ConfigManager.class
+mlnplus\hu\effectsmp\effects\EffectAbilityManager.class
+mlnplus\hu\effectsmp\effects\RollAnimationManager$1.class
+mlnplus\hu\effectsmp\items\ItemAbilityManager$FreezeInfo.class
+mlnplus\hu\effectsmp\effects\EffectAbilityManager$3.class
+mlnplus\hu\effectsmp\gui\GUIManager$GUIType.class
+mlnplus\hu\effectsmp\effects\EffectAbilityManager$4.class
+mlnplus\hu\effectsmp\gui\GUIManager.class
