@@ -1,5 +1,5 @@
 name: EffectSMP-Reimagined
-version: '${project.version}'
+version: '1.3'
 main: mlnplus.hu.effectsmp.Effectsmp
 api-version: '1.21'
 description: EffectSMP Reimagined Hivatalos Pluginja [Made by mlnplus]
