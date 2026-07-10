@@ -112,12 +112,27 @@ public class PlayerListener implements Listener {
         plugin.getDashManager().onSneak(player);
     }
 
+    @EventHandler
+    public void onFoodLevelChange(org.bukkit.event.entity.FoodLevelChangeEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            java.util.UUID uuid = player.getUniqueId();
+            if (plugin.getItemAbilityManager().isSpearLunging(uuid) || plugin.getItemAbilityManager().isSpearCharging(uuid)) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onFallDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player))
             return;
         if (event.getCause() != EntityDamageEvent.DamageCause.FALL)
             return;
+
+        if (plugin.getItemAbilityManager().wasRecentlyLunging(player.getUniqueId())) {
+            event.setCancelled(true);
+            return;
+        }
 
         if (plugin.getItemAbilityManager().isMaceFlying(player.getUniqueId())) {
             event.setCancelled(true);

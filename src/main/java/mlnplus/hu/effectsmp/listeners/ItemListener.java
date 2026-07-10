@@ -32,6 +32,12 @@ public class ItemListener implements Listener {
     @SuppressWarnings("null")
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            ItemStack item = event.getItem();
+            if (item != null && item.getType().name().contains("SPEAR") && item.containsEnchantment(org.bukkit.enchantments.Enchantment.LUNGE)) {
+                plugin.getItemAbilityManager().recordLunge(player);
+            }
+        }
         if (player.isSneaking() && (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
             if (data.getEffect() == mlnplus.hu.effectsmp.effects.EffectType.WIND_CHARGED && data.isAbilityActive()) {
@@ -105,22 +111,27 @@ public class ItemListener implements Listener {
         }
 
         if ("effect_spear".equals(itemType)) {
-            if (plugin.getItemAbilityManager().isSpearOnCooldown(player.getUniqueId())) {
-                long remaining = plugin.getItemAbilityManager().getSpearRemainingCooldown(player.getUniqueId());
-                plugin.getMessageUtils().sendMessage(player, "spear-cooldown",
-                        "%time%", plugin.getMessageUtils().formatTime(remaining));
+            if (player.isSneaking()) {
+                if (plugin.getItemAbilityManager().isSpearOnCooldown(player.getUniqueId())) {
+                    long remaining = plugin.getItemAbilityManager().getSpearRemainingCooldown(player.getUniqueId());
+                    plugin.getMessageUtils().sendMessage(player, "spear-cooldown",
+                            "%time%", plugin.getMessageUtils().formatTime(remaining));
+                    event.setCancelled(true);
+                    return;
+                }
+                PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
+                if (data.getEffectHearts() < 2) {
+                    plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-item");
+                    event.setCancelled(true);
+                    return;
+                }
+                plugin.getItemAbilityManager().startSpearCharge(player);
                 event.setCancelled(true);
                 return;
-            }
-            PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
-            if (data.getEffectHearts() < 3) {
-                plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
-                event.setCancelled(true);
+            } else {
+                plugin.getItemAbilityManager().startVanillaSpearChargeAnimation(player);
                 return;
             }
-            plugin.getItemAbilityManager().startSpearCharge(player);
-            event.setCancelled(true);
-            return;
         }
 
         event.setCancelled(true);
@@ -261,15 +272,15 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        plugin.getItemAbilityManager().checkMaceLanding(event.getPlayer());
-    }
+        Player player = event.getPlayer();
+        plugin.getItemAbilityManager().checkMaceLanding(player);
 
-    @EventHandler
-    public void onFoodLevelChange(org.bukkit.event.entity.FoodLevelChangeEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            if (plugin.getItemAbilityManager().isSpearLunging(player.getUniqueId())) {
-                event.setCancelled(true);
-            }
+        if (plugin.getItemAbilityManager().wasRecentlyLunging(player.getUniqueId())) {
+            Float sat = plugin.getItemAbilityManager().getInitialSaturation(player.getUniqueId());
+            Integer food = plugin.getItemAbilityManager().getInitialFood(player.getUniqueId());
+            if (sat != null) player.setSaturation(sat);
+            if (food != null) player.setFoodLevel(food);
+            player.setExhaustion(0.0f);
         }
     }
 }

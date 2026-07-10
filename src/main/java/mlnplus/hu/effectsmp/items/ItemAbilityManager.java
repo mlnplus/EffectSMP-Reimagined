@@ -10,6 +10,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -33,6 +34,9 @@ public class ItemAbilityManager {
     private final Map<UUID, Long> spearChargeStart = new HashMap<>();
     private final Set<UUID> spearLunging = new HashSet<>();
     private final Set<UUID> spearCharging = new HashSet<>();
+    private final Map<UUID, Long> lastLungeTime = new HashMap<>();
+    private final Map<UUID, Float> initialSaturation = new HashMap<>();
+    private final Map<UUID, Integer> initialFood = new HashMap<>();
 
     private final Map<UUID, FreezeInfo> frozenPlayers = new HashMap<>();
 
@@ -67,8 +71,8 @@ public class ItemAbilityManager {
         UUID uuid = player.getUniqueId();
 
         mlnplus.hu.effectsmp.data.PlayerData data = plugin.getPlayerDataManager().getPlayerData(uuid);
-        if (data.getEffectHearts() < 3) {
-            plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
+        if (data.getEffectHearts() < 2) {
+            plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-item");
             return false;
         }
 
@@ -134,8 +138,8 @@ public class ItemAbilityManager {
         UUID uuid = player.getUniqueId();
 
         mlnplus.hu.effectsmp.data.PlayerData data = plugin.getPlayerDataManager().getPlayerData(uuid);
-        if (data.getEffectHearts() < 3) {
-            plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
+        if (data.getEffectHearts() < 2) {
+            plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-item");
             return false;
         }
 
@@ -185,8 +189,8 @@ public class ItemAbilityManager {
         UUID uuid = player.getUniqueId();
 
         mlnplus.hu.effectsmp.data.PlayerData data = plugin.getPlayerDataManager().getPlayerData(uuid);
-        if (data.getEffectHearts() < 3) {
-            plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
+        if (data.getEffectHearts() < 2) {
+            plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-item");
             return false;
         }
 
@@ -350,14 +354,39 @@ public class ItemAbilityManager {
         spearChargeStart.put(uuid, System.currentTimeMillis());
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20, 2, false, false, false));
-        
-        Location loc = player.getLocation();
-        if (loc != null) {
-            loc.getWorld().playSound(loc, Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.2f, 0.5f);
-            loc.getWorld().spawnParticle(Particle.PORTAL, loc, 30, 0.5, 1.0, 0.5, 0.1);
-        }
-
         plugin.getMessageUtils().sendActionBar(player, "§6§lSpear Charging...");
+
+        new BukkitRunnable() {
+            int ticks = 0;
+            @Override
+            public void run() {
+                if (!player.isOnline() || !spearCharging.contains(uuid)) {
+                    cancel();
+                    return;
+                }
+                
+                Location loc = player.getLocation();
+                if (loc != null) {
+                    double radius = 0.8;
+                    double angle = ticks * 0.8;
+                    double x = radius * Math.cos(angle);
+                    double z = radius * Math.sin(angle);
+                    double y = (ticks / 10.0) * 1.8;
+                    
+                    Location pLoc = loc.clone().add(x, y, z);
+                    loc.getWorld().spawnParticle(Particle.PORTAL, pLoc, 3, 0.02, 0.02, 0.02, 0.01);
+                    loc.getWorld().spawnParticle(Particle.CRIT, pLoc, 2, 0.02, 0.02, 0.02, 0.01);
+                    
+                    float pitch = 0.5f + (ticks / 10.0f) * 1.0f;
+                    loc.getWorld().playSound(loc, Sound.ENTITY_BREEZE_CHARGE, 0.6f, pitch);
+                }
+                
+                ticks++;
+                if (ticks >= 10) {
+                    cancel();
+                }
+            }
+        }.runTaskTimer(plugin, 0L, 2L);
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             if (player.isOnline()) {
@@ -383,12 +412,37 @@ public class ItemAbilityManager {
         return spearLunging.contains(uuid);
     }
 
+    public boolean isSpearCharging(UUID uuid) {
+        return spearCharging.contains(uuid);
+    }
+
+    public void recordLunge(Player player) {
+        UUID uuid = player.getUniqueId();
+        lastLungeTime.put(uuid, System.currentTimeMillis());
+        initialSaturation.put(uuid, player.getSaturation());
+        initialFood.put(uuid, player.getFoodLevel());
+    }
+
+    public boolean wasRecentlyLunging(UUID uuid) {
+        Long time = lastLungeTime.get(uuid);
+        if (time == null) return false;
+        return (System.currentTimeMillis() - time) < 3000L;
+    }
+
+    public Float getInitialSaturation(UUID uuid) {
+        return initialSaturation.get(uuid);
+    }
+
+    public Integer getInitialFood(UUID uuid) {
+        return initialFood.get(uuid);
+    }
+
     public void performSpearLunge(Player player) {
         UUID uuid = player.getUniqueId();
 
         mlnplus.hu.effectsmp.data.PlayerData data = plugin.getPlayerDataManager().getPlayerData(uuid);
-        if (data.getEffectHearts() < 3) {
-            plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-active");
+        if (data.getEffectHearts() < 2) {
+            plugin.getMessageUtils().sendMessage(player, "not-enough-hearts-item");
             return;
         }
 
@@ -414,6 +468,7 @@ public class ItemAbilityManager {
 
         spearCooldowns.put(uuid, System.currentTimeMillis());
         spearLunging.add(uuid);
+        recordLunge(player);
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             spearLunging.remove(uuid);
@@ -422,6 +477,55 @@ public class ItemAbilityManager {
         loc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, loc, 5, 1.0, 1.0, 1.0, 0.1);
         loc.getWorld().spawnParticle(Particle.CLOUD, loc, 25, 0.5, 0.5, 0.5, 0.25);
         loc.getWorld().playSound(loc, Sound.ITEM_TRIDENT_RIPTIDE_3, 1.2f, 0.9f);
+    }
+
+    public void startVanillaSpearChargeAnimation(Player player) {
+        UUID uuid = player.getUniqueId();
+        
+        new BukkitRunnable() {
+            int ticks = 0;
+            @Override
+            public void run() {
+                if (!player.isOnline()) {
+                    cancel();
+                    return;
+                }
+                
+                if (!player.isHandRaised()) {
+                    cancel();
+                    return;
+                }
+                
+                org.bukkit.inventory.ItemStack activeItem = player.getActiveItem();
+                if (activeItem == null || !activeItem.getType().name().contains("SPEAR")) {
+                    cancel();
+                    return;
+                }
+                
+                Location loc = player.getLocation();
+                if (loc != null) {
+                    double radius = 0.6;
+                    double angle = ticks * 0.6;
+                    double x = radius * Math.cos(angle);
+                    double z = radius * Math.sin(angle);
+                    double y = 0.5 + (ticks % 10) * 0.12;
+                    
+                    Location pLoc = loc.clone().add(x, y, z);
+                    loc.getWorld().spawnParticle(Particle.PORTAL, pLoc, 2, 0.01, 0.01, 0.01, 0.01);
+                    loc.getWorld().spawnParticle(Particle.CRIT, pLoc, 1, 0.01, 0.01, 0.01, 0.01);
+                    loc.getWorld().spawnParticle(Particle.CLOUD, pLoc, 1, 0.01, 0.01, 0.01, 0.01);
+                    
+                    if (ticks % 3 == 0) {
+                        loc.getWorld().playSound(loc, Sound.BLOCK_TRIAL_SPAWNER_AMBIENT, 0.5f, 1.2f);
+                    }
+                }
+                
+                ticks++;
+                if (ticks > 60) {
+                    cancel();
+                }
+            }
+        }.runTaskTimer(plugin, 1L, 1L);
     }
 
     public void removeFreezeAttribute(Player player) {

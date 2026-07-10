@@ -289,7 +289,7 @@ public class CustomItems {
         }
 
         public ItemStack createEffectSpear() {
-                ItemStack item = new ItemStack(Material.NETHERITE_SWORD);
+                ItemStack item = new ItemStack(Material.NETHERITE_SPEAR);
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-spear-name"));
@@ -309,6 +309,7 @@ public class CustomItems {
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                 meta.addEnchant(Enchantment.SHARPNESS, 5, true);
                 meta.addEnchant(Enchantment.IMPALING, 5, true);
+                meta.addEnchant(Enchantment.LUNGE, 3, true);
 
                 meta.setCustomModelData(CMD_EFFECT_SPEAR);
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_spear");

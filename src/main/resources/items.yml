@@ -78,7 +78,7 @@ effect_scythe:
 # Effect Spear - Charge big lunge
 effect_spear:
   enabled: true
-  cooldown: 10 # Cooldown in seconds
+  cooldown: 150 # Cooldown in seconds
   shape:
     - "  N"
     - " I "
