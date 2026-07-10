@@ -10,7 +10,7 @@ public enum EffectType {
     SPEED("Speed", "§b➣ §fSpeed", PotionEffectType.SPEED, Rarity.RARE, 300, 1),
     DOLPHIN_GRACE("Dolphin Grace", "§3🌊 §fDolphin Grace", PotionEffectType.DOLPHINS_GRACE, Rarity.COMMON, 300, 1),
     HEALTH_BOOST("Health Boost", "§c❤ §fHealth Boost", PotionEffectType.HEALTH_BOOST, Rarity.EPIC, 1200, 1),
-    WIND_CHARGED("Wind Charged", "§b⚡ §fWind Charged", null, Rarity.RARE, 60, 0),
+    WIND_CHARGED("Wind Charged", "§b⚡ §fWind Charged", null, Rarity.RARE, 180, 0),
 
     RESISTANCE("Resistance", "§9⛊ §9Resistance", PotionEffectType.RESISTANCE, Rarity.LEGENDARY, 900, 1),
     STRENGTH("Strength", "§4⚔ §4Strength", PotionEffectType.STRENGTH, Rarity.LEGENDARY, 900, 1),

@@ -198,31 +198,10 @@ public class EffectAbilityManager {
 
         switch (effect) {
             case WIND_CHARGED -> {
-                org.bukkit.Location loc = player.getLocation();
-                if (loc == null) return false;
-
-                loc.getWorld().spawnParticle(org.bukkit.Particle.EXPLOSION, loc, 1);
-                loc.getWorld().spawnParticle(org.bukkit.Particle.CLOUD, loc, 40, 3.0, 1.0, 3.0, 0.2);
-                loc.getWorld().playSound(loc, org.bukkit.Sound.ENTITY_BREEZE_WIND_BURST, 1.5f, 0.8f);
-
-                UUID uuid = player.getUniqueId();
-                for (org.bukkit.entity.Entity entity : player.getNearbyEntities(8, 4, 8)) {
-                    if (entity instanceof Player target && !target.equals(player)) {
-                        if (!plugin.getPlayerDataManager().isMutualTrust(uuid, target.getUniqueId())) {
-                            org.bukkit.util.Vector diff = target.getLocation().toVector().subtract(loc.toVector()).normalize();
-                            diff.setY(0.55);
-                            diff.multiply(2.2);
-                            target.setVelocity(diff);
-                            plugin.getMessageUtils().sendMessage(target, "wind-charged-victim");
-                        }
-                    }
-                }
-
-                org.bukkit.util.Vector vel = player.getVelocity();
-                vel.setY(2.2);
-                player.setVelocity(vel);
-
-                plugin.getMessageUtils().sendMessage(player, "wind-charged-activated");
+                duration = 15000;
+                setAbilityActive(player, data, duration);
+                plugin.getMessageUtils().sendMessage(player, "wind-charged-armed");
+                player.playSound(player.getLocation(), org.bukkit.Sound.BLOCK_AMETHYST_BLOCK_CHIME, 1.0f, 1.0f);
                 return true;
             }
 
@@ -410,6 +389,38 @@ public class EffectAbilityManager {
                 }
             }
         }.runTaskLater(plugin, durationMillis / 50);
+    }
+
+    public void triggerWindBurst(Player player) {
+        PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
+        data.setAbilityActiveUntil(0);
+        plugin.getPlayerDataManager().savePlayerData(player.getUniqueId());
+
+        org.bukkit.Location loc = player.getLocation();
+        if (loc == null) return;
+
+        loc.getWorld().spawnParticle(org.bukkit.Particle.EXPLOSION, loc, 1);
+        loc.getWorld().spawnParticle(org.bukkit.Particle.CLOUD, loc, 40, 3.0, 1.0, 3.0, 0.2);
+        loc.getWorld().playSound(loc, org.bukkit.Sound.ENTITY_BREEZE_WIND_BURST, 1.5f, 0.8f);
+
+        UUID uuid = player.getUniqueId();
+        for (org.bukkit.entity.Entity entity : player.getNearbyEntities(8, 4, 8)) {
+            if (entity instanceof Player target && !target.equals(player)) {
+                if (!plugin.getPlayerDataManager().isMutualTrust(uuid, target.getUniqueId())) {
+                    org.bukkit.util.Vector diff = target.getLocation().toVector().subtract(loc.toVector()).normalize();
+                    diff.setY(0.55);
+                    diff.multiply(2.2);
+                    target.setVelocity(diff);
+                    plugin.getMessageUtils().sendMessage(target, "wind-charged-victim");
+                }
+            }
+        }
+
+        org.bukkit.util.Vector vel = player.getVelocity();
+        vel.setY(2.2);
+        player.setVelocity(vel);
+
+        plugin.getMessageUtils().sendMessage(player, "wind-charged-activated");
     }
 
     public void clearAbilityCooldown(UUID uuid) {

@@ -31,10 +31,19 @@ public class ItemListener implements Listener {
     @EventHandler
     @SuppressWarnings("null")
     public void onInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if (player.isSneaking() && (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+            PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
+            if (data.getEffect() == mlnplus.hu.effectsmp.effects.EffectType.WIND_CHARGED && data.isAbilityActive()) {
+                event.setCancelled(true);
+                plugin.getEffectAbilityManager().triggerWindBurst(player);
+                return;
+            }
+        }
+
         ItemStack interactItem = event.getItem();
         if (interactItem != null && plugin.getCustomItems().isInfiniteWindCharge(interactItem)) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                Player player = event.getPlayer();
                 PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
                 if (data.getEffect() == mlnplus.hu.effectsmp.effects.EffectType.WIND_CHARGED && data.getEffectHearts() >= 1) {
                     event.setCancelled(true);
@@ -83,7 +92,6 @@ public class ItemListener implements Listener {
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
 
-        Player player = event.getPlayer();
         ItemStack item = event.getItem();
         if (item == null)
             return;
