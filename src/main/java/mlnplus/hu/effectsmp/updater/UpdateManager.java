@@ -64,18 +64,16 @@ public class UpdateManager {
                 String currentVersion = plugin.getDescription().getVersion().replace("v", "").trim();
 
                 if (isNewerVersion(currentVersion, latestVersion)) {
-                    plugin.getLogger().warning("==================================================");
-                    plugin.getLogger().warning("A new version of EffectSMP is available on Modrinth!");
-                    plugin.getLogger().warning("Latest Version: v" + latestVersion);
-                    plugin.getLogger().warning("Current Version: v" + currentVersion);
-                    plugin.getLogger().warning("Download here: " + MODRINTH_URL);
-                    plugin.getLogger().warning("==================================================");
+                    String updateMsg = "§e          [✦] New version available: v" + latestVersion + " (Current: v" + currentVersion + ") | Download: " + MODRINTH_URL;
+                    Bukkit.getScheduler().runTask(plugin, () -> plugin.printEnableBanner(updateMsg));
                 } else {
-                    plugin.getLogger().info("EffectSMP is up to date (v" + currentVersion + ").");
+                    String okMsg = "§a                        [✔] EffectSMP is up to date! (v" + currentVersion + ")";
+                    Bukkit.getScheduler().runTask(plugin, () -> plugin.printEnableBanner(okMsg));
                 }
 
             } catch (Exception e) {
-                plugin.getLogger().warning("Could not check for updates: " + e.getMessage());
+                String errorMsg = "§c                        [!] Could not check for updates: " + e.getMessage();
+                Bukkit.getScheduler().runTask(plugin, () -> plugin.printEnableBanner(errorMsg));
             }
         });
     }

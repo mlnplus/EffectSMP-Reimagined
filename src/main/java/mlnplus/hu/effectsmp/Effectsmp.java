@@ -35,6 +35,33 @@ public final class Effectsmp extends JavaPlugin {
 
     private boolean gameStarted = false;
 
+    private boolean bannerPrinted = false;
+
+    public synchronized void printEnableBanner(String updateStatus) {
+        if (bannerPrinted) return;
+        bannerPrinted = true;
+
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§d=================================================================================");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§d  ███████╗███████╗███████╗███████╗ ██████╗████████╗   ███████╗███╗   ███╗██████╗ ");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§d  ██╔════╝██╔════╝██╔════╝██╔════╝██╔════╝╚══██╔══╝   ██╔════╝████╗ ████║██╔══██╗");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§5  █████╗  █████╗  █████╗  █████╗  ██║        ██║      ███████╗██╔████╔██║██████╔╝");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§5  ██╔══╝  ██╔══╝  ██╔══╝  ██╔══╝  ██║        ██║      ╚════██║██║╚██╔╝██║██╔═══╝ ");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§6  ███████╗██║     ██║     ███████╗╚██████╗   ██║      ███████║██║ ╚═╝ ██║██║     ");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§6  ╚══════╝╚═╝     ╚═╝     ╚══════╝ ╚═════╝   ╚═╝      ╚══════╝╚═╝     ╚═╝╚═╝     ");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§5                                                                               ");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§d                              EffectSMP Reimagined                             ");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§e                        [★] Plugin successfully enabled! [★]                      ");
+        if (gameStarted) {
+            org.bukkit.Bukkit.getConsoleSender().sendMessage("§a                        [✔] Játék elindítva, effektek aktívak!                   ");
+        } else {
+            org.bukkit.Bukkit.getConsoleSender().sendMessage("§c                        [⌛] Játék még nincs elindítva! (/e start)                ");
+        }
+        if (updateStatus != null) {
+            org.bukkit.Bukkit.getConsoleSender().sendMessage(updateStatus);
+        }
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§d=================================================================================");
+    }
+
     @Override
     public void onEnable() {
         instance = this;
@@ -74,10 +101,10 @@ public final class Effectsmp extends JavaPlugin {
 
         this.gameStarted = configManager.isGameStarted();
 
-        getLogger().info("§aEffectSMP Plugin enabled!");
-        if (gameStarted) {
-            getLogger().info("§eJáték már elindítva, effectek aktívak!");
-        }
+        // Safety fallback to print banner after 1.5 seconds if update check hangs
+        getServer().getScheduler().runTaskLater(this, () -> {
+            printEnableBanner("§c                        [!] Update check timed out or failed.                    ");
+        }, 30L);
     }
 
     @Override
