@@ -432,7 +432,7 @@ gui-items-click-how-to-get: "&e▸ Kattints a beszerzés megtekintéséhez!"
 
 gui-recipe-title: "&5&lBarkácsolási Recept"
 gui-recipe-arrow-name: "&aElkészül:"
-gui-back-items-name: "&c&l⬅ Vissza a tárgyakhoz"
+gui-back-items-name: "&c&l⬅ Vissza"
 gui-shard-info-title: "&5&lShard Beszerzése"
 
 wind-charged-need-shift: "&cA Széltöltet képesség aktiválásához guggolnod (Shift) kell!"

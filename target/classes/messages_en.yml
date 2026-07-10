@@ -432,7 +432,7 @@ gui-items-click-how-to-get: "&e▸ Click to view how to get!"
 
 gui-recipe-title: "&5&lCrafting Recipe"
 gui-recipe-arrow-name: "&aCrafts into:"
-gui-back-items-name: "&c&l⬅ Back to items"
+gui-back-items-name: "&c&l⬅ Back"
 gui-shard-info-title: "&5&lShard Obtain Details"
 
 wind-charged-need-shift: "&cYou must sneak (Shift) to activate the Wind Charged ability!"
