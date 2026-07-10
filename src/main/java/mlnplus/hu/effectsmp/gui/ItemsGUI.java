@@ -132,7 +132,7 @@ public class ItemsGUI {
         int slot = event.getRawSlot();
         if (slot == 40) {
             player.closeInventory();
-            plugin.getGuiManager().openMainGUI(player);
+            plugin.getGuiManager().openInfoGUI(player);
             return;
         }
 

@@ -32,6 +32,7 @@ public class ItemAbilityManager {
     private final Map<UUID, Long> spearCooldowns = new HashMap<>();
     private final Map<UUID, Long> spearChargeStart = new HashMap<>();
     private final Set<UUID> spearLunging = new HashSet<>();
+    private final Set<UUID> spearCharging = new HashSet<>();
 
     private final Map<UUID, FreezeInfo> frozenPlayers = new HashMap<>();
 
@@ -336,12 +337,38 @@ public class ItemAbilityManager {
         spearCooldowns.remove(uuid);
         spearChargeStart.remove(uuid);
         spearLunging.remove(uuid);
+        spearCharging.remove(uuid);
         maceFlying.remove(uuid);
         frozenPlayers.remove(uuid);
     }
 
-    public void startSpearCharge(UUID uuid) {
+    public void startSpearCharge(Player player) {
+        UUID uuid = player.getUniqueId();
+        if (spearCharging.contains(uuid)) return;
+
+        spearCharging.add(uuid);
         spearChargeStart.put(uuid, System.currentTimeMillis());
+
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20, 2, false, false, false));
+        
+        Location loc = player.getLocation();
+        if (loc != null) {
+            loc.getWorld().playSound(loc, Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.2f, 0.5f);
+            loc.getWorld().spawnParticle(Particle.PORTAL, loc, 30, 0.5, 1.0, 0.5, 0.1);
+        }
+
+        plugin.getMessageUtils().sendActionBar(player, "§6§lSpear Charging...");
+
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            if (player.isOnline()) {
+                if (spearCharging.remove(uuid)) {
+                    performSpearLunge(player);
+                }
+            } else {
+                spearCharging.remove(uuid);
+                spearChargeStart.remove(uuid);
+            }
+        }, 20L);
     }
 
     public boolean isSpearOnCooldown(UUID uuid) {

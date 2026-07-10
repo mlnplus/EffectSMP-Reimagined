@@ -336,6 +336,10 @@ gui-info-trust-none: "&7No active trusts"
 gui-info-trust-entry: "&a✔ %player%"
 gui-info-trust-lore-add: "&7/e trust <name> - Add trust"
 gui-info-trust-lore-remove: "&7/e untrust <name> - Remove trust"
+gui-info-effects-button-name: "&5&l⚡ Effects List"
+gui-info-effects-button-lore: "&7Click to view all effects!"
+gui-info-items-button-name: "&a&l⚔ Custom Items List"
+gui-info-items-button-lore: "&7Click to view custom items and recipes!"
 
 
 # ─────────────────────────────────────────────────────────────────────

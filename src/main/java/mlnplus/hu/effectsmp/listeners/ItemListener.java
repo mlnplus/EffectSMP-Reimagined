@@ -110,7 +110,8 @@ public class ItemListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
-            plugin.getItemAbilityManager().startSpearCharge(player.getUniqueId());
+            plugin.getItemAbilityManager().startSpearCharge(player);
+            event.setCancelled(true);
             return;
         }
 
@@ -253,24 +254,6 @@ public class ItemListener implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         plugin.getItemAbilityManager().checkMaceLanding(event.getPlayer());
-    }
-
-    @EventHandler
-    public void onProjectileLaunch(org.bukkit.event.entity.ProjectileLaunchEvent event) {
-        if (event.getEntity() instanceof org.bukkit.entity.Trident trident) {
-            if (trident.getShooter() instanceof Player player) {
-                ItemStack item = player.getInventory().getItemInMainHand();
-                String itemType = plugin.getCustomItems().getItemType(item);
-                if (!"effect_spear".equals(itemType)) {
-                    item = player.getInventory().getItemInOffHand();
-                    itemType = plugin.getCustomItems().getItemType(item);
-                }
-                if ("effect_spear".equals(itemType)) {
-                    event.setCancelled(true);
-                    plugin.getItemAbilityManager().performSpearLunge(player);
-                }
-            }
-        }
     }
 
     @EventHandler

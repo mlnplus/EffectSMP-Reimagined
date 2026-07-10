@@ -289,7 +289,7 @@ public class CustomItems {
         }
 
         public ItemStack createEffectSpear() {
-                ItemStack item = new ItemStack(Material.TRIDENT);
+                ItemStack item = new ItemStack(Material.NETHERITE_SWORD);
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-spear-name"));

@@ -336,6 +336,10 @@ gui-info-trust-none: "&7Nincs aktív trust"
 gui-info-trust-entry: "&a✔ %player%"
 gui-info-trust-lore-add: "&7/e trust <név> - Trust hozzáadás"
 gui-info-trust-lore-remove: "&7/e untrust <név> - Trust eltávolítás"
+gui-info-effects-button-name: "&5&l⚡ Effectek Listája"
+gui-info-effects-button-lore: "&7Kattints az összes effekt megtekintéséhez!"
+gui-info-items-button-name: "&a&l⚔ Egyedi Tárgyak Listája"
+gui-info-items-button-lore: "&7Kattints az egyedi tárgyak és receptek megtekintéséhez!"
 
 
 # ─────────────────────────────────────────────────────────────────────

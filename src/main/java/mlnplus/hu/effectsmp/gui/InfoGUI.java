@@ -52,7 +52,9 @@ public class InfoGUI {
                 inv.setItem(14, createHeartsItem(data));
                 inv.setItem(16, createKillsItem(data));
 
+                inv.setItem(29, createEffectsMenuItem());
                 inv.setItem(31, createTrustedHeaderItem(data));
+                inv.setItem(33, createItemsMenuItem());
 
                 inv.setItem(40, createBackItem());
 
@@ -199,6 +201,30 @@ public class InfoGUI {
                 return item;
         }
 
+        private ItemStack createEffectsMenuItem() {
+                ItemStack item = new ItemStack(Material.KNOWLEDGE_BOOK);
+                ItemMeta meta = item.getItemMeta();
+                meta.displayName(getNoItalic("gui-info-effects-button-name"));
+                List<Component> lore = new ArrayList<>();
+                lore.add(Component.empty());
+                lore.add(getNoItalic("gui-info-effects-button-lore"));
+                meta.lore(lore);
+                item.setItemMeta(meta);
+                return item;
+        }
+
+        private ItemStack createItemsMenuItem() {
+                ItemStack item = new ItemStack(Material.CRAFTING_TABLE);
+                ItemMeta meta = item.getItemMeta();
+                meta.displayName(getNoItalic("gui-info-items-button-name"));
+                List<Component> lore = new ArrayList<>();
+                lore.add(Component.empty());
+                lore.add(getNoItalic("gui-info-items-button-lore"));
+                meta.lore(lore);
+                item.setItemMeta(meta);
+                return item;
+        }
+
         private ItemStack createBackItem() {
                 ItemStack item = new ItemStack(Material.ARROW);
                 ItemMeta meta = item.getItemMeta();
@@ -215,6 +241,12 @@ public class InfoGUI {
                 if (slot == 40) {
                         player.closeInventory();
                         plugin.getGuiManager().openMainGUI(player);
+                } else if (slot == 29) {
+                        player.closeInventory();
+                        plugin.getGuiManager().openEffectsGUI(player);
+                } else if (slot == 33) {
+                        player.closeInventory();
+                        plugin.getGuiManager().openItemsGUI(player);
                 }
         }
 }
