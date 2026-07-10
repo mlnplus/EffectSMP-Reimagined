@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.time.Duration;
 
+@SuppressWarnings("null")
 public class MessageUtils {
 
     private final Effectsmp plugin;

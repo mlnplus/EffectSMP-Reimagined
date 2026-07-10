@@ -13,7 +13,6 @@ public class ActionBarManager {
     private BukkitTask task;
 
     private static final String HEART = "❤";
-    private static final String DIAMOND = "◆";
 
     public ActionBarManager(Effectsmp plugin) {
         this.plugin = plugin;

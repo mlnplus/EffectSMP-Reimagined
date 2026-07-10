@@ -27,9 +27,7 @@ public class RecipeGUI {
         return plugin.getMessageUtils().getMessageComponent(key).decoration(TextDecoration.ITALIC, false);
     }
 
-    private Component parseNoItalic(String text) {
-        return plugin.getMessageUtils().parse(text).decoration(TextDecoration.ITALIC, false);
-    }
+
 
     public Inventory create(Player player, String itemId) {
         if ("effect_shard".equals(itemId)) {

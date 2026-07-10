@@ -3,8 +3,6 @@ package mlnplus.hu.effectsmp.listeners;
 import mlnplus.hu.effectsmp.Effectsmp;
 import mlnplus.hu.effectsmp.data.PlayerData;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -31,6 +29,7 @@ public class ItemListener implements Listener {
     }
 
     @EventHandler
+    @SuppressWarnings("null")
     public void onInteract(PlayerInteractEvent event) {
         ItemStack interactItem = event.getItem();
         if (interactItem != null && plugin.getCustomItems().isInfiniteWindCharge(interactItem)) {
@@ -54,16 +53,19 @@ public class ItemListener implements Listener {
                     }
                     
                     // Spawn the projectile manually
-                    org.bukkit.entity.WindCharge wc = player.launchProjectile(org.bukkit.entity.WindCharge.class);
-                    if (wc != null) {
-                        wc.setVelocity(player.getLocation().getDirection().multiply(1.5));
+                    Location loc = player.getLocation();
+                    if (loc != null) {
+                        org.bukkit.entity.WindCharge wc = player.launchProjectile(org.bukkit.entity.WindCharge.class);
+                        if (wc != null) {
+                            wc.setVelocity(loc.getDirection().multiply(1.5));
+                        }
+                        
+                        // Play throw sound
+                        player.getWorld().playSound(loc, org.bukkit.Sound.ENTITY_WIND_CHARGE_THROW, 1.0f, 1.0f);
                     }
                     
                     // Set cooldown
                     windChargeCooldowns.put(uuid, now);
-                    
-                    // Play throw sound
-                    player.getWorld().playSound(player.getLocation(), org.bukkit.Sound.ENTITY_WIND_CHARGE_THROW, 1.0f, 1.0f);
                     
                     // Swing hand
                     if (event.getHand() == EquipmentSlot.OFF_HAND) {
