@@ -22,31 +22,31 @@ ability-cooldown: "&c✖ &fCooldown: &e%time%"
 ability-already-active: "&cA képességed már aktív!"
 ability-ready: "&a⚡ Az ability újra elérhető!"
 
-ability-invisibility-activated: "&d▸ Invisibility Ability &aaktivált! &7Teljes láthatatlanság 15 mp-re!"
-ability-invisibility-expired: "&d▸ Invisibility lejárt! &7Újra látható vagy."
+ability-invisibility-activated: "&d▸ Invisibility képesség &aaktiválva! &7Teljes láthatatlanság 15 másodpercig!"
+ability-invisibility-expired: "&d▸ Invisibility képesség lejárt! &7Újra látható vagy."
 
-ability-hero-activated: "&d▸ Hero of the Village Ability &aaktivált! &7Hős szint: 5, 2 percre!"
+ability-hero-activated: "&d▸ Hero of the Village képesség &aaktiválva! &7Hős szint: V, 2 percig!"
 
-ability-haste-activated: "&d▸ Haste Ability &aaktivált! &73x3-ban bányász csákánnyal/ásóval 20 mp-ig!"
-ability-haste-expired: "&d▸ Haste 3x3 bányászás lejárt!"
+ability-haste-activated: "&d▸ Haste képesség &aaktiválva! &73x3-as területű bányászás csákánnyal vagy ásóval 20 másodpercig!"
+ability-haste-expired: "&d▸ Haste (3x3 bányászás) lejárt!"
 
-ability-fireres-activated: "&d▸ Fire Resistance Ability &aaktivált! &7%count% ellenség elolthatatlan tűzben ég 15 mp-ig!"
+ability-fireres-activated: "&d▸ Fire Resistance képesség &aaktiválva! &7%count% közeli ellenség elolthatatlan tűzben ég 15 másodpercig!"
 ability-fireres-victim: "&c🔥 &lELOLTHATATLAN TŰZBEN ÉGSZ! &c🔥"
 
-ability-speed-info: "&b▸ Speed Ability: &7Használd a &bShift&7-et a dashhez! (3x)"
-ability-speed-hint: "&7A dash automatikusan elérhető 3+ szívvel."
+ability-speed-info: "&b▸ Speed képesség: &7Használd a &bShift&7-et a dash-hez (lökés)! (3x)"
+ability-speed-hint: "&7A lökés (dash) automatikusan használható 3 vagy több szívvel."
 
-ability-dolphin-activated: "&d▸ Dolphin Grace Ability &aaktivált! &7Water Breathing + Conduit Power 1 percre!"
+ability-dolphin-activated: "&d▸ Dolphin Grace képesség &aaktiválva! &7Víz alatti légzés és tengeri erő 1 percre!"
 
-ability-health-activated: "&d▸ Health Boost Ability &aaktivált! &7+10 szív (20 összesen) 1 percre!"
+ability-health-activated: "&d▸ Health Boost képesség &aaktiválva! &7+10 plusz szív 1 percre!"
 
-ability-resistance-activated: "&6▸ Resistance Ability &aaktivált! &7TELJES HALHATATLANSÁG 5 mp-re!"
-ability-resistance-expired: "&6▸ Halhatatlanság lejárt!"
+ability-resistance-activated: "&6▸ Resistance képesség &aaktiválva! &7TELJES SEBZHETETLENSÉG 5 másodpercre!"
+ability-resistance-expired: "&6▸ Sebzhetetlenség lejárt!"
 
-ability-strength-activated: "&6▸ Strength Ability &aaktivált! &7Strength 3 + Extended Reach (+3 blokk) 5 mp-re!"
-ability-strength-expired: "&6▸ Strength + Extended Reach lejárt!"
+ability-strength-activated: "&6▸ Strength képesség &aaktiválva! &7Erő III és megnövelt hatótávolság (+3 blokk) 5 másodpercre!"
+ability-strength-expired: "&6▸ Erő és megnövelt hatótávolság lejárt!"
 
-ability-regen-activated: "&6▸ Regeneration Ability &aaktivált! &7Regen 2, 45 mp neked és %count% trust-nak!"
+ability-regen-activated: "&6▸ Regeneration képesség &aaktiválva! &7Regeneráció II 45 másodpercig neked és %count% szövetségesednek!"
 ability-regen-received: "&d▸ %player% &amegosztotta veled a Regeneration képességét!"
 
 # ─────────────────────────────────────────────────────────────────────
@@ -126,25 +126,25 @@ reroll-success: "&d▸ Megkaptad az effekted: %effect%"
 #                        ITEM ABILITY MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-mace-activated: "&5⚔ Effect Buzogány &aaktivált! &7Érkezéskor lökéshullám!"
-mace-cooldown: "&cA buzogány cooldownon van! &7(%time%)"
+mace-activated: "&5⚔ Effekt Buzogány &aaktiválva! &7Földet éréskor lökéshullámot kelt!"
+mace-cooldown: "&cA buzogány töltési idő alatt van! &7(%time%)"
 mace-victim: "&5⚔ Lökéshullám!"
 mace-landing: "&5⚔ Lökéshullám aktiválva!"
 
-sword-usage-hint: "&7Használd &eShift + Jobb klikk&7-et a kard képességéhez!"
-sword-activated: "&c⚔ Effect Kard &aaktivált! &71.5x sebzés 10 mp-ig!"
-sword-cooldown: "&cA kard cooldownon van! &7(%time%)"
-sword-expired: "&c⚔ Az Effect Kard képessége lejárt!"
+sword-usage-hint: "&7Használd a &eShift + Jobb klikket &7a kard képességéhez!"
+sword-activated: "&c⚔ Effekt Kard &aaktiválva! &71.5x-es sebzés 10 másodpercig!"
+sword-cooldown: "&cA kard töltési idő alatt van! &7(%time%)"
+sword-expired: "&c⚔ Az Effekt Kard képessége lejárt!"
 
-scythe-usage-hint: "&7Használd &eShift + Jobb klikk&7-et a kasza képességéhez!"
-scythe-activated: "&3⚰ Effect Kasza &aaktivált! &7%count% játékos teljesen immobilizálva 5 mp-re!"
-scythe-no-enemies: "&3⚰ Effect Kasza &aaktivált! &7Nem volt ellenség a közelben."
-scythe-cooldown: "&cA kasza cooldownon van! &7(%time%)"
+scythe-usage-hint: "&7Használd a &eShift + Jobb klikket &7a kasza képességéhez!"
+scythe-activated: "&3⚰ Effekt Kasza &aaktiválva! &7%count% közeli játékos teljesen lefagyasztva 5 másodpercre!"
+scythe-no-enemies: "&3⚰ Effekt Kasza &aaktiválva! &7Nem volt ellenséges játékos a közelben."
+scythe-cooldown: "&cA kasza töltési idő alatt van! &7(%time%)"
 scythe-victim: "&b❄ &lLEFAGYASZTOTTAK! &b❄"
 scythe-thaw: "&b❄ Kiolvadtál a jégből!"
 
-bow-hit-victim: "&5☠ Eltalált egy átok nyíl!"
-bow-activated: "&6➹ Átok nyíl! &7%count% ellenség megátkozva!"
+bow-hit-victim: "&5☠ Átoknyíl talált el!"
+bow-activated: "&6➹ Átoknyíl! &7%count% ellenség megátkozva!"
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -404,10 +404,10 @@ version: 6
 spear-cooldown: "&cA dárda cooldownon van! &7(%time%)"
 item-spear-name: "&6&l➹ Effect Dárda"
 item-spear-lore-ability: "&dKépesség:"
-item-spear-lore-1: "&7Hosszan nyomva tölthetsz"
-item-spear-lore-2: "&7egy óriási vetődést (lunge)!"
+item-spear-lore-1: "&7Tartsd hosszan nyomva a jobb klikket"
+item-spear-lore-2: "&7guggolás közben a töltéshez"
 item-spear-lore-cooldown: "&cCooldown: %time%"
-item-spear-lore-usage: "&e▸ Jobb klikk nyomva tartásával tölthető"
+item-spear-lore-usage: "&e▸ Shift + Jobb klikk nyomva tartásával tölthető"
 
 # ─────────────────────────────────────────────────────────────────────
 #                         GUI MESSAGES

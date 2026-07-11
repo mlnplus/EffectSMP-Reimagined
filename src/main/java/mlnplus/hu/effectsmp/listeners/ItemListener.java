@@ -4,6 +4,7 @@ import mlnplus.hu.effectsmp.Effectsmp;
 import mlnplus.hu.effectsmp.data.PlayerData;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,14 +16,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class ItemListener implements Listener {
 
     private final Effectsmp plugin;
-    private final Map<UUID, Long> windChargeCooldowns = new HashMap<>();
 
     public ItemListener(Effectsmp plugin) {
         this.plugin = plugin;
@@ -54,17 +53,13 @@ public class ItemListener implements Listener {
                 if (data.getEffect() == mlnplus.hu.effectsmp.effects.EffectType.WIND_CHARGED && data.getEffectHearts() >= 1) {
                     event.setCancelled(true);
                     
-                    // Check cooldown (3 seconds = 3000ms)
-                    long now = System.currentTimeMillis();
-                    UUID uuid = player.getUniqueId();
-                    if (windChargeCooldowns.containsKey(uuid)) {
-                        long elapsed = now - windChargeCooldowns.get(uuid);
-                        if (elapsed < 3000L) {
-                            long remaining = 3000L - elapsed;
-                            plugin.getMessageUtils().sendMessage(player, "wind-charge-cooldown",
-                                    "%time%", plugin.getMessageUtils().formatTime(remaining));
-                            return;
-                        }
+                    // Check native cooldown (3 seconds = 60 ticks)
+                    if (player.hasCooldown(Material.WIND_CHARGE)) {
+                        int remainingTicks = player.getCooldown(Material.WIND_CHARGE);
+                        long remainingMs = remainingTicks * 50L;
+                        plugin.getMessageUtils().sendMessage(player, "wind-charge-cooldown",
+                                "%time%", plugin.getMessageUtils().formatTime(remainingMs));
+                        return;
                     }
                     
                     // Spawn the projectile manually
@@ -79,8 +74,8 @@ public class ItemListener implements Listener {
                         player.getWorld().playSound(loc, org.bukkit.Sound.ENTITY_WIND_CHARGE_THROW, 1.0f, 1.0f);
                     }
                     
-                    // Set cooldown
-                    windChargeCooldowns.put(uuid, now);
+                    // Set native cooldown
+                    player.setCooldown(Material.WIND_CHARGE, 60);
                     
                     // Swing hand
                     if (event.getHand() == EquipmentSlot.OFF_HAND) {
@@ -126,7 +121,6 @@ public class ItemListener implements Listener {
                     return;
                 }
                 plugin.getItemAbilityManager().startSpearCharge(player);
-                event.setCancelled(true);
                 return;
             } else {
                 plugin.getItemAbilityManager().startVanillaSpearChargeAnimation(player);
@@ -272,8 +266,43 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
+        if (event.getTo() == null)
+            return;
+
         Player player = event.getPlayer();
         plugin.getItemAbilityManager().checkMaceLanding(player);
+
+        // Check if player is lunging with spear to damage nearby entities
+        if (plugin.getItemAbilityManager().isSpearLunging(player.getUniqueId())) {
+            Set<UUID> damaged = plugin.getItemAbilityManager().getSpearLungeDamaged(player.getUniqueId());
+            for (org.bukkit.entity.Entity entity : player.getNearbyEntities(1.5, 1.5, 1.5)) {
+                if (entity instanceof org.bukkit.entity.LivingEntity living && !entity.equals(player)) {
+                    UUID entityUuid = entity.getUniqueId();
+                    if (damaged != null && damaged.contains(entityUuid)) continue;
+
+                    // Exclude trusted players
+                    if (living instanceof Player targetPlayer) {
+                        mlnplus.hu.effectsmp.data.PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
+                        if (data != null && data.hasTrusted(targetPlayer.getUniqueId())) {
+                            continue;
+                        }
+                    }
+
+                    // Deal heavy damage (15.0 = 7.5 hearts)
+                    living.damage(15.0, player);
+                    if (damaged != null) {
+                        damaged.add(entityUuid);
+                    }
+
+                    // Visuals & Sound
+                    Location eloc = living.getLocation();
+                    if (eloc != null) {
+                        eloc.getWorld().spawnParticle(org.bukkit.Particle.SWEEP_ATTACK, eloc, 1);
+                        eloc.getWorld().playSound(eloc, org.bukkit.Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.0f);
+                    }
+                }
+            }
+        }
 
         if (plugin.getItemAbilityManager().wasRecentlyLunging(player.getUniqueId())) {
             Float sat = plugin.getItemAbilityManager().getInitialSaturation(player.getUniqueId());
@@ -281,6 +310,15 @@ public class ItemListener implements Listener {
             if (sat != null) player.setSaturation(sat);
             if (food != null) player.setFoodLevel(food);
             player.setExhaustion(0.0f);
+        }
+    }
+
+    @EventHandler
+    public void onProjectileLaunch(org.bukkit.event.entity.ProjectileLaunchEvent event) {
+        if (event.getEntity().getShooter() instanceof Player player) {
+            if (plugin.getItemAbilityManager().isSpearCharging(player.getUniqueId())) {
+                event.setCancelled(true);
+            }
         }
     }
 }

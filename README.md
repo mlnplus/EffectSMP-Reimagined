@@ -102,6 +102,6 @@ This plugin is highly customizable:
 
 
 <div align="center">
-  <p style="color:red">MODIFICATION AND DISTRIBUTION OF THE PLUGIN IS NOT ALLOWED!</p>
+  <p style="color:red">MODIFICATION AND REDISTRIBUTION OF THE PLUGIN IS NOT ALLOWED!</p>
   <p>Made with ❤️ by <a href="https://github.com/mlnplus">mlnplus</a></p>
 </div>

@@ -22,31 +22,31 @@ ability-cooldown: "&c✖ &fCooldown: &e%time%"
 ability-already-active: "&cYour ability is already active!"
 ability-ready: "&a⚡ Ability is ready!"
 
-ability-invisibility-activated: "&d▸ Invisibility Ability &aactivated! &7Full invisibility for 15s!"
+ability-invisibility-activated: "&d▸ Invisibility ability &aactivated! &7Full invisibility for 15 seconds!"
 ability-invisibility-expired: "&d▸ Invisibility expired! &7You are visible again."
 
-ability-hero-activated: "&d▸ Hero of the Village Ability &aactivated! &7Hero level: 5, for 2 minutes!"
+ability-hero-activated: "&d▸ Hero of the Village ability &aactivated! &7Hero level V for 2 minutes!"
 
-ability-haste-activated: "&d▸ Haste Ability &aactivated! &73x3 mining with pickaxe/shovel for 20s!"
+ability-haste-activated: "&d▸ Haste ability &aactivated! &73x3 mining with pickaxe/shovel for 20 seconds!"
 ability-haste-expired: "&d▸ Haste 3x3 mining expired!"
 
-ability-fireres-activated: "&d▸ Fire Resistance Ability &aactivated! &7%count% enemies burn in inextinguishable fire for 15s!"
+ability-fireres-activated: "&d▸ Fire Resistance ability &aactivated! &7%count% enemies burn in inextinguishable fire for 15 seconds!"
 ability-fireres-victim: "&c🔥 &lYOU ARE BURNING IN INEXTINGUISHABLE FIRE! &c🔥"
 
-ability-speed-info: "&b▸ Speed Ability: &7Use &bShift &7to dash! (3x)"
+ability-speed-info: "&b▸ Speed ability: &7Press &bShift &7to dash! (3x)"
 ability-speed-hint: "&7Dash is automatically available with 3+ hearts."
 
-ability-dolphin-activated: "&d▸ Dolphin Grace Ability &aactivated! &7Water Breathing + Conduit Power for 1 minute!"
+ability-dolphin-activated: "&d▸ Dolphin Grace ability &aactivated! &7Water Breathing and Conduit Power for 1 minute!"
 
-ability-health-activated: "&d▸ Health Boost Ability &aactivated! &7+10 hearts (20 total) for 1 minute!"
+ability-health-activated: "&d▸ Health Boost ability &aactivated! &7+10 extra hearts for 1 minute!"
 
-ability-resistance-activated: "&6▸ Resistance Ability &aactivated! &7FULL INVULNERABILITY for 5s!"
+ability-resistance-activated: "&6▸ Resistance ability &aactivated! &7FULL INVULNERABILITY for 5 seconds!"
 ability-resistance-expired: "&6▸ Invulnerability expired!"
 
-ability-strength-activated: "&6▸ Strength Ability &aactivated! &7Strength 3 + Extended Reach (+3 blocks) for 5s!"
+ability-strength-activated: "&6▸ Strength ability &aactivated! &7Strength III and Extended Reach (+3 blocks) for 5 seconds!"
 ability-strength-expired: "&6▸ Strength + Extended Reach expired!"
 
-ability-regen-activated: "&6▸ Regeneration Ability &aactivated! &7Regen 2, 45s for you and %count% trusted players!"
+ability-regen-activated: "&6▸ Regeneration ability &aactivated! &7Regeneration II for 45 seconds for you and %count% trusted players!"
 ability-regen-received: "&d▸ %player% &ashared their Regeneration ability with you!"
 
 # ─────────────────────────────────────────────────────────────────────
@@ -126,19 +126,19 @@ reroll-success: "&d▸ You received your effect: %effect%"
 #                        ITEM ABILITY MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-mace-activated: "&5⚔ Effect Mace &aactivated! &7Shockwave on impact!"
+mace-activated: "&5⚔ Effect Mace &aactivated! &7Creates a shockwave on landing!"
 mace-cooldown: "&cMace is on cooldown! &7(%time%)"
 mace-victim: "&5⚔ Shockwave!"
 mace-landing: "&5⚔ Shockwave activated!"
 
-sword-usage-hint: "&7Use &eShift + Right Click &7for sword ability!"
-sword-activated: "&c⚔ Effect Sword &aactivated! &71.5x damage for 10s!"
+sword-usage-hint: "&7Hold &eShift + Right Click &7for sword ability!"
+sword-activated: "&c⚔ Effect Sword &aactivated! &71.5x damage for 10 seconds!"
 sword-cooldown: "&cSword is on cooldown! &7(%time%)"
 sword-expired: "&c⚔ Effect Sword ability expired!"
 
-scythe-usage-hint: "&7Use &eShift + Right Click &7for scythe ability!"
-scythe-activated: "&3⚰ Effect Scythe &aactivated! &7%count% players completely immobilized for 5s!"
-scythe-no-enemies: "&3⚰ Effect Scythe &aactivated! &7No enemies nearby."
+scythe-usage-hint: "&7Hold &eShift + Right Click &7for scythe ability!"
+scythe-activated: "&3⚰ Effect Scythe &aactivated! &7%count% nearby players frozen for 5 seconds!"
+scythe-no-enemies: "&3⚰ Effect Scythe &aactivated! &7No enemy players nearby."
 scythe-cooldown: "&cScythe is on cooldown! &7(%time%)"
 scythe-victim: "&b❄ &lYOU ARE FROZEN! &b❄"
 scythe-thaw: "&b❄ You thawed from the ice!"
@@ -404,10 +404,10 @@ version: 6
 spear-cooldown: "&cSpear is on cooldown! &7(%time%)"
 item-spear-name: "&6&l➹ Effect Spear"
 item-spear-lore-ability: "&dAbility:"
-item-spear-lore-1: "&7Hold right click to charge"
+item-spear-lore-1: "&7Hold right click while shifting to charge"
 item-spear-lore-2: "&7a really big lunge!"
 item-spear-lore-cooldown: "&cCooldown: %time%"
-item-spear-lore-usage: "&e▸ Hold Right Click to charge"
+item-spear-lore-usage: "&e▸ Hold Right Click while shifting to charge"
 
 # ─────────────────────────────────────────────────────────────────────
 #                         GUI MESSAGES

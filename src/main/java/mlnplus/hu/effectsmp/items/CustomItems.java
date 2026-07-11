@@ -19,7 +19,7 @@ import java.util.List;
 
 import net.kyori.adventure.text.format.TextDecoration;
 
-@SuppressWarnings({"deprecation", "null"})
+@SuppressWarnings({ "deprecation", "null" })
 public class CustomItems {
 
         private final Effectsmp plugin;
@@ -63,14 +63,17 @@ public class CustomItems {
                 lore.add(getNoItalic("item-infinite-wind-charge-lore-1"));
                 lore.add(getNoItalic("item-infinite-wind-charge-lore-2"));
                 meta.lore(lore);
-                meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "infinite_wind_charge"), PersistentDataType.STRING, "true");
+                meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "infinite_wind_charge"),
+                                PersistentDataType.STRING, "true");
                 item.setItemMeta(meta);
                 return item;
         }
 
         public boolean isInfiniteWindCharge(ItemStack item) {
-                if (item == null || !item.hasItemMeta()) return false;
-                return item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(plugin, "infinite_wind_charge"), PersistentDataType.STRING);
+                if (item == null || !item.hasItemMeta())
+                        return false;
+                return item.getItemMeta().getPersistentDataContainer()
+                                .has(new NamespacedKey(plugin, "infinite_wind_charge"), PersistentDataType.STRING);
         }
 
         public ItemStack createEffectHeart() {
@@ -173,7 +176,8 @@ public class CustomItems {
                 lore.add(getNoItalic("item-mace-lore-1"));
                 lore.add(getNoItalic("item-mace-lore-2"));
                 lore.add(Component.empty());
-                lore.add(getNoItalicWithTime("item-mace-lore-cooldown", plugin.getItemAbilityManager().getMaceCooldown()));
+                lore.add(getNoItalicWithTime("item-mace-lore-cooldown",
+                                plugin.getItemAbilityManager().getMaceCooldown()));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-mace-lore-usage"));
                 meta.lore(lore);
@@ -205,7 +209,8 @@ public class CustomItems {
                 lore.add(getNoItalic("item-sword-lore-1"));
                 lore.add(getNoItalic("item-sword-lore-2"));
                 lore.add(Component.empty());
-                lore.add(getNoItalicWithTime("item-sword-lore-cooldown", plugin.getItemAbilityManager().getSwordCooldown()));
+                lore.add(getNoItalicWithTime("item-sword-lore-cooldown",
+                                plugin.getItemAbilityManager().getSwordCooldown()));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-sword-lore-usage"));
                 meta.lore(lore);
@@ -216,6 +221,7 @@ public class CustomItems {
                 meta.addEnchant(Enchantment.SWEEPING_EDGE, 3, true);
                 meta.addEnchant(Enchantment.FIRE_ASPECT, 2, true);
                 meta.addEnchant(Enchantment.LOOTING, 3, true);
+                meta.addEnchant(Enchantment.BANE_OF_ARTHROPODS, 5, true);
 
                 meta.setCustomModelData(CMD_EFFECT_SWORD);
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_sword");
@@ -238,7 +244,8 @@ public class CustomItems {
                 lore.add(getNoItalic("item-bow-lore-2"));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-bow-lore-chance"));
-                lore.add(getNoItalicWithTime("item-bow-lore-cooldown", plugin.getItemAbilityManager().getBowCooldown()));
+                lore.add(getNoItalicWithTime("item-bow-lore-cooldown",
+                                plugin.getItemAbilityManager().getBowCooldown()));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-bow-lore-usage"));
                 meta.lore(lore);
@@ -270,7 +277,8 @@ public class CustomItems {
                 lore.add(getNoItalic("item-scythe-lore-1"));
                 lore.add(getNoItalic("item-scythe-lore-2"));
                 lore.add(Component.empty());
-                lore.add(getNoItalicWithTime("item-scythe-lore-cooldown", plugin.getItemAbilityManager().getScytheCooldown()));
+                lore.add(getNoItalicWithTime("item-scythe-lore-cooldown",
+                                plugin.getItemAbilityManager().getScytheCooldown()));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-scythe-lore-usage"));
                 meta.lore(lore);
@@ -300,7 +308,8 @@ public class CustomItems {
                 lore.add(getNoItalic("item-spear-lore-1"));
                 lore.add(getNoItalic("item-spear-lore-2"));
                 lore.add(Component.empty());
-                lore.add(getNoItalicWithTime("item-spear-lore-cooldown", plugin.getItemAbilityManager().getSpearCooldown()));
+                lore.add(getNoItalicWithTime("item-spear-lore-cooldown",
+                                plugin.getItemAbilityManager().getSpearCooldown()));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-spear-lore-usage"));
                 meta.lore(lore);

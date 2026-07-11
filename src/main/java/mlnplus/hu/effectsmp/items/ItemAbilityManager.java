@@ -37,6 +37,7 @@ public class ItemAbilityManager {
     private final Map<UUID, Long> lastLungeTime = new HashMap<>();
     private final Map<UUID, Float> initialSaturation = new HashMap<>();
     private final Map<UUID, Integer> initialFood = new HashMap<>();
+    private final Map<UUID, Set<UUID>> spearLungeDamaged = new HashMap<>();
 
     private final Map<UUID, FreezeInfo> frozenPlayers = new HashMap<>();
 
@@ -353,8 +354,7 @@ public class ItemAbilityManager {
         spearCharging.add(uuid);
         spearChargeStart.put(uuid, System.currentTimeMillis());
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20, 2, false, false, false));
-        plugin.getMessageUtils().sendActionBar(player, "§6§lSpear Charging...");
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 2, false, false, false));
 
         new BukkitRunnable() {
             int ticks = 0;
@@ -364,40 +364,57 @@ public class ItemAbilityManager {
                     cancel();
                     return;
                 }
-                
+
+                if (ticks > 1 && !player.isHandRaised()) {
+                    releaseSpearLunge(player);
+                    cancel();
+                    return;
+                }
+
+                double ratio = Math.min(1.0, ticks / 30.0);
+
                 Location loc = player.getLocation();
                 if (loc != null) {
                     double radius = 0.8;
-                    double angle = ticks * 0.8;
+                    double angle = ticks * 0.4;
                     double x = radius * Math.cos(angle);
                     double z = radius * Math.sin(angle);
-                    double y = (ticks / 10.0) * 1.8;
+                    double y = ratio * 1.8;
                     
                     Location pLoc = loc.clone().add(x, y, z);
-                    loc.getWorld().spawnParticle(Particle.PORTAL, pLoc, 3, 0.02, 0.02, 0.02, 0.01);
-                    loc.getWorld().spawnParticle(Particle.CRIT, pLoc, 2, 0.02, 0.02, 0.02, 0.01);
+                    loc.getWorld().spawnParticle(Particle.PORTAL, pLoc, 2, 0.01, 0.01, 0.01, 0.01);
+                    loc.getWorld().spawnParticle(Particle.CRIT, pLoc, 1, 0.01, 0.01, 0.01, 0.01);
                     
-                    float pitch = 0.5f + (ticks / 10.0f) * 1.0f;
-                    loc.getWorld().playSound(loc, Sound.ENTITY_BREEZE_CHARGE, 0.6f, pitch);
+                    float pitch = 0.5f + (float)ratio * 1.2f;
+                    if (ticks % 2 == 0) {
+                        loc.getWorld().playSound(loc, Sound.ENTITY_BREEZE_CHARGE, 0.6f, pitch);
+                    }
                 }
-                
-                ticks++;
-                if (ticks >= 10) {
-                    cancel();
-                }
-            }
-        }.runTaskTimer(plugin, 0L, 2L);
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            if (player.isOnline()) {
-                if (spearCharging.remove(uuid)) {
-                    performSpearLunge(player);
+                String color = "§2";
+                if (ratio > 0.8) {
+                    color = "§c";
+                } else if (ratio > 0.6) {
+                    color = "§6";
+                } else if (ratio > 0.4) {
+                    color = "§e";
+                } else if (ratio > 0.2) {
+                    color = "§a";
                 }
-            } else {
-                spearCharging.remove(uuid);
-                spearChargeStart.remove(uuid);
+
+                int filled = (int) (ratio * 10);
+                int empty = 10 - filled;
+                String bar = color + "Lándzsa Töltés: [" + "█".repeat(filled) + "░".repeat(empty) + "] " + (int)(ratio * 100) + "%";
+                plugin.getMessageUtils().sendActionBar(player, bar);
+
+                // Keep slowness potion refreshed while holding charge
+                if (ticks % 20 == 0) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 2, false, false, false));
+                }
+
+                ticks++;
             }
-        }, 20L);
+        }.runTaskTimer(plugin, 0L, 1L);
     }
 
     public boolean isSpearOnCooldown(UUID uuid) {
@@ -421,6 +438,11 @@ public class ItemAbilityManager {
         lastLungeTime.put(uuid, System.currentTimeMillis());
         initialSaturation.put(uuid, player.getSaturation());
         initialFood.put(uuid, player.getFoodLevel());
+        spearLungeDamaged.put(uuid, new HashSet<>());
+    }
+
+    public Set<UUID> getSpearLungeDamaged(UUID uuid) {
+        return spearLungeDamaged.computeIfAbsent(uuid, k -> new HashSet<>());
     }
 
     public boolean wasRecentlyLunging(UUID uuid) {
@@ -435,6 +457,14 @@ public class ItemAbilityManager {
 
     public Integer getInitialFood(UUID uuid) {
         return initialFood.get(uuid);
+    }
+
+    public void releaseSpearLunge(Player player) {
+        UUID uuid = player.getUniqueId();
+        if (spearCharging.remove(uuid)) {
+            player.removePotionEffect(PotionEffectType.SLOWNESS);
+            performSpearLunge(player);
+        }
     }
 
     public void performSpearLunge(Player player) {
@@ -456,14 +486,20 @@ public class ItemAbilityManager {
         Long start = spearChargeStart.remove(uuid);
         long elapsed = (start != null) ? (System.currentTimeMillis() - start) : 500;
 
-        double basePower = 1.2;
-        double extraPower = Math.min(2.3, (elapsed / 1000.0) * 2.3);
+        double ratio = Math.min(1.0, elapsed / 1500.0);
+        double basePower = 2.0;
+        double extraPower = ratio * 10.0;
         double power = basePower + extraPower;
 
         Location loc = player.getLocation();
         if (loc == null) return;
 
-        Vector direction = loc.getDirection().normalize().multiply(power);
+        Vector direction = loc.getDirection().normalize();
+        if (direction.getY() < 0.2) {
+            direction.setY(0.2);
+            direction.normalize();
+        }
+        direction.multiply(power);
         player.setVelocity(direction);
 
         spearCooldowns.put(uuid, System.currentTimeMillis());
@@ -480,7 +516,6 @@ public class ItemAbilityManager {
     }
 
     public void startVanillaSpearChargeAnimation(Player player) {
-        UUID uuid = player.getUniqueId();
         
         new BukkitRunnable() {
             int ticks = 0;
