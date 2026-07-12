@@ -286,25 +286,29 @@ public final class Effectsmp extends JavaPlugin {
                         java.util.Iterator<?> it = map.entrySet().iterator();
                         while (it.hasNext()) {
                             java.util.Map.Entry<?, ?> entry = (java.util.Map.Entry<?, ?>) it.next();
-                            boolean remove = false;
-                            if (entry.getKey() != null) {
-                                if (entry.getKey().toString().toLowerCase().contains(pluginName.toLowerCase())) {
-                                    remove = true;
+                            if (entry != null) {
+                                boolean remove = false;
+                                Object key = entry.getKey();
+                                Object valObj = entry.getValue();
+                                if (key != null) {
+                                    if (key.toString().toLowerCase().contains(pluginName.toLowerCase())) {
+                                        remove = true;
+                                    }
                                 }
-                            }
-                            if (entry.getValue() != null) {
-                                if (entry.getValue().toString().toLowerCase().contains(pluginName.toLowerCase())) {
-                                    remove = true;
+                                if (valObj != null) {
+                                    if (valObj.toString().toLowerCase().contains(pluginName.toLowerCase())) {
+                                        remove = true;
+                                    }
+                                    if (checkProviderMeta(valObj, pluginName)) {
+                                        remove = true;
+                                    }
                                 }
-                                if (checkProviderMeta(entry.getValue(), pluginName)) {
-                                    remove = true;
+                                if (remove) {
+                                    it.remove();
+                                } else {
+                                    cleanFields(key, pluginName, visited);
+                                    cleanFields(valObj, pluginName, visited);
                                 }
-                            }
-                            if (remove) {
-                                it.remove();
-                            } else {
-                                cleanFields(entry.getKey(), pluginName, visited);
-                                cleanFields(entry.getValue(), pluginName, visited);
                             }
                         }
                     } else if (val instanceof java.util.Set<?> set) {

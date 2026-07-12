@@ -26,6 +26,7 @@ public class PlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         plugin.getItemAbilityManager().removeFreezeAttribute(player);
+        plugin.getEffectAbilityManager().removeStrengthReach(player);
 
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
         data.setPlayerName(player.getName());
@@ -45,11 +46,13 @@ public class PlayerListener implements Listener {
         plugin.getPlayerDataManager().savePlayerData(player.getUniqueId());
         plugin.getEffectAbilityManager().removeRolling(player.getUniqueId());
         plugin.getItemAbilityManager().removeFreezeAttribute(player);
+        plugin.getEffectAbilityManager().removeStrengthReach(player);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
+        plugin.getEffectAbilityManager().removeStrengthReach(player);
         event.getDrops().removeIf(item -> plugin.getCustomItems().isInfiniteWindCharge(item));
 
         Player killer = player.getKiller();

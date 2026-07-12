@@ -445,6 +445,7 @@ active-desc-wind-charged: "&7Powerful wind burst that knocks back all enemies an
 item-infinite-wind-charge-name: "&b&l⚡ Infinite Wind Charge"
 item-infinite-wind-charge-lore-1: "&7This wind charge is never consumed"
 item-infinite-wind-charge-lore-2: "&7and does not drop on death!"
+infinite-wind-charge-cannot-drop: "&c✖ &fYou cannot drop the Infinite Wind Charge!"
 
 rarity-common: "&7Common"
 rarity-rare: "&bRare"

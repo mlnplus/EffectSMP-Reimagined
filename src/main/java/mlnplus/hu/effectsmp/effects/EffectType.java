@@ -3,18 +3,18 @@ package mlnplus.hu.effectsmp.effects;
 import org.bukkit.potion.PotionEffectType;
 
 public enum EffectType {
-    INVISIBILITY("Invisibility", "§7✧ §fInvisibility", PotionEffectType.INVISIBILITY, Rarity.RARE, 600, 1),
-    HERO_OF_VILLAGE("Hero of the Village", "§6✦ §fHero of the Village", PotionEffectType.HERO_OF_THE_VILLAGE, Rarity.COMMON, 600, 1),
-    HASTE("Haste", "§e⚡ §fHaste", PotionEffectType.HASTE, Rarity.RARE, 300, 1),
-    FIRE_RESISTANCE("Fire Resistance", "§c🔥 §fFire Resistance", PotionEffectType.FIRE_RESISTANCE, Rarity.COMMON, 900, 1),
-    SPEED("Speed", "§b➣ §fSpeed", PotionEffectType.SPEED, Rarity.RARE, 300, 1),
-    DOLPHIN_GRACE("Dolphin Grace", "§3🌊 §fDolphin Grace", PotionEffectType.DOLPHINS_GRACE, Rarity.COMMON, 300, 1),
-    HEALTH_BOOST("Health Boost", "§c❤ §fHealth Boost", PotionEffectType.HEALTH_BOOST, Rarity.EPIC, 1200, 1),
+    INVISIBILITY("Invisibility", "§7✧ §fInvisibility", PotionEffectType.INVISIBILITY, Rarity.RARE, 600, 0),
+    HERO_OF_VILLAGE("Hero of the Village", "§6✦ §fHero of the Village", PotionEffectType.HERO_OF_THE_VILLAGE, Rarity.COMMON, 600, 0),
+    HASTE("Haste", "§e⚡ §fHaste", PotionEffectType.HASTE, Rarity.RARE, 300, 0),
+    FIRE_RESISTANCE("Fire Resistance", "§c🔥 §fFire Resistance", PotionEffectType.FIRE_RESISTANCE, Rarity.COMMON, 900, 0),
+    SPEED("Speed", "§b➣ §fSpeed", PotionEffectType.SPEED, Rarity.RARE, 300, 0),
+    DOLPHIN_GRACE("Dolphin Grace", "§3🌊 §fDolphin Grace", PotionEffectType.DOLPHINS_GRACE, Rarity.COMMON, 300, 0),
+    HEALTH_BOOST("Health Boost", "§c❤ §fHealth Boost", PotionEffectType.HEALTH_BOOST, Rarity.EPIC, 1200, 0),
     WIND_CHARGED("Wind Charged", "§b⚡ §fWind Charged", null, Rarity.RARE, 180, 0),
 
-    RESISTANCE("Resistance", "§9⛊ §9Resistance", PotionEffectType.RESISTANCE, Rarity.LEGENDARY, 900, 1),
-    STRENGTH("Strength", "§4⚔ §4Strength", PotionEffectType.STRENGTH, Rarity.LEGENDARY, 900, 1),
-    REGENERATION("Regeneration", "§c❤ §cRegeneration", PotionEffectType.REGENERATION, Rarity.EPIC, 900, 1);
+    RESISTANCE("Resistance", "§9⛊ §9Resistance", PotionEffectType.RESISTANCE, Rarity.LEGENDARY, 900, 0),
+    STRENGTH("Strength", "§4⚔ §4Strength", PotionEffectType.STRENGTH, Rarity.LEGENDARY, 900, 0),
+    REGENERATION("Regeneration", "§c❤ §cRegeneration", PotionEffectType.REGENERATION, Rarity.EPIC, 900, 0);
 
     public enum Rarity {
         COMMON("§8[§7Közönséges§8]", "common"),

@@ -299,6 +299,11 @@ public class ItemProtectionListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDropItem(org.bukkit.event.player.PlayerDropItemEvent event) {
         ItemStack item = event.getItemDrop().getItemStack();
+        if (item != null && plugin.getCustomItems().isInfiniteWindCharge(item)) {
+            event.setCancelled(true);
+            plugin.getMessageUtils().sendMessage(event.getPlayer(), "infinite-wind-charge-cannot-drop");
+            return;
+        }
         if (item != null && item.getType() == Material.BUNDLE) {
             if (hasCustomItemInsideBundle(item)) {
                 cleanBundle(event.getPlayer(), item);

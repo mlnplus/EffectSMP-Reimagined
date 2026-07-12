@@ -337,6 +337,7 @@ public class EffectAbilityManager {
             case STRENGTH -> {
                 duration = 15000;
                 setAbilityActive(player, data, duration);
+                applyStrengthReach(player);
 
                 player.addPotionEffect(
                         new PotionEffect(PotionEffectType.STRENGTH, (int) (duration / 50), 2, false, false));
@@ -383,9 +384,12 @@ public class EffectAbilityManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (player.isOnline() && data.getEffect() != null && data.getEffect() != EffectType.INVISIBILITY) {
-                    plugin.getActionBarManager().sendAbilityExpired(player);
-                    player.playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 1.0f, 1.5f);
+                if (player.isOnline()) {
+                    removeStrengthReach(player);
+                    if (data.getEffect() != null && data.getEffect() != EffectType.INVISIBILITY) {
+                        plugin.getActionBarManager().sendAbilityExpired(player);
+                        player.playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 1.0f, 1.5f);
+                    }
                 }
             }
         }.runTaskLater(plugin, durationMillis / 50);
@@ -435,5 +439,41 @@ public class EffectAbilityManager {
 
     public boolean isRolling(Player player) {
         return plugin.getRollAnimationManager().isRolling(player.getUniqueId());
+    }
+
+    public void applyStrengthReach(Player player) {
+        if (player == null) return;
+        
+        removeStrengthReach(player);
+
+        org.bukkit.attribute.AttributeInstance blockRange = player.getAttribute(org.bukkit.attribute.Attribute.BLOCK_INTERACTION_RANGE);
+        if (blockRange != null) {
+            org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin, "strength_block_reach");
+            org.bukkit.attribute.AttributeModifier modifier = new org.bukkit.attribute.AttributeModifier(key, 3.0, org.bukkit.attribute.AttributeModifier.Operation.ADD_NUMBER);
+            blockRange.addModifier(modifier);
+        }
+
+        org.bukkit.attribute.AttributeInstance entityRange = player.getAttribute(org.bukkit.attribute.Attribute.ENTITY_INTERACTION_RANGE);
+        if (entityRange != null) {
+            org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin, "strength_entity_reach");
+            org.bukkit.attribute.AttributeModifier modifier = new org.bukkit.attribute.AttributeModifier(key, 3.0, org.bukkit.attribute.AttributeModifier.Operation.ADD_NUMBER);
+            entityRange.addModifier(modifier);
+        }
+    }
+
+    public void removeStrengthReach(Player player) {
+        if (player == null) return;
+
+        org.bukkit.attribute.AttributeInstance blockRange = player.getAttribute(org.bukkit.attribute.Attribute.BLOCK_INTERACTION_RANGE);
+        if (blockRange != null) {
+            org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin, "strength_block_reach");
+            blockRange.removeModifier(key);
+        }
+
+        org.bukkit.attribute.AttributeInstance entityRange = player.getAttribute(org.bukkit.attribute.Attribute.ENTITY_INTERACTION_RANGE);
+        if (entityRange != null) {
+            org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey(plugin, "strength_entity_reach");
+            entityRange.removeModifier(key);
+        }
     }
 }

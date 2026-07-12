@@ -445,6 +445,7 @@ active-desc-wind-charged: "&7Hatalmas széllökés, ami fellöki az ellenségeke
 item-infinite-wind-charge-name: "&b&l⚡ Végtelen Széltöltet"
 item-infinite-wind-charge-lore-1: "&7Ez a széltöltet soha nem fogy el,"
 item-infinite-wind-charge-lore-2: "&7és nem esik ki halálkor!"
+infinite-wind-charge-cannot-drop: "&c✖ &fA Végtelen Széltöltet nem dobható ki!"
 
 rarity-common: "&7Közönséges"
 rarity-rare: "&bRitka"
