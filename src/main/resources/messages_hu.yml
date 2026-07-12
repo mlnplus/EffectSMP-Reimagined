@@ -396,12 +396,13 @@ item-scythe-lore-2: "&7ellenséges játékost 5 mp-re!"
 item-scythe-lore-cooldown: "&cCooldown: %time%"
 item-scythe-lore-usage: "&e▸ Shift + Jobb klikk a használathoz"
 
-version: 6
+version: 7
 
 # ─────────────────────────────────────────────────────────────────────
 #                         SPEAR MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 spear-cooldown: "&cA dárda cooldownon van! &7(%time%)"
+spear-charging-bar: "Lándzsa Töltés"
 item-spear-name: "&6&l➹ Effect Dárda"
 item-spear-lore-ability: "&dKépesség:"
 item-spear-lore-1: "&7Tartsd hosszan nyomva a jobb klikket"

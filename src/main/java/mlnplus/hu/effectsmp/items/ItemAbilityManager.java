@@ -402,9 +402,10 @@ public class ItemAbilityManager {
                     color = "§a";
                 }
 
+                String chargeText = plugin.getMessageUtils().getMessage("spear-charging-bar");
                 int filled = (int) (ratio * 10);
                 int empty = 10 - filled;
-                String bar = color + "Lándzsa Töltés: [" + "█".repeat(filled) + "░".repeat(empty) + "] " + (int)(ratio * 100) + "%";
+                String bar = color + chargeText + ": [" + "█".repeat(filled) + "░".repeat(empty) + "] " + (int)(ratio * 100) + "%";
                 plugin.getMessageUtils().sendActionBar(player, bar);
 
                 // Keep slowness potion refreshed while holding charge

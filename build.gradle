@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+}
+
+group = 'mlnplus.hu'
+version = '1.3'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:26.2.build.56-alpha'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(26)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+processResources {
+    inputs.property "version", project.version
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand(project: project)
+    }
+}
+
+// Copy build artifact to C:\mlnplus\IdeaArtifacts
+tasks.register('copyArtifact', Copy) {
+    from layout.buildDirectory.file("libs/${project.name}-${project.version}.jar")
+    into "C:/mlnplus/IdeaArtifacts"
+    rename { String filename ->
+        return "EffectSMP-Reimagined.jar"
+    }
+}
+
+// Ensure copyArtifact runs after jar
+tasks.named('jar') {
+    finalizedBy('copyArtifact')
+}

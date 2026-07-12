@@ -1,0 +1,8 @@
+/target/
+/.gradle/
+/build/
+/gradle_temp/
+/maven/
+/out/
+*.class
+*.log

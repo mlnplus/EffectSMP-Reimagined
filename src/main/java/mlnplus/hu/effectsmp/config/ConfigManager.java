@@ -73,14 +73,14 @@ public class ConfigManager {
         boolean updateNeeded = false;
         if (messagesFile.exists()) {
             FileConfiguration temp = loadUTF8Yaml(messagesFile);
-            if (temp.getInt("version", 0) < 6) {
+            if (temp.getInt("version", 0) < 7) {
                 updateNeeded = true;
                 File backupFile = new File(plugin.getDataFolder(), messageFileName + ".old");
                 if (backupFile.exists()) {
                     backupFile.delete();
                 }
                 messagesFile.renameTo(backupFile);
-                plugin.getLogger().info("Outdated " + messageFileName + " backed up as " + messageFileName + ".old and updated to version 6.");
+                plugin.getLogger().info("Outdated " + messageFileName + " backed up as " + messageFileName + ".old and updated to version 7.");
             }
         }
         if (!messagesFile.exists() || updateNeeded) {

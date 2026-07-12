@@ -396,12 +396,13 @@ item-scythe-lore-2: "&7for 5 seconds!"
 item-scythe-lore-cooldown: "&cCooldown: %time%"
 item-scythe-lore-usage: "&e▸ Shift + Right Click to use"
 
-version: 6
+version: 7
 
 # ─────────────────────────────────────────────────────────────────────
 #                         SPEAR MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 spear-cooldown: "&cSpear is on cooldown! &7(%time%)"
+spear-charging-bar: "Spear Charge"
 item-spear-name: "&6&l➹ Effect Spear"
 item-spear-lore-ability: "&dAbility:"
 item-spear-lore-1: "&7Hold right click while shifting to charge"
