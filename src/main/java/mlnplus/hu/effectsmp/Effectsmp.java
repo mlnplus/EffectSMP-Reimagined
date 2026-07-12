@@ -124,6 +124,48 @@ public final class Effectsmp extends JavaPlugin {
             actionBarManager.stopTask();
         }
 
+        cleanupPaperRegistry(getName());
+
+        // --- CLASS LOADER CLEANUP ---
+        try {
+            ClassLoader cl = this.getClass().getClassLoader();
+            java.lang.reflect.Field clGroupField = null;
+            Class<?> clClass = cl.getClass();
+            while (clClass != null) {
+                try {
+                    clGroupField = clClass.getDeclaredField("classLoaderGroup");
+                    break;
+                } catch (NoSuchFieldException e) {
+                    clClass = clClass.getSuperclass();
+                }
+            }
+            if (clGroupField != null) {
+                clGroupField.setAccessible(true);
+                Object classLoaderGroup = clGroupField.get(cl);
+                if (classLoaderGroup != null) {
+                    if (classLoaderGroup.getClass().getName().contains("LockingClassLoaderGroup")) {
+                        java.lang.reflect.Field parentField = classLoaderGroup.getClass().getDeclaredField("parent");
+                        parentField.setAccessible(true);
+                        classLoaderGroup = parentField.get(classLoaderGroup);
+                    }
+                    if (classLoaderGroup != null) {
+                        Class<?> simpleListClass = classLoaderGroup.getClass();
+                        while (simpleListClass != null && !simpleListClass.getName().contains("SimpleListPluginClassLoaderGroup")) {
+                            simpleListClass = simpleListClass.getSuperclass();
+                        }
+                        if (simpleListClass != null) {
+                            java.lang.reflect.Field classloadersField = simpleListClass.getDeclaredField("classloaders");
+                            classloadersField.setAccessible(true);
+                            java.util.List<?> classloaders = (java.util.List<?>) classloadersField.get(classLoaderGroup);
+                            if (classloaders != null) {
+                                classloaders.remove(cl);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Throwable ignored) {}
+
         getLogger().info("§cEffectSMP Plugin disabled!");
 
         // Debug utility to log active non-daemon threads that could hang the JVM on shutdown
@@ -205,5 +247,185 @@ public final class Effectsmp extends JavaPlugin {
     public void setGameStarted(boolean started) {
         this.gameStarted = started;
         configManager.setGameStarted(started);
+    }
+
+    private void cleanupPaperRegistry(String pluginName) {
+        try {
+            org.bukkit.plugin.PluginManager pm = org.bukkit.Bukkit.getPluginManager();
+            if (pm.getClass().getName().contains("PaperPluginManagerImpl")) {
+                java.util.Set<Object> visited = new java.util.HashSet<>();
+                cleanFields(pm, pluginName, visited);
+                try {
+                    java.lang.reflect.Field instMgrField = pm.getClass().getDeclaredField("instanceManager");
+                    instMgrField.setAccessible(true);
+                    Object instanceManager = instMgrField.get(pm);
+                    if (instanceManager != null) {
+                        cleanFields(instanceManager, pluginName, visited);
+                    }
+                } catch (Throwable ignored) {}
+            }
+        } catch (Throwable ignored) {}
+
+        try {
+            Class<?> entryPointHandlerClass = Class.forName("io.papermc.paper.plugin.entrypoint.LaunchEntryPointHandler");
+            java.lang.reflect.Field handlerInstanceField = entryPointHandlerClass.getDeclaredField("INSTANCE");
+            handlerInstanceField.setAccessible(true);
+            Object handlerInstance = handlerInstanceField.get(null);
+            if (handlerInstance != null) {
+                java.lang.reflect.Method getStorageMethod = entryPointHandlerClass.getMethod("getStorage");
+                java.util.Map<?, ?> storage = (java.util.Map<?, ?>) getStorageMethod.invoke(handlerInstance);
+                if (storage != null) {
+                    java.util.Set<Object> visited = new java.util.HashSet<>();
+                    for (Object providerStorage : storage.values()) {
+                        cleanFields(providerStorage, pluginName, visited);
+                    }
+                }
+            }
+        } catch (Throwable ignored) {}
+    }
+
+    private void cleanFields(Object obj, String pluginName, java.util.Set<Object> visited) {
+        if (obj == null) return;
+        if (!visited.add(obj)) return;
+        Class<?> clazz = obj.getClass();
+        while (clazz != null && !clazz.getName().equals("java.lang.Object")) {
+            if (clazz.getName().startsWith("java.lang.") && !(obj instanceof java.util.Collection || obj instanceof java.util.Map)) {
+                break;
+            }
+            for (java.lang.reflect.Field f : clazz.getDeclaredFields()) {
+                try {
+                    f.setAccessible(true);
+                    Object val = f.get(obj);
+                    if (val == null) continue;
+                    
+                    if (val instanceof java.util.Map<?, ?> map) {
+                        java.util.Iterator<?> it = map.entrySet().iterator();
+                        while (it.hasNext()) {
+                            java.util.Map.Entry<?, ?> entry = (java.util.Map.Entry<?, ?>) it.next();
+                            boolean remove = false;
+                            if (entry.getKey() != null) {
+                                if (entry.getKey().toString().toLowerCase().contains(pluginName.toLowerCase())) {
+                                    remove = true;
+                                }
+                            }
+                            if (entry.getValue() != null) {
+                                if (entry.getValue().toString().toLowerCase().contains(pluginName.toLowerCase())) {
+                                    remove = true;
+                                }
+                                if (checkProviderMeta(entry.getValue(), pluginName)) {
+                                    remove = true;
+                                }
+                            }
+                            if (remove) {
+                                it.remove();
+                            } else {
+                                cleanFields(entry.getKey(), pluginName, visited);
+                                cleanFields(entry.getValue(), pluginName, visited);
+                            }
+                        }
+                    } else if (val instanceof java.util.Set<?> set) {
+                        java.util.Iterator<?> it = set.iterator();
+                        while (it.hasNext()) {
+                            Object element = it.next();
+                            if (element != null) {
+                                boolean remove = false;
+                                if (element.toString().toLowerCase().contains(pluginName.toLowerCase())) {
+                                    remove = true;
+                                }
+                                if (checkProviderMeta(element, pluginName)) {
+                                    remove = true;
+                                }
+                                if (remove) {
+                                    it.remove();
+                                } else {
+                                    cleanFields(element, pluginName, visited);
+                                }
+                            }
+                        }
+                    } else if (val instanceof java.util.List<?> list) {
+                        java.util.Iterator<?> it = list.iterator();
+                        while (it.hasNext()) {
+                            Object element = it.next();
+                            if (element != null) {
+                                boolean remove = false;
+                                if (element.toString().toLowerCase().contains(pluginName.toLowerCase())) {
+                                    remove = true;
+                                }
+                                if (checkProviderMeta(element, pluginName)) {
+                                    remove = true;
+                                }
+                                if (remove) {
+                                    it.remove();
+                                } else {
+                                    cleanFields(element, pluginName, visited);
+                                }
+                            }
+                        }
+                    } else {
+                        if (!f.getType().isPrimitive() && !f.getType().getName().startsWith("java.lang.")) {
+                            cleanFields(val, pluginName, visited);
+                        }
+                    }
+                } catch (Throwable ignored) {}
+            }
+            clazz = clazz.getSuperclass();
+        }
+    }
+
+    private boolean checkProviderMeta(Object element, String pluginName) {
+        if (element == null) return false;
+        ClassLoader pluginCL = this.getClass().getClassLoader();
+        if (element.getClass().getClassLoader() == pluginCL) {
+            return true;
+        }
+        try {
+            java.lang.reflect.Method getMetaMethod = element.getClass().getMethod("getMeta");
+            Object meta = getMetaMethod.invoke(element);
+            java.lang.reflect.Method getNameMethod = meta.getClass().getMethod("getName");
+            String name = (String) getNameMethod.invoke(meta);
+            if (name != null && name.equalsIgnoreCase(pluginName)) {
+                return true;
+            }
+        } catch (Throwable ignored) {}
+        try {
+            java.lang.reflect.Method getDescriptorMethod = element.getClass().getMethod("getDescriptor");
+            Object desc = getDescriptorMethod.invoke(element);
+            java.lang.reflect.Method getNameMethod = desc.getClass().getMethod("getName");
+            String name = (String) getNameMethod.invoke(desc);
+            if (name != null && name.equalsIgnoreCase(pluginName)) {
+                return true;
+            }
+        } catch (Throwable ignored) {}
+        try {
+            java.lang.reflect.Method getSourceMethod = element.getClass().getMethod("getSource");
+            Object source = getSourceMethod.invoke(element);
+            if (source != null && source.toString().toLowerCase().contains(pluginName.toLowerCase())) {
+                return true;
+            }
+        } catch (Throwable ignored) {}
+        try {
+            Class<?> clazz = element.getClass();
+            while (clazz != null && !clazz.getName().equals("java.lang.Object")) {
+                for (java.lang.reflect.Field f : clazz.getDeclaredFields()) {
+                    try {
+                        f.setAccessible(true);
+                        Object val = f.get(element);
+                        if (val != null) {
+                            if (val.getClass().getClassLoader() == pluginCL) {
+                                return true;
+                            }
+                            if (val.toString().toLowerCase().contains(pluginName.toLowerCase())) {
+                                String fName = f.getName().toLowerCase();
+                                if (fName.contains("name") || fName.contains("id") || fName.contains("provider") || fName.contains("meta")) {
+                                    return true;
+                                }
+                            }
+                        }
+                    } catch (Throwable ignored) {}
+                }
+                clazz = clazz.getSuperclass();
+            }
+        } catch (Throwable ignored) {}
+        return false;
     }
 }
