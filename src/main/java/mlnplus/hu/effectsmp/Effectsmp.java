@@ -167,22 +167,6 @@ public final class Effectsmp extends JavaPlugin {
         } catch (Throwable ignored) {}
 
         getLogger().info("§cEffectSMP Plugin disabled!");
-
-        // Debug utility to log active non-daemon threads that could hang the JVM on shutdown
-        try {
-            getLogger().info("--- Active non-daemon threads check ---");
-            for (Thread t : Thread.getAllStackTraces().keySet()) {
-                if (!t.isDaemon() && t.isAlive() && t != Thread.currentThread()) {
-                    getLogger().info("Thread: " + t.getName() + " | State: " + t.getState());
-                    StackTraceElement[] trace = t.getStackTrace();
-                    for (int i = 0; i < Math.min(3, trace.length); i++) {
-                        getLogger().info("   at " + trace[i]);
-                    }
-                }
-            }
-            getLogger().info("--------------------------------------");
-        } catch (Exception ignored) {
-        }
     }
 
     public void reload() {
