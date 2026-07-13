@@ -63,16 +63,27 @@ public class UpdateManager {
                 String latestVersion = latestVersionRaw.replace("v", "").trim();
                 String currentVersion = plugin.getDescription().getVersion().replace("v", "").trim();
 
-                if (isNewerVersion(currentVersion, latestVersion)) {
-                    String updateMsg = "§e          [✦] New version available: v" + latestVersion + " (Current: v" + currentVersion + ") | Download: " + MODRINTH_URL;
+                String lang = plugin.getConfigManager().getConfig().getString("language", "en");
+                boolean isHu = "hu".equalsIgnoreCase(lang);
+
+                                if (isNewerVersion(currentVersion, latestVersion)) {
+                    String updateMsg = isHu ?
+                        "\u00A7e[\u2726] \u00DAj verzi\u00F3 \u00E9rhet\u0151 el: v" + latestVersion + " (Jelenlegi: v" + currentVersion + ")" :
+                        "\u00A7e[\u2726] New version available: v" + latestVersion + " (Current: v" + currentVersion + ")";
                     Bukkit.getScheduler().runTask(plugin, () -> plugin.printEnableBanner(updateMsg));
                 } else {
-                    String okMsg = "§a                        [✔] EffectSMP is up to date! (v" + currentVersion + ")";
+                    String okMsg = isHu ?
+                        "\u00A7a[\u2713] Az EffectSMP naprak\u00E9sz! (v" + currentVersion + ")" :
+                        "\u00A7a[\u2713] EffectSMP is up to date! (v" + currentVersion + ")";
                     Bukkit.getScheduler().runTask(plugin, () -> plugin.printEnableBanner(okMsg));
                 }
 
             } catch (Exception e) {
-                String errorMsg = "§c                        [!] Could not check for updates: " + e.getMessage();
+                String lang = plugin.getConfigManager().getConfig().getString("language", "en");
+                boolean isHu = "hu".equalsIgnoreCase(lang);
+                String errorMsg = isHu ?
+                    "\u00A7c[!] Nem siker\u00FClt ellen\u0151rizni a friss\u00EDt\u00E9seket." :
+                    "\u00A7c[!] Could not check for updates.";
                 Bukkit.getScheduler().runTask(plugin, () -> plugin.printEnableBanner(errorMsg));
             }
         });

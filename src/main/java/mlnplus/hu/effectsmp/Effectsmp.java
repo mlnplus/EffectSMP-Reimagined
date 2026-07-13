@@ -48,25 +48,69 @@ public final class Effectsmp extends JavaPlugin {
         if (bannerPrinted) return;
         bannerPrinted = true;
 
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§d=================================================================================");
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§d  ███████╗███████╗███████╗███████╗ ██████╗████████╗   ███████╗███╗   ███╗██████╗ ");
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§d  ██╔════╝██╔════╝██╔════╝██╔════╝██╔════╝╚══██╔══╝   ██╔════╝████╗ ████║██╔══██╗");
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§5  █████╗  █████╗  █████╗  █████╗  ██║        ██║      ███████╗██╔████╔██║██████╔╝");
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§5  ██╔══╝  ██╔══╝  ██╔══╝  ██╔══╝  ██║        ██║      ╚════██║██║╚██╔╝██║██╔═══╝ ");
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§6  ███████╗██║     ██║     ███████╗╚██████╗   ██║      ███████║██║ ╚═╝ ██║██║     ");
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§6  ╚══════╝╚═╝     ╚═╝     ╚══════╝ ╚═════╝   ╚═╝      ╚══════╝╚═╝     ╚═╝╚═╝     ");
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§5                                                                               ");
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§d                              EffectSMP Reimagined                             ");
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§e                        [★] Plugin successfully enabled! [★]                      ");
-        if (gameStarted) {
-            org.bukkit.Bukkit.getConsoleSender().sendMessage("§a                        [✔] Játék elindítva, effektek aktívak!                   ");
+        String lang = configManager != null ? configManager.getConfig().getString("language", "en") : "en";
+        boolean isHu = "hu".equalsIgnoreCase(lang);
+
+        final String R = "\033[0m";  // Reset
+        final String B = "\033[1m";  // Bold
+        final String c1 = "\033[38;2;217;70;239m"; // #D946EF — Magenta/Pink
+        final String c2 = "\033[38;2;168;85;247m";  // #A855F7 — Purple
+        final String c3 = "\033[38;2;139;92;246m";  // #8B5CF6 — Violet
+        final String c4 = "\033[38;2;99;102;241m";   // #6366F1 - Indigo
+
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage(c1 + B + "  ███████╗███████╗███████╗███████╗ ██████╗████████╗   ███████╗███╗   ███╗██████╗ " + R);
+        org.bukkit.Bukkit.getConsoleSender().sendMessage(c1 + B + "  ██╔════╝██╔════╝██╔════╝██╔════╝██╔════╝╚══██╔══╝   ██╔════╝████╗ ████║██╔══██╗" + R);
+        org.bukkit.Bukkit.getConsoleSender().sendMessage(c2 + B + "  █████╗  █████╗  █████╗  █████╗  ██║        ██║      ███████╗██╔████╔██║██████╔╝" + R);
+        org.bukkit.Bukkit.getConsoleSender().sendMessage(c3 + B + "  ██╔══╝  ██╔══╝  ██╔══╝  ██╔══╝  ██║        ██║      ╚════██║██║╚██╔╝██║██╔═══╝ " + R);
+        org.bukkit.Bukkit.getConsoleSender().sendMessage(c3 + B + "  ███████╗██║     ██║     ███████╗╚██████╗   ██║      ███████║██║ ╚═╝ ██║██║     " + R);
+        org.bukkit.Bukkit.getConsoleSender().sendMessage(c4 + B + "  ╚══════╝╚═╝     ╚═╝     ╚══════╝ ╚═════╝   ╚═╝      ╚══════╝╚═╝     ╚═╝╚═╝     " + R);
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("");
+
+        int width = 77;
+        org.bukkit.Bukkit.getConsoleSender().sendMessage(c1 + "\u256d" + "\u2500".repeat(width + 2) + "\u256e" + R);
+        printBoxedLine("&dEffectSMP &8| &7Reimagined Minecraft Vanilla Effects", width, c1, R);
+        org.bukkit.Bukkit.getConsoleSender().sendMessage(c1 + "\u251c" + "\u2500".repeat(width + 2) + "\u2524" + R);
+        printBoxedLine(" &e\u2726 &fVersion: &b" + getPluginMeta().getVersion(), width, c1, R);
+        if (isHu) {
+            printBoxedLine(" &e\u2726 &fNyelv: &7Magyar (HU)", width, c1, R);
+            if (gameStarted) {            printBoxedLine(" &e\u2726 &fWebsite: &bmlnplus.hu", width, c1, R);
+
+                printBoxedLine(" &e\u2726 &fStátusz: &aJáték elindítva, effektek aktívak! &7(v" + getPluginMeta().getVersion() + ")", width, c1, R);
+            } else {            printBoxedLine(" &e\u2726 &fWebsite: &bmlnplus.hu", width, c1, R);
+
+                printBoxedLine(" &e\u2726 &fStátusz: &cKészenlét - Játék még nincs elindítva! (/e start)", width, c1, R);
+            }
         } else {
-            org.bukkit.Bukkit.getConsoleSender().sendMessage("§c                        [⌛] Játék még nincs elindítva! (/e start)                ");
+            printBoxedLine(" &e\u2726 &fLanguage: &7English (EN)", width, c1, R);
+            if (gameStarted) {            printBoxedLine(" &e\u2726 &fWebsite: &bmlnplus.hu", width, c1, R);
+
+                printBoxedLine(" &e\u2726 &fStatus: &aGame started, effects active! &7(v" + getPluginMeta().getVersion() + ")", width, c1, R);
+            } else {            printBoxedLine(" &e\u2726 &fWebsite: &bmlnplus.hu", width, c1, R);
+
+                printBoxedLine(" &e\u2726 &fStatus: &cWaiting - Game is not started yet! (/e start)", width, c1, R);
+            }
         }
-        if (updateStatus != null) {
-            org.bukkit.Bukkit.getConsoleSender().sendMessage(updateStatus);
+        if (updateStatus != null && !updateStatus.trim().isEmpty()) {
+            printBoxedLine(" &e\u2726 &fUpdate: " + updateStatus, width, c1, R);
         }
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§d=================================================================================");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage(c1 + "\u2570" + "\u2500".repeat(width + 2) + "\u256f" + R);
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("");
+    }
+
+            private void printBoxedLine(String text, int width, String borderColorCode, String resetCode) {
+        String coloredText = text.replaceAll("&([0-9a-fk-orA-FK-ORxX])", "\u00A7$1");
+        int visibleLength = stripColors(coloredText).length();
+        int padding = Math.max(0, width - visibleLength);
+        String line = borderColorCode + "\u2502 " + resetCode + coloredText + " ".repeat(padding) + borderColorCode + " \u2502" + resetCode;
+        org.bukkit.Bukkit.getConsoleSender().sendMessage(line);
+    }
+
+        private String stripColors(String text) {
+        if (text == null) return "";
+        String stripped = text.replaceAll("[\u00A7&][0-9a-fk-orA-FK-ORxX]", "");
+        stripped = stripped.replaceAll("\033\\[[0-9;]*[mK]", "");
+        return stripped;
     }
 
     @Override
@@ -110,7 +154,10 @@ public final class Effectsmp extends JavaPlugin {
 
         // Safety fallback to print banner after 1.5 seconds if update check hangs
         getServer().getScheduler().runTaskLater(this, () -> {
-            printEnableBanner("§c                        [!] Update check timed out or failed.                    ");
+            String lang = configManager != null ? configManager.getConfig().getString("language", "en") : "en";
+            boolean isHu = "hu".equalsIgnoreCase(lang);
+            String timeoutMsg = isHu ? "\u00A7c[!] A friss\u00EDt\u00E9s ellen\u0151rz\u00E9se id\u0151t\u00FAll\u00E9p\u00E9s miatt sikertelen." : "\u00A7c[!] Update check timed out or failed.";
+            printEnableBanner(timeoutMsg);
         }, 30L);
     }
 
@@ -124,56 +171,18 @@ public final class Effectsmp extends JavaPlugin {
             actionBarManager.stopTask();
         }
 
-        cleanupPaperRegistry(getName());
-
-        // --- CLASS LOADER CLEANUP ---
-        try {
-            ClassLoader cl = this.getClass().getClassLoader();
-            java.lang.reflect.Field clGroupField = null;
-            Class<?> clClass = cl.getClass();
-            while (clClass != null) {
-                try {
-                    clGroupField = clClass.getDeclaredField("classLoaderGroup");
-                    break;
-                } catch (NoSuchFieldException e) {
-                    clClass = clClass.getSuperclass();
-                }
-            }
-            if (clGroupField != null) {
-                clGroupField.setAccessible(true);
-                Object classLoaderGroup = clGroupField.get(cl);
-                if (classLoaderGroup != null) {
-                    if (classLoaderGroup.getClass().getName().contains("LockingClassLoaderGroup")) {
-                        java.lang.reflect.Field parentField = classLoaderGroup.getClass().getDeclaredField("parent");
-                        parentField.setAccessible(true);
-                        classLoaderGroup = parentField.get(classLoaderGroup);
-                    }
-                    if (classLoaderGroup != null) {
-                        Class<?> simpleListClass = classLoaderGroup.getClass();
-                        while (simpleListClass != null && !simpleListClass.getName().contains("SimpleListPluginClassLoaderGroup")) {
-                            simpleListClass = simpleListClass.getSuperclass();
-                        }
-                        if (simpleListClass != null) {
-                            java.lang.reflect.Field classloadersField = simpleListClass.getDeclaredField("classloaders");
-                            classloadersField.setAccessible(true);
-                            java.util.List<?> classloaders = (java.util.List<?>) classloadersField.get(classLoaderGroup);
-                            if (classloaders != null) {
-                                classloaders.remove(cl);
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (Throwable ignored) {}
-
-        getLogger().info("§cEffectSMP Plugin disabled!");
+        String lang = configManager != null ? configManager.getConfig().getString("language", "en") : "en";
+        boolean isHu = "hu".equalsIgnoreCase(lang);
+        getLogger().info(isHu ? "\u00A7c\u25cf EffectSMP Plugin kikapcsolva!" : "\u00A7c\u25cf EffectSMP Plugin disabled!");
     }
 
     public void reload() {
         configManager.reload();
         messageUtils.reload();
         customItems.registerRecipes();
-        getLogger().info("§aEffectSMP Config reloaded!");
+        String lang = configManager != null ? configManager.getConfig().getString("language", "en") : "en";
+        boolean isHu = "hu".equalsIgnoreCase(lang);
+        getLogger().info(isHu ? "\u00A7aEffectSMP konfiguráció újratöltve!" : "\u00A7aEffectSMP Config reloaded!");
     }
 
     public static Effectsmp getInstance() {
@@ -233,187 +242,4 @@ public final class Effectsmp extends JavaPlugin {
         configManager.setGameStarted(started);
     }
 
-    private void cleanupPaperRegistry(String pluginName) {
-        try {
-            org.bukkit.plugin.PluginManager pm = org.bukkit.Bukkit.getPluginManager();
-            if (pm.getClass().getName().contains("PaperPluginManagerImpl")) {
-                java.util.Set<Object> visited = new java.util.HashSet<>();
-                cleanFields(pm, pluginName, visited);
-                try {
-                    java.lang.reflect.Field instMgrField = pm.getClass().getDeclaredField("instanceManager");
-                    instMgrField.setAccessible(true);
-                    Object instanceManager = instMgrField.get(pm);
-                    if (instanceManager != null) {
-                        cleanFields(instanceManager, pluginName, visited);
-                    }
-                } catch (Throwable ignored) {}
-            }
-        } catch (Throwable ignored) {}
-
-        try {
-            Class<?> entryPointHandlerClass = Class.forName("io.papermc.paper.plugin.entrypoint.LaunchEntryPointHandler");
-            java.lang.reflect.Field handlerInstanceField = entryPointHandlerClass.getDeclaredField("INSTANCE");
-            handlerInstanceField.setAccessible(true);
-            Object handlerInstance = handlerInstanceField.get(null);
-            if (handlerInstance != null) {
-                java.lang.reflect.Method getStorageMethod = entryPointHandlerClass.getMethod("getStorage");
-                java.util.Map<?, ?> storage = (java.util.Map<?, ?>) getStorageMethod.invoke(handlerInstance);
-                if (storage != null) {
-                    java.util.Set<Object> visited = new java.util.HashSet<>();
-                    for (Object providerStorage : storage.values()) {
-                        cleanFields(providerStorage, pluginName, visited);
-                    }
-                }
-            }
-        } catch (Throwable ignored) {}
-    }
-
-    private void cleanFields(Object obj, String pluginName, java.util.Set<Object> visited) {
-        if (obj == null) return;
-        if (!visited.add(obj)) return;
-        Class<?> clazz = obj.getClass();
-        while (clazz != null && !clazz.getName().equals("java.lang.Object")) {
-            if (clazz.getName().startsWith("java.lang.") && !(obj instanceof java.util.Collection || obj instanceof java.util.Map)) {
-                break;
-            }
-            for (java.lang.reflect.Field f : clazz.getDeclaredFields()) {
-                try {
-                    f.setAccessible(true);
-                    Object val = f.get(obj);
-                    if (val == null) continue;
-                    
-                    if (val instanceof java.util.Map<?, ?> map) {
-                        java.util.Iterator<?> it = map.entrySet().iterator();
-                        while (it.hasNext()) {
-                            java.util.Map.Entry<?, ?> entry = (java.util.Map.Entry<?, ?>) it.next();
-                            if (entry != null) {
-                                boolean remove = false;
-                                Object key = entry.getKey();
-                                Object valObj = entry.getValue();
-                                if (key != null) {
-                                    if (key.toString().toLowerCase().contains(pluginName.toLowerCase())) {
-                                        remove = true;
-                                    }
-                                }
-                                if (valObj != null) {
-                                    if (valObj.toString().toLowerCase().contains(pluginName.toLowerCase())) {
-                                        remove = true;
-                                    }
-                                    if (checkProviderMeta(valObj, pluginName)) {
-                                        remove = true;
-                                    }
-                                }
-                                if (remove) {
-                                    it.remove();
-                                } else {
-                                    cleanFields(key, pluginName, visited);
-                                    cleanFields(valObj, pluginName, visited);
-                                }
-                            }
-                        }
-                    } else if (val instanceof java.util.Set<?> set) {
-                        java.util.Iterator<?> it = set.iterator();
-                        while (it.hasNext()) {
-                            Object element = it.next();
-                            if (element != null) {
-                                boolean remove = false;
-                                if (element.toString().toLowerCase().contains(pluginName.toLowerCase())) {
-                                    remove = true;
-                                }
-                                if (checkProviderMeta(element, pluginName)) {
-                                    remove = true;
-                                }
-                                if (remove) {
-                                    it.remove();
-                                } else {
-                                    cleanFields(element, pluginName, visited);
-                                }
-                            }
-                        }
-                    } else if (val instanceof java.util.List<?> list) {
-                        java.util.Iterator<?> it = list.iterator();
-                        while (it.hasNext()) {
-                            Object element = it.next();
-                            if (element != null) {
-                                boolean remove = false;
-                                if (element.toString().toLowerCase().contains(pluginName.toLowerCase())) {
-                                    remove = true;
-                                }
-                                if (checkProviderMeta(element, pluginName)) {
-                                    remove = true;
-                                }
-                                if (remove) {
-                                    it.remove();
-                                } else {
-                                    cleanFields(element, pluginName, visited);
-                                }
-                            }
-                        }
-                    } else {
-                        if (!f.getType().isPrimitive() && !f.getType().getName().startsWith("java.lang.")) {
-                            cleanFields(val, pluginName, visited);
-                        }
-                    }
-                } catch (Throwable ignored) {}
-            }
-            clazz = clazz.getSuperclass();
-        }
-    }
-
-    private boolean checkProviderMeta(Object element, String pluginName) {
-        if (element == null) return false;
-        ClassLoader pluginCL = this.getClass().getClassLoader();
-        if (element.getClass().getClassLoader() == pluginCL) {
-            return true;
-        }
-        try {
-            java.lang.reflect.Method getMetaMethod = element.getClass().getMethod("getMeta");
-            Object meta = getMetaMethod.invoke(element);
-            java.lang.reflect.Method getNameMethod = meta.getClass().getMethod("getName");
-            String name = (String) getNameMethod.invoke(meta);
-            if (name != null && name.equalsIgnoreCase(pluginName)) {
-                return true;
-            }
-        } catch (Throwable ignored) {}
-        try {
-            java.lang.reflect.Method getDescriptorMethod = element.getClass().getMethod("getDescriptor");
-            Object desc = getDescriptorMethod.invoke(element);
-            java.lang.reflect.Method getNameMethod = desc.getClass().getMethod("getName");
-            String name = (String) getNameMethod.invoke(desc);
-            if (name != null && name.equalsIgnoreCase(pluginName)) {
-                return true;
-            }
-        } catch (Throwable ignored) {}
-        try {
-            java.lang.reflect.Method getSourceMethod = element.getClass().getMethod("getSource");
-            Object source = getSourceMethod.invoke(element);
-            if (source != null && source.toString().toLowerCase().contains(pluginName.toLowerCase())) {
-                return true;
-            }
-        } catch (Throwable ignored) {}
-        try {
-            Class<?> clazz = element.getClass();
-            while (clazz != null && !clazz.getName().equals("java.lang.Object")) {
-                for (java.lang.reflect.Field f : clazz.getDeclaredFields()) {
-                    try {
-                        f.setAccessible(true);
-                        Object val = f.get(element);
-                        if (val != null) {
-                            if (val.getClass().getClassLoader() == pluginCL) {
-                                return true;
-                            }
-                            if (val.toString().toLowerCase().contains(pluginName.toLowerCase())) {
-                                String fName = f.getName().toLowerCase();
-                                if (fName.contains("name") || fName.contains("id") || fName.contains("provider") || fName.contains("meta")) {
-                                    return true;
-                                }
-                            }
-                        }
-                    } catch (Throwable ignored) {}
-                }
-                clazz = clazz.getSuperclass();
-            }
-        } catch (Throwable ignored) {}
-        return false;
-    }
 }
