@@ -43,7 +43,7 @@ public class LootListener implements Listener {
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         if (event.getEntityType() == EntityType.WARDEN) {
-            if (Math.random() < 0.15) { // 5% chance
+            if (Math.random() < 0.15) { // 15% chance
                 ItemStack shard = plugin.getCustomItems().getItemByName("shard");
                 if (shard != null) {
                     event.getDrops().add(shard);
