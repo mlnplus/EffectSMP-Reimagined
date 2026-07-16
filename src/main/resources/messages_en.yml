@@ -386,7 +386,6 @@ item-bow-lore-ability: "&dAbility:"
 item-bow-lore-1: "&7Curse arrow - enemies are"
 item-bow-lore-2: "&7slowed, weakened and glowing!"
 item-bow-lore-chance: "&c10% chance for curse arrow"
-item-bow-lore-cooldown: "&cCooldown: %time%"
 item-bow-lore-usage: "&e▸ Passive ability"
 
 item-scythe-name: "&3&l⚰ Effect Scythe"

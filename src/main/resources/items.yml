@@ -19,10 +19,10 @@ op_reroll:
   enabled: true
   shape:
     - "NSN"
-    - "DHD"
+    - "DRD"
     - "NSN"
   ingredients:
-    H: EFFECT_HEART
+    R: REROLL
     S: EFFECT_SHARD
     N: NETHERITE_INGOT
     D: DIAMOND_BLOCK
@@ -32,62 +32,63 @@ effect_mace:
   enabled: true
   cooldown: 60 # Cooldown in seconds
   shape:
-    - "BNB"
-    - "BSB"
-    - " S "
+    - "SHS"
+    - " B "
+    - " B "
   ingredients:
     B: BREEZE_ROD
-    N: EFFECT_HEART
-    S: STICK
+    S: EFFECT_SHARD
+    H: HEAVY_CORE
 
 # Effect Sword - Critical hit mode
 effect_sword:
   enabled: true
   cooldown: 150 # Cooldown in seconds
   shape:
-    - " D "
-    - " D "
+    - " E "
+    - " H "
     - " S "
   ingredients:
-    D: NETHERITE_INGOT
-    S: EFFECT_HEART
+    H: EFFECT_HEART
+    E: EFFECT_SHARD
+    S: STICK
 
 # Effect Bow - Explosion arrows
 effect_bow:
   enabled: true
-  cooldown: 90 # Cooldown in seconds
   shape:
-    - " TN"
-    - "T N"
-    - " TN"
+    - " SE"
+    - "S C"
+    - " SE"
   ingredients:
-    T: TNT
-    N: EFFECT_HEART
+    E: EFFECT_SHARD
+    S: STRING
+    C: STICK
 
 # Effect Scythe - Freeze enemies
 effect_scythe:
   enabled: true
   cooldown: 150 # Cooldown in seconds
   shape:
-    - "IIN"
-    - " S "
-    - " S "
+    - "EHS"
+    - "  S"
+    - "  S"
   ingredients:
-    I: NETHERITE_INGOT
-    N: EFFECT_HEART
+    E: EFFECT_SHARD
     S: STICK
+    H: EFFECT_HEART
 
 # Effect Spear - Charge big lunge
 effect_spear:
   enabled: true
   cooldown: 150 # Cooldown in seconds
   shape:
-    - "  N"
-    - " I "
+    - "  E"
+    - " H "
     - "S  "
   ingredients:
-    N: EFFECT_HEART
-    I: NETHERITE_INGOT
+    H: EFFECT_HEART
+    E: EFFECT_SHARD
     S: STICK
 
 # Effect Heart - Extra life / currency

@@ -244,8 +244,6 @@ public class CustomItems {
                 lore.add(getNoItalic("item-bow-lore-2"));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-bow-lore-chance"));
-                lore.add(getNoItalicWithTime("item-bow-lore-cooldown",
-                                plugin.getItemAbilityManager().getBowCooldown()));
                 lore.add(Component.empty());
                 lore.add(getNoItalic("item-bow-lore-usage"));
                 meta.lore(lore);

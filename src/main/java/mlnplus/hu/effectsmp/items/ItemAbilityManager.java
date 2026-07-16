@@ -28,7 +28,6 @@ public class ItemAbilityManager {
     private final Effectsmp plugin;
     private final Map<UUID, Long> maceCooldowns = new HashMap<>();
     private final Map<UUID, Long> swordCooldowns = new HashMap<>();
-    private final Map<UUID, Long> bowCooldowns = new HashMap<>();
     private final Map<UUID, Long> scytheCooldowns = new HashMap<>();
     private final Map<UUID, Long> spearCooldowns = new HashMap<>();
     private final Map<UUID, Long> spearChargeStart = new HashMap<>();
@@ -54,10 +53,6 @@ public class ItemAbilityManager {
 
     public long getScytheCooldown() {
         return plugin.getConfigManager().getItemsConfig().getLong("effect_scythe.cooldown", 150) * 1000L;
-    }
-
-    public long getBowCooldown() {
-        return plugin.getConfigManager().getItemsConfig().getLong("effect_bow.cooldown", 90) * 1000L;
     }
 
     public long getSpearCooldown() {
@@ -255,11 +250,6 @@ public class ItemAbilityManager {
         return true;
     }
 
-    public boolean canBowApplyDebuffs(Player player) {
-        UUID uuid = player.getUniqueId();
-        return !isOnCooldown(bowCooldowns, uuid, getBowCooldown());
-    }
-
     public void triggerBowDebuffs(Player player, Location location) {
         UUID uuid = player.getUniqueId();
 
@@ -285,7 +275,6 @@ public class ItemAbilityManager {
             }
         }
 
-        bowCooldowns.put(uuid, System.currentTimeMillis());
 
         if (affected > 0) {
             plugin.getMessageUtils().sendMessage(player, "bow-activated",
@@ -297,7 +286,6 @@ public class ItemAbilityManager {
         Map<UUID, Long> cooldownMap = switch (itemType) {
             case "effect_mace" -> maceCooldowns;
             case "effect_sword" -> swordCooldowns;
-            case "effect_bow" -> bowCooldowns;
             case "effect_scythe" -> scytheCooldowns;
             case "effect_spear" -> spearCooldowns;
             default -> null;
@@ -309,7 +297,6 @@ public class ItemAbilityManager {
         long duration = switch (itemType) {
             case "effect_mace" -> getMaceCooldown();
             case "effect_sword" -> getSwordCooldown();
-            case "effect_bow" -> getBowCooldown();
             case "effect_scythe" -> getScytheCooldown();
             case "effect_spear" -> getSpearCooldown();
             default -> 0;
@@ -338,7 +325,6 @@ public class ItemAbilityManager {
         swordCooldowns.remove(uuid);
         swordActiveUntil.remove(uuid);
         scytheCooldowns.remove(uuid);
-        bowCooldowns.remove(uuid);
         spearCooldowns.remove(uuid);
         spearChargeStart.remove(uuid);
         spearLunging.remove(uuid);
