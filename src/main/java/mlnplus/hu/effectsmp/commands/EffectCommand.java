@@ -372,7 +372,6 @@ public class EffectCommand implements CommandExecutor {
         }
 
         plugin.reload();
-        plugin.reload();
         plugin.getMessageUtils().sendMessage(player, "admin-reload-success");
 
         return true;

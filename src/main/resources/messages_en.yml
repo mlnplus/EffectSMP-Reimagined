@@ -235,10 +235,10 @@ usage-trust: "&cUsage: &7/e trust <player>"
 usage-untrust: "&cUsage: &7/e untrust <player>"
 usage-set: "&cUsage: &7/e set <effect> [player]"
 usage-give: "&cUsage: &7/e give <item> [player]"
-usage-give-list: "&7Items: heart, shard, reroll, op_reroll, mace, sword, bow, scythe"
+usage-give-list: "&7Items: heart, shard, reroll, op_reroll, mace, sword, bow, scythe, spear, wind_charge"
 usage-removecooldown: "&cUsage: &7/e removecooldown [item|effect|all] [player]"
 usage-craftreset: "&cUsage: &7/e craftreset [item|all]"
-invalid-limited-item: "&cInvalid item! &7(effect_sword, effect_mace, effect_bow, effect_scythe)"
+invalid-limited-item: "&cInvalid item! &7(effect_sword, effect_mace, effect_bow, effect_scythe, effect_spear)"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          ROLL ANIMATION

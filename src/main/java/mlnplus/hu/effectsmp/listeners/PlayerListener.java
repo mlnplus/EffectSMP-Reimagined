@@ -144,7 +144,7 @@ public class PlayerListener implements Listener {
 
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
         if (data.getEffect() == mlnplus.hu.effectsmp.effects.EffectType.WIND_CHARGED) {
-            if (data.getEffectHearts() >= 2 || (data.getEffectHearts() >= 1 && player.isSneaking())) {
+            if (data.getEffectHearts() >= 2) {
                 event.setCancelled(true);
             }
         }

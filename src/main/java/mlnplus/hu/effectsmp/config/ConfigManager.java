@@ -89,11 +89,11 @@ public class ConfigManager {
                 messagesFile = new File(plugin.getDataFolder(), messageFileName);
             } catch (IllegalArgumentException e) {
                 plugin.getLogger().warning(
-                        "Language file " + messageFileName + " not found in JAR. Falling back to messages_hu.yml");
-                messageFileName = "messages_hu.yml";
+                        "Language file " + messageFileName + " not found in JAR. Falling back to messages_en.yml");
+                messageFileName = "messages_en.yml";
                 messagesFile = new File(plugin.getDataFolder(), messageFileName);
                 if (!messagesFile.exists()) {
-                    plugin.saveResource("messages_hu.yml", false);
+                    plugin.saveResource("messages_en.yml", false);
                 }
             }
         }
@@ -103,7 +103,7 @@ public class ConfigManager {
     public void reload() {
         config = loadUTF8Yaml(configFile);
 
-        String lang = config.getString("language", "hu");
+        String lang = config.getString("language", "en");
         String messageFileName = "messages_" + lang + ".yml";
         checkAndLoadMessages(messageFileName);
 

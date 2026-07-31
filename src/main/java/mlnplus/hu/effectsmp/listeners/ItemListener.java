@@ -232,16 +232,32 @@ public class ItemListener implements Listener {
     }
 
     @EventHandler
+    public void onBowShoot(org.bukkit.event.entity.EntityShootBowEvent event) {
+        if (!(event.getEntity() instanceof Player player))
+            return;
+
+        ItemStack bow = event.getBow();
+        if (bow != null && "effect_bow".equals(plugin.getCustomItems().getItemType(bow))) {
+            event.getProjectile().getPersistentDataContainer().set(
+                    new org.bukkit.NamespacedKey(plugin, "effect_arrow"),
+                    org.bukkit.persistence.PersistentDataType.BYTE, (byte) 1
+            );
+        }
+    }
+
+    @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
-        if (!(event.getEntity() instanceof Arrow arrow))
+        if (!(event.getEntity() instanceof org.bukkit.entity.Projectile projectile))
             return;
-        if (!(arrow.getShooter() instanceof Player player))
+        if (!(projectile.getShooter() instanceof Player player))
             return;
 
-        ItemStack mainHand = player.getInventory().getItemInMainHand();
-        String itemType = plugin.getCustomItems().getItemType(mainHand);
+        boolean isEffectBowArrow = projectile.getPersistentDataContainer().has(
+                new org.bukkit.NamespacedKey(plugin, "effect_arrow"),
+                org.bukkit.persistence.PersistentDataType.BYTE
+        );
 
-        if ("effect_bow".equals(itemType)) {
+        if (isEffectBowArrow) {
             if (Math.random() < 0.10) {
                 Location loc = event.getEntity().getLocation();
                 plugin.getItemAbilityManager().triggerBowDebuffs(player, loc);

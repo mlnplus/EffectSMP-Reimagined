@@ -17,10 +17,10 @@ public enum EffectType {
     REGENERATION("Regeneration", "§c❤ §cRegeneration", PotionEffectType.REGENERATION, Rarity.EPIC, 900, 0);
 
     public enum Rarity {
-        COMMON("§8[§7Közönséges§8]", "common"),
-        RARE("§8[§bRitka§8]", "rare"),
-        EPIC("§8[§dEpikus§8]", "epic"),
-        LEGENDARY("§8[§6Legendás§8]", "legendary");
+        COMMON("§8[§7Common§8]", "common"),
+        RARE("§8[§bRare§8]", "rare"),
+        EPIC("§8[§dEpic§8]", "epic"),
+        LEGENDARY("§8[§6Legendary§8]", "legendary");
 
         private final String displayName;
         private final String key;

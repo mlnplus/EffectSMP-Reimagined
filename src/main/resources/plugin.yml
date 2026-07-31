@@ -2,7 +2,7 @@ name: EffectSMP-Reimagined
 version: '${project.version}'
 main: mlnplus.hu.effectsmp.Effectsmp
 api-version: '1.21'
-description: EffectSMP Reimagined Hivatalos Pluginja [Made by mlnplus]
+description: EffectSMP Reimagined Official Plugin [Made by mlnplus]
 author: mlnplus
 
 commands:
@@ -16,5 +16,5 @@ permissions:
     description: Access to all admin commands
     default: op
   effectsmp.teszter:
-    description: Tester - can use all commands except reload, /e set only on self
+    description: Tester access - all commands except reload, /e set limited to self
     default: false

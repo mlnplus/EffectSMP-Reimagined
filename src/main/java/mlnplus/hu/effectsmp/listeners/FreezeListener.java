@@ -33,22 +33,15 @@ public class FreezeListener implements Listener {
             if (from.getX() != to.getX() || from.getY() != to.getY() || from.getZ() != to.getZ()) {
                 Location frozenLoc = plugin.getItemAbilityManager().getFreezeLocation(player.getUniqueId());
                 if (frozenLoc != null) {
-                    event.setCancelled(true);
-
-                    Bukkit.getScheduler().runTask(plugin, () -> {
-                        if (player.isOnline() && plugin.getItemAbilityManager().isFrozen(player.getUniqueId())) {
-                            Location targetLoc = frozenLoc.clone();
-                            Location currentLoc = player.getLocation();
-                            if (currentLoc != null) {
-                                targetLoc.setYaw(currentLoc.getYaw());
-                                targetLoc.setPitch(currentLoc.getPitch());
-                            }
-                            player.teleport(targetLoc);
-                            player.setVelocity(new Vector(0, 0, 0));
-                        }
-                    });
+                    Location targetLoc = frozenLoc.clone();
+                    targetLoc.setYaw(to.getYaw());
+                    targetLoc.setPitch(to.getPitch());
+                    event.setTo(targetLoc);
                 } else {
-                    event.setCancelled(true);
+                    Location targetLoc = from.clone();
+                    targetLoc.setYaw(to.getYaw());
+                    targetLoc.setPitch(to.getPitch());
+                    event.setTo(targetLoc);
                 }
             }
         }

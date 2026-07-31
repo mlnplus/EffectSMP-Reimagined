@@ -1,105 +1,134 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/db4982ae-ff09-45ca-9c53-2d764e4acdb9" width="160" height="160" alt="EffectSMP logo"/>
-  <h1>⚡ EffectSMP: Reimagined (HU) ⚡</h1>
-  <p><b>A legteljesebb, egyedi képességekkel és fegyverekkel teli Spigot/Paper szerver plugin.</b></p>
+  <img src="https://github.com/user-attachments/assets/db4982ae-ff09-45ca-9c53-2d764e4acdb9" width="140" height="140" alt="EffectSMP logo"/>
+  <h1>⚡ EffectSMP: Reimagined ⚡</h1>
+  <p><b>Egyedi képességek, fejlődési rendszer és legendás fegyverek Minecraft szerverekhez.</b></p>
 
   [![Modrinth](https://img.shields.io/badge/Modrinth-Plugin-00C853?style=for-the-badge&logo=modrinth)](https://modrinth.com/plugin/effectsmp-reimagined)
+  [![PaperMC](https://img.shields.io/badge/PaperMC-1.20%20--%201.21.x-blue?style=for-the-badge&logo=papermc)](https://papermc.io)
   [![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)](https://oracle.com/java)
-  [![Paper](https://img.shields.io/badge/PaperMC-1.20%20--%201.21-blue?style=for-the-badge)](https://papermc.io)
+
+  <br />
+
+  [ 🇬🇧 **English** ](README.md) &nbsp;•&nbsp; [ 🇭🇺 **Magyar** ](README_HU.md)
 </div>
 
 ---
 
-## 📖 A pluginról
-
-Az **EffectSMP: Reimagined** az alapértelmezett Minecraft effekteket alakítja át fejleszthető egyedi képességekké, passzív erökké és legendás fegyverekké.
-
-A játékosok egy véletlenszerű effekttel és **1 Effect Szívvel** kezdik a játékot. Mások legyőzésével, tárgyak barkácsolásával vagy elrejtett shardok felkutatásával akár **3 Effect Szívet** is összegyűjthetnek, ami erősebb passzív hatásokat, rövidebb töltési időket (cooldown) és pusztító aktív képességeket nyit meg!
+> [!NOTE]
+> Az **EffectSMP: Reimagined** a Minecraft alapértelmezett effektjeit alakítja át egyedi, fejleszthető képességekké, passzív erökké és legendás fegyverekké.
 
 ---
 
-## ✨ Funkciók és Mechanikák
+## 🌟 Főbb Funkciók
 
-### 🔮 Fejlődési Rendszer
-- **1. Szint (1 Szív)**: Alapvető passzív effekt feloldva. Hozzáférés a fő GUI-hoz.
-- **2. Szint (2 Szív)**: Megerősített passzív hatás (Amplifier +1) és csökkentett töltési idők.
-- **3. Szint (3 Szív)**: Feloldja az aktív képességet (guggolva aktiválható) és képessé teszi a játékost a legendás fegyverek használatára!
+- 🔮 **3-Szintes Fejlődési Rendszer**: Gyűjts össze akár 3 Effect Szívet a passzív hatások megerősítéséhez, a cooldownok csökkentéséhez és az aktív képességek feloldásához.
+- 🎲 **Ritkasági Alapú Effekt Rendszer**: 11 egyedi effekt **Közönséges**, **Ritka**, **Epikus** és **Legendás** kategóriákba sorolva.
+- ⚔️ **5 Legendás Egyedi Fegyver**: Egyedi harci mechanikák: **Effect Mace**, **Effect Sword**, **Effect Bow**, **Effect Scythe** és **Effect Spear**.
+- 🌪️ **Széltöltet (Wind Charged) Effekt**: Egyedi mozgási stílus **Végtelen Széltöltet** tárggyal és 2. szinttől teljes esésmentességgel.
+- 🖥️ **Interaktív Menük (GUI)**: Böngészhető effektek, 3x3-as interaktív barkácsreceptek, megbízhatósági lista és statisztikák.
+- 👥 **Kölcsönös Megbízhatósági Rendszer (Trust)**: Védi a szövetségeseket az egyedi képességek területi sebzésétől.
+- 💾 **Rugalmas Adattárolás**: Helyi YAML fájlok vagy nagy teljesítményű MySQL adatbázis támogatás.
 
-### 💫 Effektek Ritkasági Rendszere
-Az effektek **4 ritkasági szintbe** vannak sorolva, ami meghatározza erejüket és azt, hogy hogyan lehet őket pörgetni:
+---
 
-| Ritkaság | Effektek | Pörgetési Forrás |
+## 🔮 Fejlődési Rendszer & Szívek
+
+A játékosok egy véletlenszerű effekttel és **1 Effect Szívvel** kezdenek. A szívek erősítik a passzív hatásokat, csökkentik a töltési időket és feloldják az aktív képességet:
+
+| Szint | Feltétel | Biztosított Előnyök |
 | :--- | :--- | :--- |
-| **🟢 Közönséges** | Hero of the Village, Fire Resistance, Dolphin Grace | Sima Reroll |
-| **🔵 Ritka** | Invisibility, Haste, Speed, **Wind Charged** (Új!) | Sima Reroll |
-| **🟣 Epikus** | Health Boost, Regeneration | OP Reroll |
-| **🟡 Legendás** | Strength, Resistance | OP Reroll |
+| **1. Szint** | ❤️ **1 Szív** | Alapvető passzív effekt, hozzáférés a főmenühöz (`/e`) |
+| **2. Szint** | ❤️❤️ **2 Szív** | Megerősített passzív effekt (Amplifier +1), egyedi fegyverek használata |
+| **3. Szint** | ❤️❤️❤️ **3 Szív** | **Aktív Képesség Feloldva** (guggolva aktiválható), **25% Cooldown Csökkentés** |
+
+> [!IMPORTANT]
+> Ha egy játékos elveszíti az összes Effect Szívét, a passzív effekte letiltásra kerül, amíg nem szerez újabb Szívet.
 
 ---
 
-## 🌪️ Új Effekt: Wind Charged (Széltöltet)
-A legdinamikusabb mozgási és védelmi stílus:
-- **1. Szint**: Egy **Végtelen Széltöltet** tárgyat ad. Soha nem fogy el használatkor, és halálkor sem esik ki!
-- **2. Szint**: Teljes **Esési Sebzés Immunitást** biztosít.
-- **3. Szint (Aktív)**: Guggolás közben aktiválva hatalmas szélrobbanást idéz elő, ami minden közeli ellenséget hátralök, téged pedig magasra repít a levegőbe!
+## 💫 Effektek és Ritkaságok
+
+| Ritkaság | Effekt | Típus | Fő Képesség / Előny |
+| :--- | :--- | :--- | :--- |
+| **🟢 Közönséges** | **Hero of the Village** | Passzív / Aktív | Falusi kedvezmények / Hero V roham (2 perc) |
+| **🟢 Közönséges** | **Fire Resistance** | Passzív / Aktív | Tűzimmunitás / Meggyújtja a közeli ellenségeket (15 mp) |
+| **🟢 Közönséges** | **Dolphin Grace** | Passzív / Aktív | Úszási sebesség / Víz alatti légzés & Conduit Power (1 perc) |
+| **🔵 Ritka** | **Invisibility** | Passzív / Aktív | Láthatatlanság / Elrejt a nem megbízott játékosok elől (10 mp) |
+| **🔵 Ritka** | **Haste** | Passzív / Aktív | Bányászati sebesség / **3x3-as Területi Bányászás** (30 mp) |
+| **🔵 Ritka** | **Speed** | Passzív / Aktív | Gyorsaság I / **3x Töltésű Lökés (Dash) Képesség** |
+| **🔵 Ritka** | **Wind Charged** | Passzív / Aktív | Végtelen Széltöltet & Esési Immunitás / Hatalmas Széllökés |
+| **🟣 Epikus** | **Health Boost** | Passzív / Aktív | Extra szívek / **+10 Bónusz Szív Roham** (30 mp) |
+| **🟣 Epikus** | **Regeneration** | Passzív / Aktív | Folyamatos regen / Regeneráció II megosztása megbízott társaiddal (45 mp) |
+| **🟡 Legendás** | **Strength** | Passzív / Aktív | Sebzésbónusz / Erő III & **+3 Blokk Hatótávolság** (15 mp) |
+| **🟡 Legendás** | **Resistance** | Passzív / Aktív | Sebzéscsökkentés / **TELJES SEBZHETETLENSÉG** (20 mp) |
 
 ---
 
-## 🛠️ Egyedi Tárgyak és Barkácsolás
-Készíts vagy keress legendás tárgyakat a képességek manipulálásához és a harcok irányításához. *Minden recept és cooldown teljesen testreszabható az `items.yml`-ben!*
+## ⚔️ Egyedi Tárgyak és Barkácsolás
 
-- ❤️ **Effect Szív (Heart)**: Elhasználva +1 Szívet ad. Shardból és Gyémántból készíthető.
-- 💎 **Effect Shard**: Minden egyedi tárgy alapja. Világszerte megtalálható ládákban és mob kiejtésekben:
-  - 🏛️ **Ősi Város Láda (Ancient City)**: 2.5% esély
-  - 🚢 **Végváros Hajó Láda (End City Ship)**: 5.0% esély
-  - 🏡 **Erdei Kastély Láda (Woodland Mansion)**: 2.0% esély
-  - 👹 **Warden Szörnyek**: 5.0% kiejtési esély halálkor
-- 🔄 **Reroll**: Megváltoztatja az aktív effekted egy véletlenszerű Közönséges/Ritka effektre.
-- 🌟 **OP Reroll**: Megváltoztatja az aktív effekted egy véletlenszerű Epikus/Legendás effektre.
-- ⚔️ **Egyedi Fegyverek** (3. Szint szükséges):
-  - **Effect Mace**: A magasba lök, földet éréskor pedig hatalmas lökéshullámot hoz létre!
-  - **Effect Sword**: 10 másodpercre 1.5x sebzést és 2x támadási sebességet ad minden ütésre.
-  - **Effect Bow**: Robbantó, lassító és gyengítő átok nyilakat lő (10% esély).
-  - **Effect Scythe**: Minden közeli ellenséges játékost 5 másodpercre teljesen lefagyaszt.
-  - **Effect Spear**: Hosszan nyomva tartva tölthető óriási vetődéshez (lunge), ami nem meríti az éhséget!
+Készíts vagy keress egyedi tárgyakat a képességek irányításához. *Minden recept és töltési idő testreszabható az `items.yml`-ben.*
 
----
+| Tárgy | Típus | Képesség & Mechanika |
+| :--- | :--- | :--- |
+| ❤️ **Effect Szív** | Fogyóeszköz | +1 Szívet ad (Max 3). Shardból és Gyémántból/Netherite-ből barkácsolható. |
+| 💎 **Effect Shard** | Alapanyag | Minden egyedi tárgy alapja. Láda zsákmányokban és Warden dropként található. |
+| 🔄 **Reroll** | Fogyóeszköz | Véletlenszerű **Közönséges** vagy **Ritka** effektet sorsol. |
+| 🌟 **OP Reroll** | Fogyóeszköz | Véletlenszerű **Epikus** vagy **Legendás** effektet sorsol. |
+| 🔨 **Effect Mace** | Fegyver (3. Szint) | A magasba repít; földet éréskor hatalmas lökéshullámot hoz létre. |
+| 🗡️ **Effect Sword** | Fegyver (3. Szint) | Kritikus állapotot aktivál **1.5x sebzéssel és 2x támadási sebességgel** 10 mp-ig. |
+| 🏹 **Effect Bow** | Fegyver (3. Szint) | Átoknyíllal lassító, gyengítő és körvonalazó hatást alkalmaz (10% esély). |
+| 🧹 **Effect Scythe** | Fegyver (3. Szint) | Minden közeli ellenséges játékost teljesen lefagyaszt 5 mp-re. |
+| 🔱 **Effect Spear** | Fegyver (3. Szint) | Tölthető óriási vetődés (lunge), ami nem meríti az éhséget. |
 
-## 🖥️ Interaktív GUI-k
-- `/e` - Fő GUI a passzívok ki/bekapcsolásához, statisztikák és cooldownok megtekintéséhez.
-- `/e effects` - Megnyitja az Effekt Könyvtár menüt, ahol látható az összes effekt passzív/aktív leírása, ritkasága és töltési ideje.
-- `/e items` - Megjeleníti az egyedi tárgyak listáját. Bármelyik tárgyra kattintva látható az **interaktív 3x3-as barkács receptje**, vagy leírás a shardok megtalálásához!
+### 🏛️ Shard Megtalálási Helyek
 
----
-
-## ⚙️ Konfigurációs Fájlok
-A plugin szinte minden része testreszabható:
-- **`config.yml`**: Adatbázis beállítások (YAML/MySQL), alapvető játékbeállítások és automatikus frissítés-ellenőrző.
-- **`items.yml`**: Barkácsreceptek átrendezése, tárgyak ki/bekapcsolása és a fegyverek egyedi másodperces cooldownjainak módosítása.
-- **`messages_hu.yml` / `messages_en.yml`**: Minden tárgyleírás, aktív címek, akcióbárok és hibaüzenetek nyelvi szerkesztése.
+| Helyszín / Forrás | Esély |
+| :--- | :--- |
+| 🏛️ **Ősi Város Láda (Ancient City)** | **7.5%** |
+| 🚢 **Végváros Hajó Láda (End City Ship)** | **7.5%** |
+| 🏡 **Erdei Kastély Láda (Woodland Mansion)** | **7.5%** |
+| 👹 **Warden Szörny Drop** | **15.0%** |
 
 ---
 
 ## ⌨️ Parancsok és Jogosultságok
 
-- `/e` - Megnyitja a főmenüt.
-- `/e info` - Megjeleníti a saját statisztikáidat, trustolt játékosokat és az aktív státuszt.
-- `/e effects` - Megnyitja az effektek leírását tartalmazó listát.
-- `/e items` - Megnyitja a tárgyak és receptek listáját.
-- `/e trust <játékos>` - Megbízol egy játékosban (így nem sebzik őt az egyedi képességeid).
-- `/e untrust <játékos>` - Eltávolítasz egy játékost a megbízhatósági listáról.
-- `/e withdraw [mennyiség]` - Fizikai tárggyá alakítja az Effect Szíveidet a kereskedéshez.
-- `/e activate` - Aktiválja az aktív effekt képességedet.
+### Játékos Parancsok
 
-**Adminisztrátori Parancsok** (`effectsmp.admin` vagy `effectsmp.teszter` szükséges):
-- `/e give <tárgy>` - Egyedi tárgyakat ad a játékosnak.
-- `/e set <játékos> <effekt>` - Rákényszerít egy effektet a célpontra.
-- `/e removecooldown <játékos> <item/effect/all>` - Törli a cooldownokat.
-- `/e craftreset <tárgy/all>` - Visszaállítja a limitált fegyverek barkácsolási korlátját.
-- `/e reload` - Újratölti a konfigurációkat és az egyedi tárgyakat.
+| Parancs | Használat | Leírás |
+| :--- | :--- | :--- |
+| `/e` | `/e` | Megnyitja a Fő GUI menüt. |
+| `/e info` | `/e info` | Megjeleníti a saját statisztikáidat és a megbízott játékosokat. |
+| `/e effects` | `/e effects` | Megnyitja az Effekt Könyvtárat. |
+| `/e items` | `/e items` | Megnyitja az Egyedi Tárgyak és receptek listáját. |
+| `/e activate` | `/e activate` | Aktiválja az aktív effekt képességet. |
+| `/e trust` | `/e trust <játékos>` | Megbízhatóvá tesz egy játékost (letiltja a területi sebzést rá). |
+| `/e untrust` | `/e untrust <játékos>` | Eltávolít egy játékost a megbízhatósági listáról. |
+| `/e withdraw` | `/e withdraw [mennyiség]` | Fizikai tárggyá alakítja az Effect Szíveidet a kereskedéshez. |
+
+### Adminisztrátori Parancsok
+
+| Parancs | Használat | Jogosultság | Leírás |
+| :--- | :--- | :--- | :--- |
+| `/e set` | `/e set <effekt> [játékos]` | `effectsmp.admin` | Rákényszerít egy effektet a célpontra. |
+| `/e give` | `/e give <tárgy> [játékos]` | `effectsmp.admin` | Egyedi tárgyakat ad a játékosnak. |
+| `/e removecooldown` | `/e removecooldown [típus] [játékos]` | `effectsmp.admin` | Törli a tárgy/effekt töltési időket. |
+| `/e craftreset` | `/e craftreset [tárgy\|all]` | `effectsmp.admin` | Visszaállítja a barkácsolási korlátokat. |
+| `/e start` | `/e start` | `effectsmp.admin` | Elindítja a játékot és kiadja az effekteket. |
+| `/e reload` | `/e reload` | `effectsmp.admin` | Újratölti a konfigurációs fájlokat. |
+
+---
+
+## ⚙️ Konfigurációs Fájlok
+
+- **`config.yml`**: Adatbázis beállítások (YAML/MySQL), nyelvválasztás (`en` / `hu`) és frissítés-ellenőrző.
+- **`items.yml`**: Receptek, tárgyak ki/bekapcsolása és fegyver cooldownok módosítása.
+- **`messages_en.yml`**: Angol nyelvi állomány.
+- **`messages_hu.yml`**: Magyar nyelvi állomány.
 
 ---
 
 <div align="center">
+  <p style="color: red; font-weight: bold;">MÓDOSÍTÁS ÉS ÚJRAOSZTÁS NEM ENGEDÉLYEZETT</p>
   <p>Készítette ❤️-el: <a href="https://github.com/mlnplus">mlnplus</a></p>
 </div>

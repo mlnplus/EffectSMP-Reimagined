@@ -79,11 +79,11 @@ heart-depleted: "&4&l⚠ Nincs több Effect Szíved! A /e parancs nem elérhető
 heart-level-up: "&a⬆ Effect szint: &l2"
 heart-level-down: "&c⬇ Effect szint: &l1"
 
-heart-withdrawn: "&a✦ &f%amount% Effect Szív withdraw-olva!"
+heart-withdrawn: "&a✦ &f%amount% Effect Szív kivéve!"
 heart-dropped: "&a✦ &f%amount% Effect Szív kidobva! &7(Inventory tele)"
 heart-not-enough: "&cNincs elég Effect Szíved! &7(Van: %hearts%)"
 heart-downgrade-warning: "&e⚠ Az effekted 1-es szintre csökkent! &7(2 szív alatt)"
-heart-ability-lost: "&c⚠ Elvesztetted az aktív ability-det! &7(3 szív kell)"
+heart-ability-lost: "&c⚠ Elvesztetted az aktív képességedet! &7(3 szív szükséges)"
 heart-passive-disabled: "&4⚠ Nincs több Effect Szíved! A passzív képesség letiltva!"
 heart-limit-reached: "&cElérted a maximális Effect Szív számot! (3)"
 
@@ -98,29 +98,29 @@ shard-gained: "&a✧ Effect Szilánkot szereztél!"
 #                          TRUST MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-trust-added: "&a✔ &f%player% &atrustolva!"
-trust-added-mutual: "&a✔ &f%player% &7→ &aKölcsönös trust!"
+trust-added: "&a✔ &f%player% &amegbízva!"
+trust-added-mutual: "&a✔ &f%player% &7→ &aKölcsönös megbízhatóság!"
 
-trust-mutual-active-sender: "&a✦ &f%player% &atrustolva! &7(Kölcsönös trust aktív!)"
-trust-mutual-active-target: "&a✦ &f%player% &atrustolt téged! &7(Kölcsönös trust aktív!)"
-trust-pending-sender: "&a✦ &f%player% &atrustolva! &7(Várj amíg ő is trustol téged!)"
-trust-pending-target: "&e✦ &f%player% &etrustolt téged! &7(/e trust %player%)"
-trust-removed: "&c✦ &f%player% &ctrust eltávolítva!"
+trust-mutual-active-sender: "&a✦ &f%player% &amegbízva! &7(Kölcsönös megbízhatóság aktív!)"
+trust-mutual-active-target: "&a✦ &f%player% &amegbízott benned! &7(Kölcsönös megbízhatóság aktív!)"
+trust-pending-sender: "&a✦ &f%player% &amegbízva! &7(Várj amíg ő is megbíz benned!)"
+trust-pending-target: "&e✦ &f%player% &amegbízott benned! &7(/e trust %player%)"
+trust-removed: "&c✦ &f%player% &celtávolítva a megbízhatósági listáról!"
 
 trust-not-found: "&cNincs ilyen játékos online!"
-trust-already-trusted: "&cEzt a játékost már trustoltad!"
-trust-limit-reached: "&cElérted a maximális trust keretet (5 játékos)!"
-trust-not-trusted: "&cEz a játékos nincs trustolva!"
-trust-self: "&cNem trustolhatod magadat!"
+trust-already-trusted: "&cEzt a játékost már megbízhatóvá tetted!"
+trust-limit-reached: "&cElérted a maximális megbízhatósági keretet (5 játékos)!"
+trust-not-trusted: "&cEz a játékos nincs a megbízhatósági listádon!"
+trust-self: "&cNem bízhatsz meg saját magadban!"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          REROLL MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
 reroll-in-progress: "&cÉppen sorsolás alatt vagy! Várd meg a végét."
-reroll-no-effect: "&cNincs effected amit reroll-olhatnál!"
-reroll-op-error: "&cOP effectet nem lehet sima reroll-al újragörgetni!"
-reroll-success: "&d▸ Megkaptad az effekted: %effect%"
+reroll-no-effect: "&cNincs effekted, amit újragörgethetnél!"
+reroll-op-error: "&cOP effektet nem lehet normál reroll-lal újragörgetni!"
+reroll-success: "&d▸ Megkaptad az új effektedet: %effect%"
 
 # ─────────────────────────────────────────────────────────────────────
 #                        ITEM ABILITY MESSAGES
@@ -235,10 +235,10 @@ usage-trust: "&cHasználat: &7/e trust <játékos>"
 usage-untrust: "&cHasználat: &7/e untrust <játékos>"
 usage-set: "&cHasználat: &7/e set <effect> [játékos]"
 usage-give: "&cHasználat: &7/e give <item> [játékos]"
-usage-give-list: "&7Itemek: heart, shard, reroll, op_reroll, mace, sword, bow, scythe"
+usage-give-list: "&7Itemek: heart, shard, reroll, op_reroll, mace, sword, bow, scythe, spear, wind_charge"
 usage-removecooldown: "&cHasználat: &7/e removecooldown [item|effect|all] [játékos]"
 usage-craftreset: "&cHasználat: &7/e craftreset [item|all]"
-invalid-limited-item: "&cÉrvénytelen item! &7(effect_sword, effect_mace, effect_bow, effect_scythe)"
+invalid-limited-item: "&cÉrvénytelen item! &7(effect_sword, effect_mace, effect_bow, effect_scythe, effect_spear)"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          ROLL ANIMATION
@@ -331,13 +331,13 @@ gui-info-stats-lore-kills: "&7Ölések: &a%kills%"
 gui-info-stats-lore-deaths: "&7Halálok: &c%deaths%"
 gui-info-stats-lore-kd: "&7K/D: &e%kd%"
 
-gui-info-trust-name: "&a&l👥 Trustolt Játékosok"
-gui-info-trust-lore-count: "&7Kölcsönös trust: &f%count%/5"
-gui-info-trust-none: "&7Nincs aktív trust"
+gui-info-trust-name: "&a&l👥 Megbízott Játékosok"
+gui-info-trust-lore-count: "&7Kölcsönös megbízhatóság: &f%count%/5"
+gui-info-trust-none: "&7Nincs aktív megbízhatóság"
 gui-info-trust-entry: "&a✔ %player%"
-gui-info-trust-lore-add: "&7/e trust <név> - Trust hozzáadás"
-gui-info-trust-lore-remove: "&7/e untrust <név> - Trust eltávolítás"
-gui-info-effects-button-name: "&5&l⚡ Effectek Listája"
+gui-info-trust-lore-add: "&7/e trust <név> - Megbízhatóság hozzáadása"
+gui-info-trust-lore-remove: "&7/e untrust <név> - Megbízhatóság eltávolítása"
+gui-info-effects-button-name: "&5&l⚡ Effektek Listája"
 gui-info-effects-button-lore: "&7Kattints az összes effekt megtekintéséhez!"
 gui-info-items-button-name: "&a&l⚔ Egyedi Tárgyak Listája"
 gui-info-items-button-lore: "&7Kattints az egyedi tárgyak és receptek megtekintéséhez!"
@@ -467,18 +467,18 @@ cooldown-type-all: "Minden"
 cooldown-type-item: "Tárgy"
 cooldown-type-effect: "Effekt"
 
-wind-charge-cooldown: "&c✖ &fVégtelen Széltöltet cooldown: &e%time%"
+wind-charge-cooldown: "&c✖ &fVégtelen Széltöltet töltési idő: &e%time%"
 
 actionbar-active-format: "&a◆ &fAktív &a%time% %progress%"
-actionbar-cooldown-format: "&c◆ &fCooldown &c%time% %progress%"
+actionbar-cooldown-format: "&c◆ &fTöltési idő &c%time% %progress%"
 actionbar-ready-format: "&a◆ &fElérhető! &7(/e activate)"
 actionbar-dash-format: "&a◆ &fDash: %charges%%time%"
-actionbar-locked-format: "&7🔒 &7(&f3 &c❤ &fkell&7)"
+actionbar-locked-format: "&7🔒 &7(&f3 &c❤ &fszükséges&7)"
 actionbar-no-hearts: "&c✖ &7Nincs szíved!"
-actionbar-ready-alert: "&a&l⚡ ABILITY ELÉRHETŐ! ⚡"
-actionbar-expired-alert: "&c&l⏱ ABILITY LEJÁRT! ⏱"
+actionbar-ready-alert: "&a&l⚡ KÉPESSÉG ELÉRHETŐ! ⚡"
+actionbar-expired-alert: "&c&l⏱ KÉPESSÉG LEJÁRT! ⏱"
 
-gui-effects-info-book-name: "&d&lEFFEKTEK TÁRA &7| &fLibrary"
+gui-effects-info-book-name: "&d&lEFFEKT KÖNYVTÁR &7| &fKönyvtár"
 gui-effects-info-book-lore: "&7Tekintsd meg a megszerezhető képességeket!"
-gui-items-info-book-name: "&d&lEGYEDI TÁRGYAK &7| &fCustom Items"
+gui-items-info-book-name: "&d&lEGYEDI TÁRGYAK &7| &fEgyedi Tárgyak"
 gui-items-info-book-lore: "&7Tekintsd meg a receptek és tárgyak listáját!"
