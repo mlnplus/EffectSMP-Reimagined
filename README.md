@@ -11,7 +11,7 @@
   [ 🇬🇧 **English** ](https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/README.md) &nbsp;•&nbsp; [ 🇭🇺 **Magyar** ](https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/README_HU.md)
 
   ```
-  ⚠️ DISCLAIMER: Atrificial Intelligence was used in the development of this plugin.
+  ⚠️ DISCLAIMER: Artificial Intelligence was used in the development of this plugin.
   ```
 
 </div>
