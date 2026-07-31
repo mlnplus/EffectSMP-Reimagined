@@ -3,7 +3,6 @@
   <h1>⚡ EffectSMP: Reimagined ⚡</h1>
   <p><b>Egyedi képességek, fejlődési rendszer és legendás fegyverek Minecraft szerverekhez.</b></p>
 
-  [![GitHub](https://img.shields.io/badge/GitHub-Source_Code-181717?style=for-the-badge&logo=github)](https://github.com/mlnplus/EffectSMP-Reimagined)
   [![Modrinth](https://img.shields.io/badge/Modrinth-Plugin-00C853?style=for-the-badge&logo=modrinth)](https://modrinth.com/plugin/effectsmp-reimagined)
   [![License](https://img.shields.io/badge/License-Custom-red?style=for-the-badge)](https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/LICENSE)
 
