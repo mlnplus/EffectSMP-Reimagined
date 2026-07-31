@@ -4,12 +4,15 @@
   <p><b>Egyedi képességek, fejlődési rendszer és legendás fegyverek Minecraft szerverekhez.</b></p>
 
   [![Modrinth](https://img.shields.io/badge/Modrinth-Plugin-00C853?style=for-the-badge&logo=modrinth)](https://modrinth.com/plugin/effectsmp-reimagined)
-  [![PaperMC](https://img.shields.io/badge/PaperMC-1.20%20--%201.21.x-blue?style=for-the-badge&logo=papermc)](https://papermc.io)
-  [![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)](https://oracle.com/java)
 
   <br />
 
   [ 🇬🇧 **English** ](README.md) &nbsp;•&nbsp; [ 🇭🇺 **Magyar** ](README_HU.md)
+
+  ```
+  ⚠️ FIGYELEM: A plugin fejlesztése során használatva volt mesterséges intelligencia.
+  ```
+
 </div>
 
 ---
