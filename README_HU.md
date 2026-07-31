@@ -3,11 +3,13 @@
   <h1>⚡ EffectSMP: Reimagined ⚡</h1>
   <p><b>Egyedi képességek, fejlődési rendszer és legendás fegyverek Minecraft szerverekhez.</b></p>
 
+  [![GitHub](https://img.shields.io/badge/GitHub-Source_Code-181717?style=for-the-badge&logo=github)](https://github.com/mlnplus/EffectSMP-Reimagined)
   [![Modrinth](https://img.shields.io/badge/Modrinth-Plugin-00C853?style=for-the-badge&logo=modrinth)](https://modrinth.com/plugin/effectsmp-reimagined)
+  [![License](https://img.shields.io/badge/License-Custom-red?style=for-the-badge)](https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/LICENSE)
 
   <br />
 
-  [ 🇬🇧 **English** ](README.md) &nbsp;•&nbsp; [ 🇭🇺 **Magyar** ](README_HU.md)
+  [ 🇬🇧 **English** ](https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/README.md) &nbsp;•&nbsp; [ 🇭🇺 **Magyar** ](https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/README_HU.md)
 
   ```
   ⚠️ FIGYELEM: A plugin fejlesztése során használatva volt mesterséges intelligencia.
@@ -132,7 +134,7 @@ Készíts vagy keress egyedi tárgyakat a képességek irányításához. *Minde
 ---
 
 <div align="center">
-  <p style="font-weight: bold;">Védelem alatt: <a href="LICENSE">EffectSMP Public & Attribution License</a></p>
+  <p style="font-weight: bold;">Védelem alatt: <a href="https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/LICENSE">EffectSMP Public & Attribution License</a></p>
   <p>A kód módosítása saját/szerver célra engedélyezett • Nyilvános újraosztás vagy eladás szigorúan tilos • A készítő (<b>mlnplus</b>) feltüntetése kötelező</p>
   <p>Készítette ❤️-el: <a href="https://github.com/mlnplus">mlnplus</a></p>
 </div>

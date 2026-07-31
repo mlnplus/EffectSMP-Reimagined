@@ -4,10 +4,11 @@
   <p><b>Custom abilities, progressive heart mechanics, and legendary weapons for Minecraft servers.</b></p>
 
   [![Modrinth](https://img.shields.io/badge/Modrinth-Plugin-00C853?style=for-the-badge&logo=modrinth)](https://modrinth.com/plugin/effectsmp-reimagined)
+  [![License](https://img.shields.io/badge/License-Custom-red?style=for-the-badge)](https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/LICENSE)
 
   <br />
 
-  [ 🇬🇧 **English** ](README.md) &nbsp;•&nbsp; [ 🇭🇺 **Magyar** ](README_HU.md)
+  [ 🇬🇧 **English** ](https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/README.md) &nbsp;•&nbsp; [ 🇭🇺 **Magyar** ](https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/README_HU.md)
 
   ```
   ⚠️ DISCLAIMER: Atrificial Intelligence was used in the development of this plugin.
@@ -132,7 +133,7 @@ Craft or discover custom items to manipulate abilities and dominate combat. *All
 ---
 
 <div align="center">
-  <p style="font-weight: bold;">Protected under the <a href="LICENSE">EffectSMP Public & Attribution License</a></p>
+  <p style="font-weight: bold;">Protected under the <a href="https://github.com/mlnplus/EffectSMP-Reimagined/blob/main/LICENSE">EffectSMP Public & Attribution License</a></p>
   <p>Code modification is permitted for personal/server use • Public redistribution or resale is strictly prohibited • Mandatory credit to <b>mlnplus</b></p>
   <p>Created with ❤️ by <a href="https://github.com/mlnplus">mlnplus</a></p>
 </div>
