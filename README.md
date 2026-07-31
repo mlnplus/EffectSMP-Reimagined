@@ -132,6 +132,7 @@ Craft or discover custom items to manipulate abilities and dominate combat. *All
 ---
 
 <div align="center">
-  <p style="color: red; font-weight: bold;">MODIFICATION AND REDISTRIBUTION IS NOT PERMITTED</p>
+  <p style="font-weight: bold;">Protected under the <a href="LICENSE">EffectSMP Public & Attribution License</a></p>
+  <p>Code modification is permitted for personal/server use • Public redistribution or resale is strictly prohibited • Mandatory credit to <b>mlnplus</b></p>
   <p>Created with ❤️ by <a href="https://github.com/mlnplus">mlnplus</a></p>
 </div>

@@ -132,6 +132,7 @@ Készíts vagy keress egyedi tárgyakat a képességek irányításához. *Minde
 ---
 
 <div align="center">
-  <p style="color: red; font-weight: bold;">MÓDOSÍTÁS ÉS ÚJRAOSZTÁS NEM ENGEDÉLYEZETT</p>
+  <p style="font-weight: bold;">Védelem alatt: <a href="LICENSE">EffectSMP Public & Attribution License</a></p>
+  <p>A kód módosítása saját/szerver célra engedélyezett • Nyilvános újraosztás vagy eladás szigorúan tilos • A készítő (<b>mlnplus</b>) feltüntetése kötelező</p>
   <p>Készítette ❤️-el: <a href="https://github.com/mlnplus">mlnplus</a></p>
 </div>
