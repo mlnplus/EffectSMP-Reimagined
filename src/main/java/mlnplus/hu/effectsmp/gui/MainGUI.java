@@ -4,9 +4,7 @@ import mlnplus.hu.effectsmp.Effectsmp;
 import mlnplus.hu.effectsmp.data.PlayerData;
 import mlnplus.hu.effectsmp.effects.EffectType;
 import net.kyori.adventure.text.Component;
-
 import net.kyori.adventure.text.format.TextDecoration;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,8 +21,8 @@ public class MainGUI {
     private final Effectsmp plugin;
 
     private static final int PASSIVE_TOGGLE_SLOT = 11;
+    private static final int INFO_SLOT = 13;
     private static final int ACTIVE_ABILITY_SLOT = 15;
-    private static final int INFO_SLOT = 22;
 
     private Component getNoItalic(String key) {
         return plugin.getMessageUtils().getMessageComponent(key).decoration(TextDecoration.ITALIC, false);
@@ -45,24 +43,32 @@ public class MainGUI {
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
         EffectType effect = data.getEffect();
 
-        ItemStack filler = createFiller();
+        // Dark modern border pattern (Purple & Magenta glass)
+        ItemStack purpleGlass = createFiller(Material.PURPLE_STAINED_GLASS_PANE);
+        ItemStack magentaGlass = createFiller(Material.MAGENTA_STAINED_GLASS_PANE);
+        ItemStack darkGlass = createFiller(Material.BLACK_STAINED_GLASS_PANE);
+
         for (int i = 0; i < 27; i++) {
-            inv.setItem(i, filler);
+            if (i == 0 || i == 8 || i == 18 || i == 26) {
+                inv.setItem(i, magentaGlass);
+            } else if (i < 9 || i >= 18 || i % 9 == 0 || i % 9 == 8) {
+                inv.setItem(i, purpleGlass);
+            } else {
+                inv.setItem(i, darkGlass);
+            }
         }
 
         inv.setItem(PASSIVE_TOGGLE_SLOT, createPassiveToggleItem(data, effect));
-
+        inv.setItem(INFO_SLOT, createInfoItem(player, data));
         inv.setItem(ACTIVE_ABILITY_SLOT, createActiveAbilityItem(data, effect));
-
-        inv.setItem(INFO_SLOT, createInfoItem());
 
         return inv;
     }
 
-    private ItemStack createFiller() {
-        ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+    private ItemStack createFiller(Material material) {
+        ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(getNoItalic("gui-main-filler-name"));
+        meta.displayName(Component.text(" "));
         item.setItemMeta(meta);
         return item;
     }
@@ -109,7 +115,7 @@ public class MainGUI {
 
     private ItemStack createActiveAbilityItem(PlayerData data, EffectType effect) {
         boolean available = data.getEffectHearts() >= 3 && !data.isAbilityOnCooldown();
-        Material material = available ? Material.BLAZE_POWDER : Material.GUNPOWDER;
+        Material material = available ? Material.NETHER_STAR : Material.GUNPOWDER;
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
 
@@ -154,9 +160,13 @@ public class MainGUI {
         return item;
     }
 
-    private ItemStack createInfoItem() {
-        ItemStack item = new ItemStack(Material.BOOK);
+    private ItemStack createInfoItem(Player player, PlayerData data) {
+        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
         ItemMeta meta = item.getItemMeta();
+
+        if (meta instanceof org.bukkit.inventory.meta.SkullMeta skullMeta) {
+            skullMeta.setOwningPlayer(player);
+        }
 
         meta.displayName(getNoItalic("gui-info-name"));
 

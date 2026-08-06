@@ -19,19 +19,23 @@
 ---
 
 > [!NOTE]
-> **EffectSMP: Reimagined** elevates standard Minecraft potion effects into custom abilities, progressive heart power-ups, and game-changing legendary items.
+> **EffectSMP: Reimagined** elevates standard Minecraft potion effects into custom abilities, progressive heart power-ups, configurable game controls, and game-changing legendary items.
 
 ---
 
 ## 🌟 Key Features
 
 - 🔮 **3-Tier Progression System**: Collect up to 3 Effect Hearts to boost passives, reduce cooldowns, and unlock active abilities.
-- 🎲 **Rarity-Based Effect System**: 11 unique abilities categorized across **Common**, **Rare**, **Epic**, and **Legendary** tiers.
+- 🎲 **Rarity-Based Effect System**: 11 unique abilities categorized across **Common**, **Rare**, **Epic**, and **Legendary** tiers with configurable start-roll rarity pools.
+- 🛡️ **Per-Effect Cooldown Reduction**: Custom `reduced_cooldown` settings configurable for every single effect in `effects.yml`.
 - ⚔️ **5 Custom Legendary Weapons**: Unique combat mechanics including **Effect Mace**, **Effect Sword**, **Effect Bow**, **Effect Scythe**, and **Effect Spear**.
+- ⏸️ **Game Pause & Resume Controls**: Pause/stop all game mechanics, action bar HUDs, abilities, and item usage on demand with `/e pause` / `/e resume`.
 - 🌪️ **Wind Charged Archetype**: Custom movement archetype featuring an **Infinite Wind Charge** and complete fall immunity at Level 2+.
+- 🎨 **Paper Adventure Sprite Tags**: Native support for `<sprite:items:item/...>` and `<head:...>` tags in messages, titles, and item lore.
 - 🖥️ **Interactive In-Game GUIs**: Browse abilities, inspect interactive 3x3 crafting recipes, view trust status, and check detailed player stats.
 - 👥 **Mutual Trust System**: Protect teammates from friendly-fire AOE abilities.
-- 💾 **Dual Storage Options**: Local YAML storage or high-performance MySQL integration.
+- 🗄️ **Local SQLite Database**: High-performance `database.db` local SQLite database by default with automatic legacy data migration.
+- 🚫 **100% Duplicate-Free Rerolls**: Rerolls and OP Rerolls mathematically guarantee you never receive the effect you currently hold.
 
 ---
 
@@ -43,7 +47,7 @@ Players begin with a random effect and **1 Effect Heart**. Hearts power up passi
 | :--- | :--- | :--- |
 | **Level 1** | ❤️ **1 Heart** | Basic passive effect, access to main GUI (`/e`) |
 | **Level 2** | ❤️❤️ **2 Hearts** | Enhanced passive effect (Amplifier +1), ability to wield custom weapons |
-| **Level 3** | ❤️❤️❤️ **3 Hearts** | **Active Ability Unlocked** (sneak-to-activate), **25% Cooldown Reduction** |
+| **Level 3** | ❤️❤️❤️ **3 Hearts** | **Active Ability Unlocked** (sneak-to-activate), **Per-Effect Cooldown Reduction** |
 
 > [!IMPORTANT]
 > If a player loses all Effect Hearts, their passive effect is disabled until they acquire a new Heart.
@@ -76,13 +80,13 @@ Craft or discover custom items to manipulate abilities and dominate combat. *All
 | :--- | :--- | :--- |
 | ❤️ **Effect Heart** | Consumable | Adds +1 Heart (Max 3). Crafted with Shards and Netherite/Diamonds. |
 | 💎 **Effect Shard** | Ingredient | Crafting core for custom items. Found in world loot & Warden drops. |
-| 🔄 **Reroll** | Consumable | Rolls a random **Common** or **Rare** effect. |
-| 🌟 **OP Reroll** | Consumable | Rolls a random **Epic** or **Legendary** effect. |
-| 🔨 **Effect Mace** | Weapon (Lvl 3) | Launches user high into the air; creates a massive knockback shockwave on landing. |
-| 🗡️ **Effect Sword** | Weapon (Lvl 3) | Activates critical state dealing **1.5x damage + 2x attack speed** for 10s. |
-| 🏹 **Effect Bow** | Weapon (Lvl 3) | Fires curse arrows that apply Slowness, Weakness, and Glowing (10% chance). |
-| 🧹 **Effect Scythe** | Weapon (Lvl 3) | Freezes all nearby enemy players completely in place for 5s. |
-| 🔱 **Effect Spear** | Weapon (Lvl 3) | Charge a high-velocity Riptide lunge that consumes zero hunger. |
+| 🔄 **Reroll** | Consumable | Rolls a random **Common** or **Rare** effect (never duplicate). |
+| 🌟 **OP Reroll** | Consumable | Rolls a random **Epic** or **Legendary** effect (never duplicate). |
+| 🔨 **Effect Mace** | Weapon (Lvl 2+) | Launches user high into the air; creates a massive knockback shockwave on landing. |
+| 🗡️ **Effect Sword** | Weapon (Lvl 2+) | Activates critical state dealing **1.5x damage + 2x attack speed** for 10s. |
+| 🏹 **Effect Bow** | Weapon (Lvl 2+) | Fires curse arrows that apply Slowness, Weakness, and Glowing (10% chance). |
+| 🧹 **Effect Scythe** | Weapon (Lvl 2+) | Freezes all nearby enemy players completely in place for 5s. |
+| 🔱 **Effect Spear** | Weapon (Lvl 2+) | Charge a high-velocity Riptide lunge that consumes zero hunger. |
 
 ### 🏛️ Shard Obtain Locations
 
@@ -110,23 +114,26 @@ Craft or discover custom items to manipulate abilities and dominate combat. *All
 | `/e untrust` | `/e untrust <player>` | Remove player from trust list. |
 | `/e withdraw` | `/e withdraw [amount]` | Convert physical Hearts into item form. |
 
-### Admin Commands
+### Admin & Tester Commands
 
 | Command | Usage | Permission | Description |
 | :--- | :--- | :--- | :--- |
-| `/e set` | `/e set <effect> [player]` | `effectsmp.admin` | Force set a player's effect. |
-| `/e give` | `/e give <item> [player]` | `effectsmp.admin` | Spawn custom items. |
-| `/e removecooldown` | `/e removecooldown [type] [player]` | `effectsmp.admin` | Reset item/effect cooldowns. |
-| `/e craftreset` | `/e craftreset [item\|all]` | `effectsmp.admin` | Reset limited crafting limits. |
-| `/e start` | `/e start` | `effectsmp.admin` | Start game and assign initial effects. |
+| `/e set` | `/e set <effect> [player]` | `effectsmp.admin` / `effectsmp.tester` | Force set a player's effect. |
+| `/e give` | `/e give <item> [player]` | `effectsmp.admin` / `effectsmp.tester` | Spawn custom items. |
+| `/e removecooldown` | `/e rc [item\|effect\|dash\|all] [player]` | `effectsmp.admin` / `effectsmp.tester` | Reset item/effect/dash cooldowns. |
+| `/e craftreset` | `/e craftreset [item\|all]` | `effectsmp.admin` / `effectsmp.tester` | Reset limited crafting limits. |
+| `/e start` | `/e start` | `effectsmp.admin` / `effectsmp.tester` | Start game and assign initial effects. |
+| `/e pause` | `/e pause` / `/e stop` | `effectsmp.admin` / `effectsmp.tester` | Pause/stop all plugin mechanics and HUDs. |
+| `/e resume` | `/e resume` | `effectsmp.admin` / `effectsmp.tester` | Resume game mechanics. |
 | `/e reload` | `/e reload` | `effectsmp.admin` | Reload configuration files. |
 
 ---
 
 ## ⚙️ Configuration Files
 
-- **`config.yml`**: Database setup (YAML/MySQL), language setting (`en` / `hu`), and auto-updater.
-- **`items.yml`**: Customize recipes, toggle items, and adjust weapon cooldown seconds.
+- **`config.yml`**: Database setup (SQLite/MySQL), language setting (`en` / `hu`), start roll rarities, heart thresholds, and drop chances.
+- **`items.yml`**: Customize materials, custom model data, recipes, item abilities, and weapon cooldowns.
+- **`effects.yml`**: Toggle effects, edit rarities, set base cooldowns, and per-effect `reduced_cooldown` values.
 - **`messages_en.yml`**: Full English localization (action-bars, titles, GUI names, error strings).
 - **`messages_hu.yml`**: Full Hungarian localization option.
 

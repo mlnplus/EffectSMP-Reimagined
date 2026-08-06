@@ -1,0 +1,101 @@
+# EffectSMP Effects Configuration
+# All effect enablement, rarity, cooldowns, reduced cooldowns, passive amplifiers, and active ability settings are defined here
+
+invisibility:
+  enabled: true
+  rarity: RARE
+  cooldown: 600 # Base cooldown in seconds
+  reduced_cooldown: 450 # Reduced cooldown in seconds (when player has 3+ hearts)
+  passive_amplifier: 0
+  duration: 10 # Ability duration in seconds
+
+hero_of_village:
+  enabled: true
+  rarity: COMMON
+  cooldown: 600 # Base cooldown in seconds
+  reduced_cooldown: 450 # Reduced cooldown in seconds
+  passive_amplifier: 0
+  duration: 120 # Ability duration in seconds
+  ability_amplifier: 4
+
+haste:
+  enabled: true
+  rarity: RARE
+  cooldown: 300 # Base cooldown in seconds
+  reduced_cooldown: 225 # Reduced cooldown in seconds
+  passive_amplifier: 0
+  duration: 30 # Ability duration in seconds
+  ability_amplifier: 2
+
+fire_resistance:
+  enabled: true
+  rarity: COMMON
+  cooldown: 900 # Base cooldown in seconds
+  reduced_cooldown: 675 # Reduced cooldown in seconds
+  passive_amplifier: 0
+  duration: 15 # Ability duration in seconds
+  radius: 10.0
+  burn_seconds: 15
+
+speed:
+  enabled: true
+  rarity: RARE
+  cooldown: 300 # Base cooldown in seconds
+  reduced_cooldown: 225 # Reduced cooldown in seconds
+  passive_amplifier: 0
+
+dolphin_grace:
+  enabled: true
+  rarity: COMMON
+  cooldown: 300 # Base cooldown in seconds
+  reduced_cooldown: 225 # Reduced cooldown in seconds
+  passive_amplifier: 0
+  duration: 15 # Ability duration in seconds
+
+health_boost:
+  enabled: true
+  rarity: EPIC
+  cooldown: 300 # Base cooldown in seconds
+  reduced_cooldown: 225 # Reduced cooldown in seconds
+  passive_amplifier: 0
+  duration: 30 # Ability duration in seconds
+  ability_amplifier: 4
+  regen_seconds: 5
+  regen_amplifier: 2
+
+wind_charged:
+  enabled: true
+  rarity: RARE
+  cooldown: 180 # Base cooldown in seconds
+  reduced_cooldown: 135 # Reduced cooldown in seconds
+  passive_amplifier: 0
+  duration: 15 # Ability duration in seconds
+
+resistance:
+  enabled: true
+  rarity: LEGENDARY
+  cooldown: 900 # Base cooldown in seconds
+  reduced_cooldown: 675 # Reduced cooldown in seconds
+  passive_amplifier: 0
+  duration: 20 # Ability duration in seconds
+  ability_amplifier: 2
+
+strength:
+  enabled: true
+  rarity: LEGENDARY
+  cooldown: 900 # Base cooldown in seconds
+  reduced_cooldown: 675 # Reduced cooldown in seconds
+  passive_amplifier: 0
+  duration: 15 # Ability duration in seconds
+  ability_amplifier: 2
+  reach_bonus: 3.0
+
+regeneration:
+  enabled: true
+  rarity: EPIC
+  cooldown: 900 # Base cooldown in seconds
+  reduced_cooldown: 675 # Reduced cooldown in seconds
+  passive_amplifier: 0
+  duration: 45 # Ability duration in seconds
+  ability_amplifier: 2
+  absorption_amplifier: 1

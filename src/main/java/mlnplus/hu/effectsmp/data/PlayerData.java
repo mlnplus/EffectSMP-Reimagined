@@ -72,15 +72,24 @@ public class PlayerData {
     }
 
     public void setEffectHearts(int effectHearts) {
-        this.effectHearts = Math.max(0, effectHearts);
+        int maxHearts = 10;
+        mlnplus.hu.effectsmp.Effectsmp instance = mlnplus.hu.effectsmp.Effectsmp.getInstance();
+        if (instance != null && instance.getConfigManager() != null && instance.getConfigManager().getConfig() != null) {
+            maxHearts = instance.getConfigManager().getConfig().getInt("settings.max-hearts", 10);
+        }
+        int value = Math.max(0, effectHearts);
+        if (maxHearts > 0) {
+            value = Math.min(maxHearts, value);
+        }
+        this.effectHearts = value;
     }
 
     public void addEffectHearts(int amount) {
-        this.effectHearts += amount;
+        setEffectHearts(this.effectHearts + amount);
     }
 
     public void removeEffectHearts(int amount) {
-        this.effectHearts = Math.max(0, this.effectHearts - amount);
+        setEffectHearts(this.effectHearts - amount);
     }
 
     public boolean hasEffectShard() {
@@ -159,10 +168,26 @@ public class PlayerData {
         return System.currentTimeMillis() < abilityActiveUntil;
     }
 
+    public long getEffectiveCooldownMillis() {
+        if (effect == null)
+            return 0;
+        int req = 3;
+        mlnplus.hu.effectsmp.Effectsmp instance = mlnplus.hu.effectsmp.Effectsmp.getInstance();
+        if (instance != null && instance.getConfigManager() != null && instance.getConfigManager().getConfig() != null) {
+            req = instance.getConfigManager().getConfig().getInt("settings.hearts-required.cooldown-reduction", 3);
+        }
+
+        if (effectHearts >= req) {
+            return effect.getReducedCooldownSeconds() * 1000L;
+        } else {
+            return effect.getCooldownSeconds() * 1000L;
+        }
+    }
+
     public boolean isAbilityOnCooldown() {
         if (effect == null)
             return false;
-        long effectiveCooldown = (long) (effect.getCooldownSeconds() * getCooldownMultiplier() * 1000L);
+        long effectiveCooldown = getEffectiveCooldownMillis();
         long cooldownEnd = lastAbilityCooldown + effectiveCooldown;
         return System.currentTimeMillis() < cooldownEnd;
     }
@@ -170,7 +195,7 @@ public class PlayerData {
     public long getRemainingCooldown() {
         if (effect == null)
             return 0;
-        long effectiveCooldown = (long) (effect.getCooldownSeconds() * getCooldownMultiplier() * 1000L);
+        long effectiveCooldown = getEffectiveCooldownMillis();
         long cooldownEnd = lastAbilityCooldown + effectiveCooldown;
         return Math.max(0, cooldownEnd - System.currentTimeMillis());
     }
@@ -180,25 +205,49 @@ public class PlayerData {
     }
 
     public boolean canUseAbility() {
-        return effectHearts >= 3 && !isAbilityOnCooldown() && !isAbilityActive();
+        int req = 3;
+        mlnplus.hu.effectsmp.Effectsmp instance = mlnplus.hu.effectsmp.Effectsmp.getInstance();
+        if (instance != null && instance.getConfigManager() != null && instance.getConfigManager().getConfig() != null) {
+            req = instance.getConfigManager().getConfig().getInt("settings.hearts-required.active-ability", 3);
+        }
+        return effectHearts >= req && !isAbilityOnCooldown() && !isAbilityActive();
     }
 
     public int getPassiveAmplifier() {
-        return effectHearts >= 2 ? 1 : 0;
+        int req = 2;
+        int add = 1;
+        mlnplus.hu.effectsmp.Effectsmp instance = mlnplus.hu.effectsmp.Effectsmp.getInstance();
+        if (instance != null && instance.getConfigManager() != null && instance.getConfigManager().getConfig() != null) {
+            req = instance.getConfigManager().getConfig().getInt("settings.hearts-required.passive-boost", 2);
+            add = instance.getConfigManager().getConfig().getInt("settings.modifiers.passive-boost-amplifier-add", 1);
+        }
+        return effectHearts >= req ? add : 0;
     }
 
     public double getCooldownMultiplier() {
-        return effectHearts >= 3 ? 0.75 : 1.0;
+        int req = 3;
+        double mult = 0.75;
+        mlnplus.hu.effectsmp.Effectsmp instance = mlnplus.hu.effectsmp.Effectsmp.getInstance();
+        if (instance != null && instance.getConfigManager() != null && instance.getConfigManager().getConfig() != null) {
+            req = instance.getConfigManager().getConfig().getInt("settings.hearts-required.cooldown-reduction", 3);
+            mult = instance.getConfigManager().getConfig().getDouble("settings.modifiers.cooldown-reduction-multiplier", 0.75);
+        }
+        return effectHearts >= req ? mult : 1.0;
     }
 
     public int getEffectiveCooldownSeconds() {
         if (effect == null)
             return 0;
-        return (int) (effect.getCooldownSeconds() * getCooldownMultiplier());
+        return (int) (getEffectiveCooldownMillis() / 1000L);
     }
 
     public boolean canAccessMenu() {
-        return effectHearts >= 1;
+        int req = 1;
+        mlnplus.hu.effectsmp.Effectsmp instance = mlnplus.hu.effectsmp.Effectsmp.getInstance();
+        if (instance != null && instance.getConfigManager() != null && instance.getConfigManager().getConfig() != null) {
+            req = instance.getConfigManager().getConfig().getInt("settings.hearts-required.menu-access", 1);
+        }
+        return effectHearts >= req;
     }
 
     public void clearAbilityCooldown() {

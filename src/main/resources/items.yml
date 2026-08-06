@@ -1,15 +1,17 @@
 # EffectSMP Custom Items & Recipes
-# All custom items, their recipes, and cooldowns are defined here
+# All custom items, recipes, materials, custom model data, enchants, cooldowns, and ability mechanics are defined here
 
 # Reroll - Normal effect reroll
 reroll:
   enabled: true
+  material: ENDER_EYE
+  custom_model_data: 1003
   shape:
     - "DSD"
     - "BHB"
     - "DSD"
   ingredients:
-    B: DIAMOND_BlOCK
+    B: DIAMOND_BLOCK
     S: EFFECT_SHARD
     H: EFFECT_HEART
     D: DIAMOND
@@ -17,6 +19,8 @@ reroll:
 # OP Reroll - OP effect (Resistance, Strength, Regeneration)
 op_reroll:
   enabled: true
+  material: NETHER_STAR
+  custom_model_data: 1004
   shape:
     - "NSN"
     - "DRD"
@@ -30,7 +34,19 @@ op_reroll:
 # Effect Mace - Wind charge launcher
 effect_mace:
   enabled: true
+  material: MACE
+  custom_model_data: 1005
   cooldown: 60 # Cooldown in seconds
+  min_hearts: 2
+  launch_velocity_y: 1.8
+  knockback_multiplier: 1.2
+  knockback_y: 0.4
+  radius: 6.0
+  enchants:
+    sharpness: 5
+    density: 3
+    wind_burst: 2
+    breach: 4
   shape:
     - "SHS"
     - " B "
@@ -43,7 +59,19 @@ effect_mace:
 # Effect Sword - Critical hit mode
 effect_sword:
   enabled: true
+  material: NETHERITE_SWORD
+  custom_model_data: 1006
   cooldown: 150 # Cooldown in seconds
+  min_hearts: 2
+  duration: 10 # Ability active mode in seconds
+  haste_duration_seconds: 10
+  haste_amplifier: 1
+  enchants:
+    sharpness: 5
+    sweeping_edge: 3
+    fire_aspect: 2
+    looting: 3
+    bane_of_arthropods: 5
   shape:
     - " E "
     - " H "
@@ -56,6 +84,19 @@ effect_sword:
 # Effect Bow - Explosion arrows
 effect_bow:
   enabled: true
+  material: BOW
+  custom_model_data: 1007
+  debuff_radius: 5.0
+  slowness_duration_seconds: 8
+  slowness_amplifier: 1
+  weakness_duration_seconds: 8
+  weakness_amplifier: 0
+  glowing_duration_seconds: 10
+  enchants:
+    power: 5
+    flame: 1
+    infinity: 1
+    punch: 2
   shape:
     - " SE"
     - "S C"
@@ -68,7 +109,15 @@ effect_bow:
 # Effect Scythe - Freeze enemies
 effect_scythe:
   enabled: true
+  material: NETHERITE_HOE
+  custom_model_data: 1008
   cooldown: 150 # Cooldown in seconds
+  min_hearts: 2
+  freeze_duration_seconds: 5
+  radius: 15.0
+  base_bonus_damage: 14.0
+  enchants:
+    sharpness: 10
   shape:
     - "EHS"
     - "  S"
@@ -81,7 +130,24 @@ effect_scythe:
 # Effect Spear - Charge big lunge
 effect_spear:
   enabled: true
+  material: NETHERITE_SPEAR
+  custom_model_data: 1009
   cooldown: 150 # Cooldown in seconds
+  min_hearts: 2
+  charge_max_ticks: 20
+  launch_power_base: 3.0
+  launch_power_max: 6.5
+  flight_ticks: 25
+  flight_velocity: 3.2
+  impact_damage: 50.0
+  true_damage: 12.0
+  knockback_multiplier: 2.5
+  knockback_y: 1.2
+  radius: 4.0
+  enchants:
+    sharpness: 5
+    impaling: 5
+    lunge: 3
   shape:
     - "  E"
     - " H "
@@ -94,6 +160,8 @@ effect_spear:
 # Effect Heart - Extra life / currency
 effect_heart:
   enabled: true
+  material: NETHER_STAR
+  custom_model_data: 1001
   shape:
     - " S "
     - "DND"
@@ -102,3 +170,9 @@ effect_heart:
     S: EFFECT_SHARD
     D: DIAMOND_BLOCK
     N: NETHERITE_INGOT
+
+# Effect Shard - Currency item
+effect_shard:
+  enabled: true
+  material: PRISMARINE_SHARD
+  custom_model_data: 1002

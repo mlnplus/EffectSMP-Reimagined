@@ -5,9 +5,12 @@ import net.kyori.adventure.text.Component;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -76,8 +79,28 @@ public class CustomItems {
                                 .has(new NamespacedKey(plugin, "infinite_wind_charge"), PersistentDataType.STRING);
         }
 
+        public Material getItemMaterial(String itemKey, Material defaultMat) {
+                org.bukkit.configuration.file.FileConfiguration config = plugin.getConfigManager().getItemsConfig();
+                if (config != null && config.contains(itemKey + ".material")) {
+                        String matStr = config.getString(itemKey + ".material");
+                        if (matStr != null) {
+                                Material mat = Material.matchMaterial(matStr);
+                                if (mat != null) return mat;
+                        }
+                }
+                return defaultMat;
+        }
+
+        public int getItemCustomModelData(String itemKey, int defaultCmd) {
+                org.bukkit.configuration.file.FileConfiguration config = plugin.getConfigManager().getItemsConfig();
+                if (config != null && config.contains(itemKey + ".custom_model_data")) {
+                        return config.getInt(itemKey + ".custom_model_data", defaultCmd);
+                }
+                return defaultCmd;
+        }
+
         public ItemStack createEffectHeart() {
-                ItemStack item = new ItemStack(Material.NETHER_STAR);
+                ItemStack item = new ItemStack(getItemMaterial("effect_heart", Material.NETHER_STAR));
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-heart-name"));
@@ -90,7 +113,7 @@ public class CustomItems {
                 lore.add(getNoItalic("item-heart-lore-usage"));
                 meta.lore(lore);
 
-                meta.setCustomModelData(CMD_EFFECT_HEART);
+                meta.setCustomModelData(getItemCustomModelData("effect_heart", CMD_EFFECT_HEART));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_heart");
                 meta.setMaxStackSize(1);
 
@@ -99,7 +122,7 @@ public class CustomItems {
         }
 
         public ItemStack createEffectShard() {
-                ItemStack item = new ItemStack(Material.PRISMARINE_SHARD);
+                ItemStack item = new ItemStack(getItemMaterial("effect_shard", Material.PRISMARINE_SHARD));
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-shard-name"));
@@ -112,7 +135,7 @@ public class CustomItems {
                 lore.add(getNoItalic("item-shard-lore-usage"));
                 meta.lore(lore);
 
-                meta.setCustomModelData(CMD_EFFECT_SHARD);
+                meta.setCustomModelData(getItemCustomModelData("effect_shard", CMD_EFFECT_SHARD));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_shard");
                 meta.setMaxStackSize(1);
 
@@ -121,7 +144,7 @@ public class CustomItems {
         }
 
         public ItemStack createReroll() {
-                ItemStack item = new ItemStack(Material.ENDER_EYE);
+                ItemStack item = new ItemStack(getItemMaterial("reroll", Material.ENDER_EYE));
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-reroll-name"));
@@ -134,7 +157,7 @@ public class CustomItems {
                 lore.add(getNoItalic("item-reroll-lore-usage"));
                 meta.lore(lore);
 
-                meta.setCustomModelData(CMD_REROLL);
+                meta.setCustomModelData(getItemCustomModelData("reroll", CMD_REROLL));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "reroll");
                 meta.setMaxStackSize(1);
 
@@ -143,7 +166,7 @@ public class CustomItems {
         }
 
         public ItemStack createOPReroll() {
-                ItemStack item = new ItemStack(Material.NETHER_STAR);
+                ItemStack item = new ItemStack(getItemMaterial("op_reroll", Material.NETHER_STAR));
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-op-reroll-name"));
@@ -156,7 +179,7 @@ public class CustomItems {
                 lore.add(getNoItalic("item-op-reroll-lore-usage"));
                 meta.lore(lore);
 
-                meta.setCustomModelData(CMD_OP_REROLL);
+                meta.setCustomModelData(getItemCustomModelData("op_reroll", CMD_OP_REROLL));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "op_reroll");
                 meta.setMaxStackSize(1);
 
@@ -165,7 +188,7 @@ public class CustomItems {
         }
 
         public ItemStack createEffectMace() {
-                ItemStack item = new ItemStack(Material.MACE);
+                ItemStack item = new ItemStack(getItemMaterial("effect_mace", Material.MACE));
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-mace-name"));
@@ -184,12 +207,14 @@ public class CustomItems {
 
                 meta.setUnbreakable(true);
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-                meta.addEnchant(Enchantment.SHARPNESS, 5, true);
-                meta.addEnchant(Enchantment.DENSITY, 3, true);
-                meta.addEnchant(Enchantment.WIND_BURST, 2, true);
-                meta.addEnchant(Enchantment.BREACH, 4, true);
+                applyEnchantments(meta, "effect_mace", java.util.Map.of(
+                        Enchantment.SHARPNESS, 5,
+                        Enchantment.DENSITY, 3,
+                        Enchantment.WIND_BURST, 2,
+                        Enchantment.BREACH, 4
+                ));
 
-                meta.setCustomModelData(CMD_EFFECT_MACE);
+                meta.setCustomModelData(getItemCustomModelData("effect_mace", CMD_EFFECT_MACE));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_mace");
                 meta.setMaxStackSize(1);
 
@@ -198,7 +223,7 @@ public class CustomItems {
         }
 
         public ItemStack createEffectSword() {
-                ItemStack item = new ItemStack(Material.NETHERITE_SWORD);
+                ItemStack item = new ItemStack(getItemMaterial("effect_sword", Material.NETHERITE_SWORD));
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-sword-name"));
@@ -217,13 +242,15 @@ public class CustomItems {
 
                 meta.setUnbreakable(true);
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-                meta.addEnchant(Enchantment.SHARPNESS, 5, true);
-                meta.addEnchant(Enchantment.SWEEPING_EDGE, 3, true);
-                meta.addEnchant(Enchantment.FIRE_ASPECT, 2, true);
-                meta.addEnchant(Enchantment.LOOTING, 3, true);
-                meta.addEnchant(Enchantment.BANE_OF_ARTHROPODS, 5, true);
+                applyEnchantments(meta, "effect_sword", java.util.Map.of(
+                        Enchantment.SHARPNESS, 5,
+                        Enchantment.SWEEPING_EDGE, 3,
+                        Enchantment.FIRE_ASPECT, 2,
+                        Enchantment.LOOTING, 3,
+                        Enchantment.BANE_OF_ARTHROPODS, 5
+                ));
 
-                meta.setCustomModelData(CMD_EFFECT_SWORD);
+                meta.setCustomModelData(getItemCustomModelData("effect_sword", CMD_EFFECT_SWORD));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_sword");
                 meta.setMaxStackSize(1);
 
@@ -232,7 +259,7 @@ public class CustomItems {
         }
 
         public ItemStack createEffectBow() {
-                ItemStack item = new ItemStack(Material.BOW);
+                ItemStack item = new ItemStack(getItemMaterial("effect_bow", Material.BOW));
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-bow-name"));
@@ -250,12 +277,14 @@ public class CustomItems {
 
                 meta.setUnbreakable(true);
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-                meta.addEnchant(Enchantment.POWER, 5, true);
-                meta.addEnchant(Enchantment.FLAME, 1, true);
-                meta.addEnchant(Enchantment.INFINITY, 1, true);
-                meta.addEnchant(Enchantment.PUNCH, 2, true);
+                applyEnchantments(meta, "effect_bow", java.util.Map.of(
+                        Enchantment.POWER, 5,
+                        Enchantment.FLAME, 1,
+                        Enchantment.INFINITY, 1,
+                        Enchantment.PUNCH, 2
+                ));
 
-                meta.setCustomModelData(CMD_EFFECT_BOW);
+                meta.setCustomModelData(getItemCustomModelData("effect_bow", CMD_EFFECT_BOW));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_bow");
                 meta.setMaxStackSize(1);
 
@@ -264,7 +293,7 @@ public class CustomItems {
         }
 
         public ItemStack createEffectScythe() {
-                ItemStack item = new ItemStack(Material.NETHERITE_HOE);
+                ItemStack item = new ItemStack(getItemMaterial("effect_scythe", Material.NETHERITE_HOE));
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-scythe-name"));
@@ -283,10 +312,22 @@ public class CustomItems {
 
                 meta.setUnbreakable(true);
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-                meta.addEnchant(Enchantment.SHARPNESS, 10, true);
-                meta.addEnchant(Enchantment.SMITE, 5, true);
+                applyEnchantments(meta, "effect_scythe", java.util.Map.of(
+                        Enchantment.SHARPNESS, 10
+                ));
 
-                meta.setCustomModelData(CMD_EFFECT_SCYTHE);
+                // Add base bonus attack damage attribute modifier to scythe
+                double bonusDmg = plugin.getConfigManager().getItemsConfig().getDouble("effect_scythe.base_bonus_damage", 14.0);
+                NamespacedKey dmgKey = new NamespacedKey(plugin, "scythe_damage");
+                AttributeModifier dmgMod = new AttributeModifier(
+                        dmgKey,
+                        bonusDmg,
+                        AttributeModifier.Operation.ADD_NUMBER,
+                        EquipmentSlotGroup.MAINHAND
+                );
+                meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, dmgMod);
+
+                meta.setCustomModelData(getItemCustomModelData("effect_scythe", CMD_EFFECT_SCYTHE));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_scythe");
                 meta.setMaxStackSize(1);
 
@@ -295,7 +336,7 @@ public class CustomItems {
         }
 
         public ItemStack createEffectSpear() {
-                ItemStack item = new ItemStack(Material.NETHERITE_SPEAR);
+                ItemStack item = new ItemStack(getItemMaterial("effect_spear", Material.NETHERITE_SPEAR));
                 ItemMeta meta = item.getItemMeta();
 
                 meta.displayName(getNoItalic("item-spear-name"));
@@ -314,16 +355,83 @@ public class CustomItems {
 
                 meta.setUnbreakable(true);
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-                meta.addEnchant(Enchantment.SHARPNESS, 5, true);
-                meta.addEnchant(Enchantment.IMPALING, 5, true);
-                meta.addEnchant(Enchantment.LUNGE, 3, true);
+                applyEnchantments(meta, "effect_spear", java.util.Map.of(
+                        Enchantment.SHARPNESS, 5,
+                        Enchantment.IMPALING, 5,
+                        Enchantment.LUNGE, 3
+                ));
 
-                meta.setCustomModelData(CMD_EFFECT_SPEAR);
+                meta.setCustomModelData(getItemCustomModelData("effect_spear", CMD_EFFECT_SPEAR));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_spear");
                 meta.setMaxStackSize(1);
 
                 item.setItemMeta(meta);
                 return item;
+        }
+
+        private void applyEnchantments(ItemMeta meta, String itemKey, java.util.Map<Enchantment, Integer> defaults) {
+                FileConfiguration itemsConfig = plugin.getConfigManager().getItemsConfig();
+                ConfigurationSection itemSection = itemsConfig != null ? itemsConfig.getConfigurationSection(itemKey) : null;
+
+                if (itemSection != null && itemSection.contains("enchants")) {
+                        ConfigurationSection enchantsSec = itemSection.getConfigurationSection("enchants");
+                        if (enchantsSec != null) {
+                                for (String keyStr : enchantsSec.getKeys(false)) {
+                                        int level = enchantsSec.getInt(keyStr);
+                                        Enchantment enchant = parseEnchantment(keyStr);
+                                        if (enchant != null) {
+                                                if (level > 0) {
+                                                        meta.addEnchant(enchant, level, true);
+                                                }
+                                        } else {
+                                                plugin.getLogger().warning("Unknown enchantment '" + keyStr + "' in items.yml for item '" + itemKey + "'");
+                                        }
+                                }
+                        }
+                } else if (defaults != null) {
+                        for (java.util.Map.Entry<Enchantment, Integer> entry : defaults.entrySet()) {
+                                if (entry.getValue() > 0) {
+                                        meta.addEnchant(entry.getKey(), entry.getValue(), true);
+                                }
+                        }
+                }
+        }
+
+        private Enchantment parseEnchantment(String keyStr) {
+                if (keyStr == null || keyStr.trim().isEmpty()) return null;
+                String cleanKey = keyStr.trim().toLowerCase();
+
+                try {
+                        NamespacedKey nsKey;
+                        if (cleanKey.contains(":")) {
+                                nsKey = NamespacedKey.fromString(cleanKey);
+                        } else {
+                                nsKey = NamespacedKey.minecraft(cleanKey);
+                        }
+                        if (nsKey != null) {
+                                Enchantment enchant = org.bukkit.Registry.ENCHANTMENT.get(nsKey);
+                                if (enchant != null) return enchant;
+                                enchant = Enchantment.getByKey(nsKey);
+                                if (enchant != null) return enchant;
+                        }
+                } catch (Exception ignored) {}
+
+                try {
+                        Enchantment enchant = Enchantment.getByName(keyStr.trim().toUpperCase());
+                        if (enchant != null) return enchant;
+                } catch (Exception ignored) {}
+
+                try {
+                        for (Enchantment e : Enchantment.values()) {
+                                if (e.getKey().getKey().equalsIgnoreCase(cleanKey) ||
+                                    e.getName().equalsIgnoreCase(keyStr.trim()) ||
+                                    e.getKey().toString().equalsIgnoreCase(cleanKey)) {
+                                        return e;
+                                }
+                        }
+                } catch (Exception ignored) {}
+
+                return null;
         }
 
         public String getItemType(ItemStack item) {

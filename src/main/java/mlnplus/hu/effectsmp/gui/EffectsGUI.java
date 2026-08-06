@@ -35,12 +35,15 @@ public class EffectsGUI {
         Inventory inv = Bukkit.createInventory(null, 45,
                 plugin.getMessageUtils().getMessageComponent("gui-effects-title"));
 
-        // Build premium background grid
-        ItemStack border = createBorderFiller();
-        ItemStack innerFiller = createInnerFiller();
+        // Build theme-appropriate glass grid (Purple / Blue accent border pattern)
+        ItemStack border = createFiller(Material.PURPLE_STAINED_GLASS_PANE);
+        ItemStack corner = createFiller(Material.MAGENTA_STAINED_GLASS_PANE);
+        ItemStack innerFiller = createFiller(Material.BLACK_STAINED_GLASS_PANE);
 
         for (int i = 0; i < 45; i++) {
-            if (i < 9 || i >= 36 || i % 9 == 0 || i % 9 == 8) {
+            if (i == 0 || i == 8 || i == 36 || i == 44) {
+                inv.setItem(i, corner);
+            } else if (i < 9 || i >= 36 || i % 9 == 0 || i % 9 == 8) {
                 inv.setItem(i, border);
             } else {
                 inv.setItem(i, innerFiller);
@@ -73,16 +76,8 @@ public class EffectsGUI {
         return inv;
     }
 
-    private ItemStack createBorderFiller() {
-        ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-        ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.text(" "));
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    private ItemStack createInnerFiller() {
-        ItemStack item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+    private ItemStack createFiller(Material mat) {
+        ItemStack item = new ItemStack(mat);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text(" "));
         item.setItemMeta(meta);
@@ -141,20 +136,19 @@ public class EffectsGUI {
         String passTitle = plugin.getMessageUtils().getMessage("gui-effects-passive-title");
         lore.add(parseNoItalic(passTitle));
 
-        String passDesc = "";
-        switch (type) {
-            case INVISIBILITY -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-invis");
-            case HERO_OF_VILLAGE -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-hero");
-            case HASTE -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-haste");
-            case FIRE_RESISTANCE -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-fire");
-            case SPEED -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-speed");
-            case DOLPHIN_GRACE -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-dolphin");
-            case HEALTH_BOOST -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-health");
-            case WIND_CHARGED -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-wind");
-            case RESISTANCE -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-resist");
-            case STRENGTH -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-strength");
-            case REGENERATION -> passDesc = plugin.getMessageUtils().getMessage("gui-effects-pass-regen");
-        }
+        String passDesc = switch (type) {
+            case INVISIBILITY -> plugin.getMessageUtils().getMessage("gui-effects-pass-invis");
+            case HERO_OF_VILLAGE -> plugin.getMessageUtils().getMessage("gui-effects-pass-hero");
+            case HASTE -> plugin.getMessageUtils().getMessage("gui-effects-pass-haste");
+            case FIRE_RESISTANCE -> plugin.getMessageUtils().getMessage("gui-effects-pass-fire");
+            case SPEED -> plugin.getMessageUtils().getMessage("gui-effects-pass-speed");
+            case DOLPHIN_GRACE -> plugin.getMessageUtils().getMessage("gui-effects-pass-dolphin");
+            case HEALTH_BOOST -> plugin.getMessageUtils().getMessage("gui-effects-pass-health");
+            case WIND_CHARGED -> plugin.getMessageUtils().getMessage("gui-effects-pass-wind");
+            case RESISTANCE -> plugin.getMessageUtils().getMessage("gui-effects-pass-resist");
+            case STRENGTH -> plugin.getMessageUtils().getMessage("gui-effects-pass-strength");
+            case REGENERATION -> plugin.getMessageUtils().getMessage("gui-effects-pass-regen");
+        };
         lore.add(parseNoItalic(passDesc));
         
         lore.add(Component.empty());

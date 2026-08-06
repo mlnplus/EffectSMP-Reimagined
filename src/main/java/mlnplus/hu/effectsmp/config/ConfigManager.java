@@ -6,9 +6,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ConfigManager {
@@ -18,12 +19,12 @@ public class ConfigManager {
     private FileConfiguration config;
     private FileConfiguration messages;
     private FileConfiguration items;
-    private FileConfiguration data;
+    private FileConfiguration effects;
 
     private File configFile;
     private File messagesFile;
     private File itemsFile;
-    private File dataFile;
+    private File effectsFile;
 
     public ConfigManager(Effectsmp plugin) {
         this.plugin = plugin;
@@ -56,15 +57,11 @@ public class ConfigManager {
         }
         items = loadUTF8Yaml(itemsFile);
 
-        dataFile = new File(plugin.getDataFolder(), "data.yml");
-        if (!dataFile.exists()) {
-            try {
-                dataFile.createNewFile();
-            } catch (IOException e) {
-                plugin.getLogger().severe("Could not create data.yml: " + e.getMessage());
-            }
+        effectsFile = new File(plugin.getDataFolder(), "effects.yml");
+        if (!effectsFile.exists()) {
+            plugin.saveResource("effects.yml", false);
         }
-        data = loadUTF8Yaml(dataFile);
+        effects = loadUTF8Yaml(effectsFile);
     }
 
     @SuppressWarnings("null")
@@ -108,15 +105,7 @@ public class ConfigManager {
         checkAndLoadMessages(messageFileName);
 
         items = loadUTF8Yaml(itemsFile);
-        data = loadUTF8Yaml(dataFile);
-    }
-
-    public void saveData() {
-        try {
-            data.save(dataFile);
-        } catch (IOException e) {
-            plugin.getLogger().severe("Could not save data.yml: " + e.getMessage());
-        }
+        effects = loadUTF8Yaml(effectsFile);
     }
 
     public FileConfiguration getConfig() {
@@ -131,25 +120,32 @@ public class ConfigManager {
         return items;
     }
 
-    public FileConfiguration getData() {
-        return data;
+    public FileConfiguration getEffectsConfig() {
+        return effects;
     }
 
     public boolean isGameStarted() {
-        return data.getBoolean("game-started", false);
+        return Boolean.parseBoolean(plugin.getDatabaseManager().getServerData("game-started", "false"));
     }
 
     public void setGameStarted(boolean started) {
-        data.set("game-started", started);
-        saveData();
+        plugin.getDatabaseManager().setServerData("game-started", String.valueOf(started));
     }
 
     public boolean isGlobalItemCrafted(String itemId) {
-        return data.getStringList("global-crafted-items").contains(itemId);
+        String dataStr = plugin.getDatabaseManager().getServerData("global-crafted-items", "");
+        if (dataStr.isEmpty()) return false;
+        List<String> craftedItems = Arrays.asList(dataStr.split(","));
+        return craftedItems.contains(itemId);
     }
 
     public void setGlobalItemCrafted(String itemId, boolean crafted) {
-        List<String> craftedItems = data.getStringList("global-crafted-items");
+        String dataStr = plugin.getDatabaseManager().getServerData("global-crafted-items", "");
+        List<String> craftedItems = new ArrayList<>();
+        if (!dataStr.isEmpty()) {
+            craftedItems.addAll(Arrays.asList(dataStr.split(",")));
+        }
+
         if (crafted) {
             if (!craftedItems.contains(itemId)) {
                 craftedItems.add(itemId);
@@ -157,17 +153,15 @@ public class ConfigManager {
         } else {
             craftedItems.remove(itemId);
         }
-        data.set("global-crafted-items", craftedItems);
-        saveData();
+        plugin.getDatabaseManager().setServerData("global-crafted-items", String.join(",", craftedItems));
     }
 
     public void resetAllGlobalCraftedItems() {
-        data.set("global-crafted-items", null);
-        saveData();
+        plugin.getDatabaseManager().setServerData("global-crafted-items", "");
     }
 
     public String getDatabaseType() {
-        return config.getString("database.type", "yaml");
+        return config.getString("database.type", "sqlite");
     }
 
     public String getDatabaseHost() {

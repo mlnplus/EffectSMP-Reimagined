@@ -26,18 +26,19 @@ public class ItemsGUI {
         return plugin.getMessageUtils().getMessageComponent(key).decoration(TextDecoration.ITALIC, false);
     }
 
-
-
     public Inventory create(Player player) {
         Inventory inv = Bukkit.createInventory(null, 45,
                 plugin.getMessageUtils().getMessageComponent("gui-items-title"));
 
-        // Build premium background grid
-        ItemStack border = createBorderFiller();
-        ItemStack innerFiller = createInnerFiller();
+        // Gold & Orange accent border pattern for Items GUI
+        ItemStack border = createFiller(Material.ORANGE_STAINED_GLASS_PANE);
+        ItemStack corner = createFiller(Material.YELLOW_STAINED_GLASS_PANE);
+        ItemStack innerFiller = createFiller(Material.BLACK_STAINED_GLASS_PANE);
 
         for (int i = 0; i < 45; i++) {
-            if (i < 9 || i >= 36 || i % 9 == 0 || i % 9 == 8) {
+            if (i == 0 || i == 8 || i == 36 || i == 44) {
+                inv.setItem(i, corner);
+            } else if (i < 9 || i >= 36 || i % 9 == 0 || i % 9 == 8) {
                 inv.setItem(i, border);
             } else {
                 inv.setItem(i, innerFiller);
@@ -66,16 +67,8 @@ public class ItemsGUI {
         return inv;
     }
 
-    private ItemStack createBorderFiller() {
-        ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-        ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.text(" "));
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    private ItemStack createInnerFiller() {
-        ItemStack item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+    private ItemStack createFiller(Material mat) {
+        ItemStack item = new ItemStack(mat);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text(" "));
         item.setItemMeta(meta);

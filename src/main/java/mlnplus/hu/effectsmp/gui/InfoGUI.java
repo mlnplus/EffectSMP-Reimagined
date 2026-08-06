@@ -42,9 +42,19 @@ public class InfoGUI {
 
                 PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
 
-                ItemStack filler = createFiller();
+                // Modern cyan/blue border grid
+                ItemStack border = createFiller(Material.CYAN_STAINED_GLASS_PANE);
+                ItemStack corner = createFiller(Material.BLUE_STAINED_GLASS_PANE);
+                ItemStack innerFiller = createFiller(Material.BLACK_STAINED_GLASS_PANE);
+
                 for (int i = 0; i < 45; i++) {
-                        inv.setItem(i, filler);
+                        if (i == 0 || i == 8 || i == 36 || i == 44) {
+                                inv.setItem(i, corner);
+                        } else if (i < 9 || i >= 36 || i % 9 == 0 || i % 9 == 8) {
+                                inv.setItem(i, border);
+                        } else {
+                                inv.setItem(i, innerFiller);
+                        }
                 }
 
                 inv.setItem(10, createEffectItem(data));
@@ -53,7 +63,7 @@ public class InfoGUI {
                 inv.setItem(16, createKillsItem(data));
 
                 inv.setItem(29, createEffectsMenuItem());
-                inv.setItem(31, createTrustedHeaderItem(data));
+                inv.setItem(31, createTrustedHeaderItem(player, data));
                 inv.setItem(33, createItemsMenuItem());
 
                 inv.setItem(40, createBackItem());
@@ -61,10 +71,10 @@ public class InfoGUI {
                 return inv;
         }
 
-        private ItemStack createFiller() {
-                ItemStack item = new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
+        private ItemStack createFiller(Material mat) {
+                ItemStack item = new ItemStack(mat);
                 ItemMeta meta = item.getItemMeta();
-                meta.displayName(getNoItalic("gui-info-filler-name"));
+                meta.displayName(Component.text(" "));
                 item.setItemMeta(meta);
                 return item;
         }
@@ -165,9 +175,13 @@ public class InfoGUI {
                 return item;
         }
 
-        private ItemStack createTrustedHeaderItem(PlayerData data) {
+        private ItemStack createTrustedHeaderItem(Player player, PlayerData data) {
                 ItemStack item = new ItemStack(Material.PLAYER_HEAD);
                 ItemMeta meta = item.getItemMeta();
+
+                if (meta instanceof org.bukkit.inventory.meta.SkullMeta skullMeta) {
+                        skullMeta.setOwningPlayer(player);
+                }
 
                 List<UUID> mutualTrusted = plugin.getPlayerDataManager().getMutualTrustedPlayers(data.getUuid());
 
@@ -228,9 +242,7 @@ public class InfoGUI {
         private ItemStack createBackItem() {
                 ItemStack item = new ItemStack(Material.ARROW);
                 ItemMeta meta = item.getItemMeta();
-
                 meta.displayName(getNoItalic("gui-back-name"));
-
                 item.setItemMeta(meta);
                 return item;
         }

@@ -27,8 +27,6 @@ public class RecipeGUI {
         return plugin.getMessageUtils().getMessageComponent(key).decoration(TextDecoration.ITALIC, false);
     }
 
-
-
     public Inventory create(Player player, String itemId) {
         if ("effect_shard".equals(itemId)) {
             return createShardInfoGUI(player);
@@ -37,9 +35,15 @@ public class RecipeGUI {
         Inventory inv = Bukkit.createInventory(null, 27,
                 plugin.getMessageUtils().getMessageComponent("gui-recipe-title"));
 
-        ItemStack filler = createFiller();
+        ItemStack darkFiller = createFiller(Material.BLACK_STAINED_GLASS_PANE);
+        ItemStack grayFiller = createFiller(Material.GRAY_STAINED_GLASS_PANE);
+
         for (int i = 0; i < 27; i++) {
-            inv.setItem(i, filler);
+            if (i < 9 || i >= 18 || i % 9 == 0 || i % 9 == 8) {
+                inv.setItem(i, darkFiller);
+            } else {
+                inv.setItem(i, grayFiller);
+            }
         }
 
         // Center visual indicator and result
@@ -102,9 +106,15 @@ public class RecipeGUI {
         Inventory inv = Bukkit.createInventory(null, 27,
                 plugin.getMessageUtils().getMessageComponent("gui-shard-info-title"));
 
-        ItemStack filler = createFiller();
+        ItemStack darkFiller = createFiller(Material.CYAN_STAINED_GLASS_PANE);
+        ItemStack grayFiller = createFiller(Material.BLACK_STAINED_GLASS_PANE);
+
         for (int i = 0; i < 27; i++) {
-            inv.setItem(i, filler);
+            if (i < 9 || i >= 18 || i % 9 == 0 || i % 9 == 8) {
+                inv.setItem(i, darkFiller);
+            } else {
+                inv.setItem(i, grayFiller);
+            }
         }
 
         // Ancient City
@@ -116,7 +126,7 @@ public class RecipeGUI {
         ancientLore.add(getNoItalic("gui-shard-info-ancient-lore"));
         ancientMeta.lore(ancientLore);
         ancient.setItemMeta(ancientMeta);
-        inv.setItem(9, ancient);
+        inv.setItem(10, ancient);
 
         // End City Ship
         ItemStack endCity = new ItemStack(Material.ELYTRA);
@@ -127,7 +137,7 @@ public class RecipeGUI {
         endLore.add(getNoItalic("gui-shard-info-end-lore"));
         endMeta.lore(endLore);
         endCity.setItemMeta(endMeta);
-        inv.setItem(11, endCity);
+        inv.setItem(12, endCity);
 
         // Woodland Mansion
         ItemStack mansion = new ItemStack(Material.DARK_OAK_LOG);
@@ -138,7 +148,7 @@ public class RecipeGUI {
         mansionLore.add(getNoItalic("gui-shard-info-mansion-lore"));
         mansionMeta.lore(mansionLore);
         mansion.setItemMeta(mansionMeta);
-        inv.setItem(13, mansion);
+        inv.setItem(14, mansion);
 
         // Warden Drop
         ItemStack warden = new ItemStack(Material.ECHO_SHARD);
@@ -149,20 +159,14 @@ public class RecipeGUI {
         wardenLore.add(getNoItalic("gui-shard-info-warden-lore"));
         wardenMeta.lore(wardenLore);
         warden.setItemMeta(wardenMeta);
-        inv.setItem(15, warden);
-
-        // Target shard
-        ItemStack shard = plugin.getCustomItems().getItemByName("shard");
-        if (shard != null) {
-            inv.setItem(17, shard);
-        }
+        inv.setItem(16, warden);
 
         inv.setItem(26, createBackItem());
         return inv;
     }
 
-    private ItemStack createFiller() {
-        ItemStack item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+    private ItemStack createFiller(Material mat) {
+        ItemStack item = new ItemStack(mat);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text(" "));
         item.setItemMeta(meta);

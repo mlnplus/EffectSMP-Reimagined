@@ -275,7 +275,6 @@ public class ItemAbilityManager {
             }
         }
 
-
         if (affected > 0) {
             plugin.getMessageUtils().sendMessage(player, "bow-activated",
                     "%count%", String.valueOf(affected));
@@ -344,6 +343,8 @@ public class ItemAbilityManager {
 
         new BukkitRunnable() {
             int ticks = 0;
+            final int maxTicks = 20; // 1 second charge for exact 5% increments up to 100%!
+
             @Override
             public void run() {
                 if (!player.isOnline() || !spearCharging.contains(uuid)) {
@@ -357,49 +358,48 @@ public class ItemAbilityManager {
                     return;
                 }
 
-                double ratio = Math.min(1.0, ticks / 30.0);
+                ticks++;
+                double ratio = Math.min(1.0, (double) ticks / maxTicks);
+
+                String color = "§2";
+                if (ratio >= 1.0) {
+                    color = "§c";
+                } else if (ratio > 0.7) {
+                    color = "§6";
+                } else if (ratio > 0.4) {
+                    color = "§e";
+                } else if (ratio > 0.1) {
+                    color = "§a";
+                }
+
+                String chargeText = plugin.getMessageUtils().getMessage("spear-charging-bar");
+                int filled = (int) Math.round(ratio * 10.0);
+                int empty = 10 - filled;
+                int percent = (int) Math.round(ratio * 100.0);
+                String bar = color + chargeText + ": [" + "█".repeat(filled) + "░".repeat(empty) + "] " + percent + "%";
+                plugin.getMessageUtils().sendActionBar(player, bar);
 
                 Location loc = player.getLocation();
                 if (loc != null) {
                     double radius = 0.8;
-                    double angle = ticks * 0.4;
+                    double angle = ticks * 0.5;
                     double x = radius * Math.cos(angle);
                     double z = radius * Math.sin(angle);
                     double y = ratio * 1.8;
                     
                     Location pLoc = loc.clone().add(x, y, z);
-                    loc.getWorld().spawnParticle(Particle.PORTAL, pLoc, 2, 0.01, 0.01, 0.01, 0.01);
-                    loc.getWorld().spawnParticle(Particle.CRIT, pLoc, 1, 0.01, 0.01, 0.01, 0.01);
+                    loc.getWorld().spawnParticle(Particle.PORTAL, pLoc, 3, 0.01, 0.01, 0.01, 0.01);
+                    loc.getWorld().spawnParticle(Particle.CRIT, pLoc, 2, 0.01, 0.01, 0.01, 0.01);
                     
                     float pitch = 0.5f + (float)ratio * 1.2f;
-                    if (ticks % 2 == 0) {
-                        loc.getWorld().playSound(loc, Sound.ENTITY_BREEZE_CHARGE, 0.6f, pitch);
-                    }
+                    loc.getWorld().playSound(loc, Sound.ENTITY_BREEZE_CHARGE, 0.6f, pitch);
                 }
 
-                String color = "§2";
-                if (ratio > 0.8) {
-                    color = "§c";
-                } else if (ratio > 0.6) {
-                    color = "§6";
-                } else if (ratio > 0.4) {
-                    color = "§e";
-                } else if (ratio > 0.2) {
-                    color = "§a";
+                // If charge reaches 100% (20 ticks), auto release lunge instantly!
+                if (ticks >= maxTicks) {
+                    releaseSpearLunge(player);
+                    cancel();
                 }
-
-                String chargeText = plugin.getMessageUtils().getMessage("spear-charging-bar");
-                int filled = (int) (ratio * 10);
-                int empty = 10 - filled;
-                String bar = color + chargeText + ": [" + "█".repeat(filled) + "░".repeat(empty) + "] " + (int)(ratio * 100) + "%";
-                plugin.getMessageUtils().sendActionBar(player, bar);
-
-                // Keep slowness potion refreshed while holding charge
-                if (ticks % 20 == 0) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 2, false, false, false));
-                }
-
-                ticks++;
             }
         }.runTaskTimer(plugin, 0L, 1L);
     }
@@ -435,7 +435,7 @@ public class ItemAbilityManager {
     public boolean wasRecentlyLunging(UUID uuid) {
         Long time = lastLungeTime.get(uuid);
         if (time == null) return false;
-        return (System.currentTimeMillis() - time) < 3000L;
+        return (System.currentTimeMillis() - time) < 4000L;
     }
 
     public Float getInitialSaturation(UUID uuid) {
@@ -471,39 +471,102 @@ public class ItemAbilityManager {
         }
 
         Long start = spearChargeStart.remove(uuid);
-        long elapsed = (start != null) ? (System.currentTimeMillis() - start) : 500;
+        long elapsed = (start != null) ? (System.currentTimeMillis() - start) : 1000;
 
-        double ratio = Math.min(1.0, elapsed / 1500.0);
-        double basePower = 2.0;
-        double extraPower = ratio * 10.0;
-        double power = basePower + extraPower;
+        double ratio = Math.min(1.0, elapsed / 1000.0);
+        // Extremely powerful launch thrust (up to 4.5 initial multiplier)
+        double initialPower = 3.0 + (ratio * 3.5);
 
         Location loc = player.getLocation();
         if (loc == null) return;
 
         Vector direction = loc.getDirection().normalize();
-        if (direction.getY() < 0.2) {
-            direction.setY(0.2);
+        if (direction.getY() < 0.3) {
+            direction.setY(0.3);
             direction.normalize();
         }
-        direction.multiply(power);
-        player.setVelocity(direction);
+
+        player.setVelocity(direction.clone().multiply(initialPower));
 
         spearCooldowns.put(uuid, System.currentTimeMillis());
         spearLunging.add(uuid);
         recordLunge(player);
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            spearLunging.remove(uuid);
-        }, 30L);
+        // Sonic Rocket Flight Task: maintains hyper-velocity (3.2 per tick) for 25 ticks (1.25 seconds = 80-120+ blocks!)
+        Set<UUID> damagedEntities = getSpearLungeDamaged(uuid);
+        new BukkitRunnable() {
+            int ticks = 0;
 
-        loc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, loc, 5, 1.0, 1.0, 1.0, 0.1);
-        loc.getWorld().spawnParticle(Particle.CLOUD, loc, 25, 0.5, 0.5, 0.5, 0.25);
-        loc.getWorld().playSound(loc, Sound.ITEM_TRIDENT_RIPTIDE_3, 1.2f, 0.9f);
+            @Override
+            public void run() {
+                if (!player.isOnline() || ticks >= 25 || !spearLunging.contains(uuid)) {
+                    spearLunging.remove(uuid);
+                    if (player.isOnline()) {
+                        player.setFallDistance(0.0f);
+                        // Add 5 seconds of resistance against fall damage after flight
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 100, 4, false, false, false));
+                    }
+                    cancel();
+                    return;
+                }
+
+                Location currentLoc = player.getLocation();
+                if (currentLoc != null && currentLoc.getWorld() != null) {
+                    // Continuous rocket thrust per tick to overcome air friction and launch 80-120+ blocks!
+                    if (ticks < 20) {
+                        Vector forwardVelocity = currentLoc.getDirection().normalize().multiply(3.2);
+                        if (forwardVelocity.getY() < 0.15) forwardVelocity.setY(0.15);
+                        player.setVelocity(forwardVelocity);
+                    }
+
+                    player.setFallDistance(0.0f);
+
+                    currentLoc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, currentLoc, 6, 0.5, 0.5, 0.5, 0.1);
+                    currentLoc.getWorld().spawnParticle(Particle.CRIT, currentLoc, 10, 0.5, 0.5, 0.5, 0.1);
+                    currentLoc.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, currentLoc, 1, 0, 0, 0, 0);
+
+                    for (Entity entity : currentLoc.getWorld().getNearbyEntities(currentLoc, 4.0, 4.0, 4.0)) {
+                        if (entity instanceof org.bukkit.entity.LivingEntity living && !entity.equals(player)) {
+                            UUID targetUuid = entity.getUniqueId();
+                            if (damagedEntities.contains(targetUuid)) continue;
+
+                            if (living instanceof Player targetPlayer) {
+                                if (data.hasTrusted(targetPlayer.getUniqueId())) {
+                                    continue;
+                                }
+                            }
+
+                            // OVERPOWERED SPEAR IMPACT DAMAGE: 50.0 Raw Damage (25 Hearts) + 12.0 True Health Bypass Damage!
+                            living.damage(50.0, player);
+                            double newHealth = Math.max(0.5, living.getHealth() - 12.0);
+                            living.setHealth(newHealth);
+
+                            damagedEntities.add(targetUuid);
+
+                            // Launch target into the air with heavy shockwave impulse
+                            Vector knockback = living.getLocation().toVector().subtract(currentLoc.toVector()).normalize().multiply(2.5).setY(1.2);
+                            living.setVelocity(knockback);
+
+                            Location eloc = living.getLocation();
+                            if (eloc != null) {
+                                eloc.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, eloc, 2);
+                                eloc.getWorld().playSound(eloc, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.5f, 0.8f);
+                                eloc.getWorld().playSound(eloc, Sound.ENTITY_GENERIC_EXPLODE, 1.5f, 0.7f);
+                            }
+                        }
+                    }
+                }
+
+                ticks++;
+            }
+        }.runTaskTimer(plugin, 0L, 1L);
+
+        loc.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, loc, 2, 0.5, 0.5, 0.5, 0.2);
+        loc.getWorld().playSound(loc, Sound.ENTITY_WARDEN_SONIC_BOOM, 2.0f, 0.7f);
+        loc.getWorld().playSound(loc, Sound.ITEM_TRIDENT_RIPTIDE_3, 2.0f, 0.6f);
     }
 
     public void startVanillaSpearChargeAnimation(Player player) {
-        
         new BukkitRunnable() {
             int ticks = 0;
             @Override

@@ -5,7 +5,6 @@ import mlnplus.hu.effectsmp.data.PlayerData;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,12 +15,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
 public class ItemListener implements Listener {
 
     private final Effectsmp plugin;
+    private final Map<UUID, Long> rerollConfirmations = new HashMap<>();
 
     public ItemListener(Effectsmp plugin) {
         this.plugin = plugin;
@@ -153,6 +156,11 @@ public class ItemListener implements Listener {
     }
 
     private void useEffectHeart(Player player, ItemStack item) {
+        if (!plugin.isGameStarted()) {
+            plugin.getMessageUtils().sendMessage(player, "game-not-started");
+            return;
+        }
+
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
 
         if (data.getEffectHearts() >= 3) {
@@ -186,6 +194,11 @@ public class ItemListener implements Listener {
     }
 
     private void useReroll(Player player, ItemStack item) {
+        if (!plugin.isGameStarted()) {
+            plugin.getMessageUtils().sendMessage(player, "game-not-started");
+            return;
+        }
+
         if (plugin.getEffectAbilityManager().isRolling(player)) {
             plugin.getMessageUtils().sendMessage(player, "reroll-in-progress");
             return;
@@ -203,6 +216,16 @@ public class ItemListener implements Listener {
             return;
         }
 
+        UUID uuid = player.getUniqueId();
+        Long lastConfirm = rerollConfirmations.get(uuid);
+        if (lastConfirm == null || (System.currentTimeMillis() - lastConfirm > 5000L)) {
+            rerollConfirmations.put(uuid, System.currentTimeMillis());
+            plugin.getMessageUtils().sendMessage(player, "reroll-confirm-prompt");
+            player.playSound(player.getLocation(), org.bukkit.Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 0.5f);
+            return;
+        }
+        rerollConfirmations.remove(uuid);
+
         if (item.getAmount() > 1) {
             item.setAmount(item.getAmount() - 1);
         } else {
@@ -215,10 +238,25 @@ public class ItemListener implements Listener {
     }
 
     private void useOPReroll(Player player, ItemStack item) {
+        if (!plugin.isGameStarted()) {
+            plugin.getMessageUtils().sendMessage(player, "game-not-started");
+            return;
+        }
+
         if (plugin.getEffectAbilityManager().isRolling(player)) {
             plugin.getMessageUtils().sendMessage(player, "reroll-in-progress");
             return;
         }
+
+        UUID uuid = player.getUniqueId();
+        Long lastConfirm = rerollConfirmations.get(uuid);
+        if (lastConfirm == null || (System.currentTimeMillis() - lastConfirm > 5000L)) {
+            rerollConfirmations.put(uuid, System.currentTimeMillis());
+            plugin.getMessageUtils().sendMessage(player, "reroll-confirm-prompt");
+            player.playSound(player.getLocation(), org.bukkit.Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 0.5f);
+            return;
+        }
+        rerollConfirmations.remove(uuid);
 
         if (item.getAmount() > 1) {
             item.setAmount(item.getAmount() - 1);
@@ -287,38 +325,6 @@ public class ItemListener implements Listener {
 
         Player player = event.getPlayer();
         plugin.getItemAbilityManager().checkMaceLanding(player);
-
-        // Check if player is lunging with spear to damage nearby entities
-        if (plugin.getItemAbilityManager().isSpearLunging(player.getUniqueId())) {
-            Set<UUID> damaged = plugin.getItemAbilityManager().getSpearLungeDamaged(player.getUniqueId());
-            for (org.bukkit.entity.Entity entity : player.getNearbyEntities(1.5, 1.5, 1.5)) {
-                if (entity instanceof org.bukkit.entity.LivingEntity living && !entity.equals(player)) {
-                    UUID entityUuid = entity.getUniqueId();
-                    if (damaged != null && damaged.contains(entityUuid)) continue;
-
-                    // Exclude trusted players
-                    if (living instanceof Player targetPlayer) {
-                        mlnplus.hu.effectsmp.data.PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
-                        if (data != null && data.hasTrusted(targetPlayer.getUniqueId())) {
-                            continue;
-                        }
-                    }
-
-                    // Deal heavy damage (15.0 = 7.5 hearts)
-                    living.damage(15.0, player);
-                    if (damaged != null) {
-                        damaged.add(entityUuid);
-                    }
-
-                    // Visuals & Sound
-                    Location eloc = living.getLocation();
-                    if (eloc != null) {
-                        eloc.getWorld().spawnParticle(org.bukkit.Particle.SWEEP_ATTACK, eloc, 1);
-                        eloc.getWorld().playSound(eloc, org.bukkit.Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.0f);
-                    }
-                }
-            }
-        }
 
         if (plugin.getItemAbilityManager().wasRecentlyLunging(player.getUniqueId())) {
             Float sat = plugin.getItemAbilityManager().getInitialSaturation(player.getUniqueId());

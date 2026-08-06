@@ -19,17 +19,20 @@ public class LootListener implements Listener {
 
     @EventHandler
     public void onLootGenerate(LootGenerateEvent event) {
+        if (!plugin.isGameStarted()) return;
         if (event.getLootTable() == null)
             return;
         String lootTableKey = event.getLootTable().getKey().toString();
         double chance = 0.0;
 
+        org.bukkit.configuration.file.FileConfiguration config = plugin.getConfigManager().getConfig();
+
         if (lootTableKey.equals("minecraft:chests/ancient_city")) {
-            chance = 0.075; // 2.5%
+            chance = config.getDouble("shard-drops.ancient-city-chest-chance", 0.075);
         } else if (lootTableKey.equals("minecraft:chests/end_city_treasure")) {
-            chance = 0.075; // 5%
+            chance = config.getDouble("shard-drops.end-city-chest-chance", 0.075);
         } else if (lootTableKey.equals("minecraft:chests/woodland_mansion")) {
-            chance = 0.075; // 2%
+            chance = config.getDouble("shard-drops.mansion-chest-chance", 0.075);
         }
 
         if (chance > 0.0 && Math.random() < chance) {
@@ -42,8 +45,10 @@ public class LootListener implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
+        if (!plugin.isGameStarted()) return;
         if (event.getEntityType() == EntityType.WARDEN) {
-            if (Math.random() < 0.15) { // 15% chance
+            double chance = plugin.getConfigManager().getConfig().getDouble("shard-drops.warden-kill-chance", 0.15);
+            if (Math.random() < chance) {
                 ItemStack shard = plugin.getCustomItems().getItemByName("shard");
                 if (shard != null) {
                     event.getDrops().add(shard);

@@ -146,4 +146,9 @@ public class DashManager {
         long remainingMs = 30000 - (System.currentTimeMillis() - lastCharge);
         return Math.max(0, remainingMs);
     }
+
+    public void resetDashes(UUID uuid) {
+        dashCharges.remove(uuid);
+        lastChargeTime.remove(uuid);
+    }
 }

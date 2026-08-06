@@ -3,6 +3,8 @@ package mlnplus.hu.effectsmp.effects;
 import mlnplus.hu.effectsmp.Effectsmp;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -57,20 +59,33 @@ public class RollAnimationManager {
                     return;
                 }
 
-                if (tick % 5 == 0) {
+                Location loc = player.getLocation();
+                if (loc != null) {
+                    // Spawn spinning particle spiral around player
+                    double radius = 1.2;
+                    double angle = tick * 0.4;
+                    double x = radius * Math.cos(angle);
+                    double z = radius * Math.sin(angle);
+                    double y = (tick % 20) * 0.1;
+                    Location particleLoc = loc.clone().add(x, y, z);
+                    
+                    Particle pType = isOP ? Particle.END_ROD : Particle.WITCH;
+                    loc.getWorld().spawnParticle(pType, particleLoc, 2, 0.02, 0.02, 0.02, 0.01);
+                }
+
+                if (tick % 4 == 0) {
                     EffectType display = effects[random.nextInt(effects.length)];
 
                     String displayName = display.getDisplayName();
-                    String colorCode = (displayName.startsWith("§") && displayName.length() >= 2) ? displayName.substring(0, 2) : "";
                     Component titleComp = plugin.getMessageUtils()
-                            .parse(colorCode + "🎲 " + displayName + "...");
+                            .parse("🎲 " + displayName + "...");
 
                     player.showTitle(Title.title(titleComp, Component.empty(),
-                            Title.Times.times(Duration.ZERO, Duration.ofMillis(500), Duration.ZERO)));
+                            Title.Times.times(Duration.ZERO, Duration.ofMillis(350), Duration.ofMillis(100))));
 
-                    org.bukkit.Location loc = player.getLocation();
                     if (loc != null) {
-                        player.playSound(loc, Sound.UI_BUTTON_CLICK, 1.0f, 2.0f);
+                        float pitch = 0.8f + ((float) tick / ROLL_TICKS) * 1.2f;
+                        player.playSound(loc, Sound.UI_BUTTON_CLICK, 0.8f, pitch);
                     }
                 }
 

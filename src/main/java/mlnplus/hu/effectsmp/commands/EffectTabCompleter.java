@@ -18,7 +18,7 @@ public class EffectTabCompleter implements TabCompleter {
 
     private static final List<String> MAIN_COMMANDS = Arrays.asList(
             "activate", "info", "effects", "items", "withdraw", "trust", "untrust", "toggle",
-            "set", "give", "reload", "start", "removecooldown", "rc", "craftreset");
+            "set", "give", "reload", "start", "pause", "stop", "resume", "removecooldown", "rc", "craftreset");
 
     private static final List<String> ITEMS = Arrays.asList(
             "heart", "shard", "reroll", "op_reroll", "mace", "sword", "bow", "scythe", "spear");
@@ -26,7 +26,7 @@ public class EffectTabCompleter implements TabCompleter {
     private static final List<String> LIMITED_ITEMS = Arrays.asList(
             "effect_sword", "effect_mace", "effect_bow", "effect_scythe", "effect_spear", "all");
 
-    private static final List<String> COOLDOWN_TYPES = Arrays.asList("item", "effect", "all");
+    private static final List<String> COOLDOWN_TYPES = Arrays.asList("item", "effect", "dash", "all");
 
     public EffectTabCompleter(Effectsmp plugin) {
     }
@@ -38,7 +38,7 @@ public class EffectTabCompleter implements TabCompleter {
         }
 
         boolean isAdmin = player.hasPermission("effectsmp.admin");
-        boolean isTester = player.hasPermission("effectsmp.teszter");
+        boolean isTester = player.hasPermission("effectsmp.tester");
 
         List<String> completions = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class EffectTabCompleter implements TabCompleter {
 
             if (!isAdmin && !isTester) {
                 completions.removeAll(
-                        Arrays.asList("set", "give", "reload", "start", "removecooldown", "rc", "craftreset"));
+                        Arrays.asList("set", "give", "reload", "start", "pause", "stop", "resume", "removecooldown", "rc", "craftreset"));
             } else if (isTester && !isAdmin) {
                 completions.remove("reload");
             }

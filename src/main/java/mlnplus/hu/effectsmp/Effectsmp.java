@@ -3,6 +3,7 @@ package mlnplus.hu.effectsmp;
 import mlnplus.hu.effectsmp.commands.EffectCommand;
 import mlnplus.hu.effectsmp.commands.EffectTabCompleter;
 import mlnplus.hu.effectsmp.config.ConfigManager;
+import mlnplus.hu.effectsmp.data.DatabaseManager;
 import mlnplus.hu.effectsmp.data.PlayerDataManager;
 import mlnplus.hu.effectsmp.effects.EffectAbilityManager;
 import mlnplus.hu.effectsmp.effects.RollAnimationManager;
@@ -29,6 +30,7 @@ public final class Effectsmp extends JavaPlugin {
     private static Effectsmp instance;
 
     private ConfigManager configManager;
+    private DatabaseManager databaseManager;
     private PlayerDataManager playerDataManager;
     private EffectAbilityManager effectAbilityManager;
     private RollAnimationManager rollAnimationManager;
@@ -118,6 +120,8 @@ public final class Effectsmp extends JavaPlugin {
         instance = this;
 
         this.configManager = new ConfigManager(this);
+        this.databaseManager = new DatabaseManager(this);
+        this.databaseManager.initialize();
         this.messageUtils = new MessageUtils(this);
         this.playerDataManager = new PlayerDataManager(this);
         this.customItems = new CustomItems(this);
@@ -163,8 +167,16 @@ public final class Effectsmp extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (guiManager != null) {
+            guiManager.restoreAll();
+        }
+
         if (playerDataManager != null) {
             playerDataManager.saveAll();
+        }
+
+        if (databaseManager != null) {
+            databaseManager.close();
         }
 
         if (actionBarManager != null) {
@@ -191,6 +203,10 @@ public final class Effectsmp extends JavaPlugin {
 
     public ConfigManager getConfigManager() {
         return configManager;
+    }
+
+    public DatabaseManager getDatabaseManager() {
+        return databaseManager;
     }
 
     public PlayerDataManager getPlayerDataManager() {

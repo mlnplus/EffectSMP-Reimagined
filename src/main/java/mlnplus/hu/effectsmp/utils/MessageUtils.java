@@ -29,76 +29,57 @@ public class MessageUtils {
 
     public void reload() {
         FileConfiguration messages = plugin.getConfigManager().getMessages();
-        this.prefix = messages.getString("prefix", "§8[§dEffectSMP§8] §7");
+        this.prefix = messages.getString("prefix", "<dark_gray>「</dark_gray><gradient:#8A00E6:#DF00FF><b>Effect</b></gradient><gradient:#FF8C00:#FFC800><b>SMP</b></gradient><dark_gray>」</dark_gray> ");
     }
 
-    private boolean isMiniMessage(String message) {
-        if (message == null)
-            return false;
-        if (!message.contains("<") || !message.contains(">"))
-            return false;
-
-        // If it contains legacy colors, it's legacy, unless it has a gradient or
-        // rainbow tag
-        if (message.contains("&0") || message.contains("&1") || message.contains("&2") || message.contains("&3") ||
-                message.contains("&4") || message.contains("&5") || message.contains("&6") || message.contains("&7") ||
-                message.contains("&8") || message.contains("&9") || message.contains("&a") || message.contains("&b") ||
-                message.contains("&c") || message.contains("&d") || message.contains("&e") || message.contains("&f") ||
-                message.contains("&l") || message.contains("&m") || message.contains("&n") || message.contains("&o") ||
-                message.contains("&r") || message.contains("&A") || message.contains("&B") || message.contains("&C") ||
-                message.contains("&D") || message.contains("&E") || message.contains("&F") || message.contains("&L") ||
-                message.contains("&M") || message.contains("&N") || message.contains("&O") || message.contains("&R")) {
-
-            return message.contains("<gradient") || message.contains("<rainbow");
+    public Component parse(String message) {
+        if (message == null || message.isEmpty()) {
+            return Component.empty();
         }
 
-        // Check for common MiniMessage tags to be sure it's meant to be MiniMessage
-        return message.contains("<gradient") || message.contains("<rainbow") ||
-                message.contains("<red>") || message.contains("<green>") || message.contains("<blue>") ||
-                message.contains("<yellow>") || message.contains("<gold>") || message.contains("<aqua>") ||
-                message.contains("<gray>") || message.contains("<white>") || message.contains("<black>") ||
-                message.contains("<bold>") || message.contains("<italic>") || message.contains("<underlined>") ||
-                message.contains("<hover:") || message.contains("<click:") || message.contains("<transition") ||
-                message.contains("<font");
+        // Normalize legacy section symbols § to ampersands &
+        String clean = message.replace('§', '&');
+
+        // Convert legacy color codes (&0-&f, &l-&r) into MiniMessage tags
+        clean = convertLegacyToMiniMessage(clean);
+
+        try {
+            return miniMessage.deserialize(clean);
+        } catch (Exception e) {
+            try {
+                return legacySerializer.deserialize(message.replace('§', '&'));
+            } catch (Exception ex) {
+                return Component.text(message);
+            }
+        }
     }
 
-    private String translateLegacyToMiniMessage(String message) {
-        if (message == null)
-            return "";
-        String result = message;
-        String[] legacy = { "&0", "&1", "&2", "&3", "&4", "&5", "&6", "&7", "&8", "&9",
-                "&a", "&b", "&c", "&d", "&e", "&f", "&k", "&l", "&m", "&n", "&o", "&r",
-                "&A", "&B", "&C", "&D", "&E", "&F", "&K", "&L", "&M", "&N", "&O", "&R" };
-        String[] mini = { "<black>", "<dark_blue>", "<dark_green>", "<dark_aqua>", "<dark_red>", "<dark_purple>",
-                "<gold>", "<gray>", "<dark_gray>", "<blue>",
-                "<green>", "<aqua>", "<red>", "<light_purple>", "<yellow>", "<white>", "<obfuscated>", "<bold>",
-                "<strikethrough>", "<underlined>", "<italic>", "<reset>",
-                "<green>", "<aqua>", "<red>", "<light_purple>", "<yellow>", "<white>", "<obfuscated>", "<bold>",
-                "<strikethrough>", "<underlined>", "<italic>", "<reset>" };
+    private String convertLegacyToMiniMessage(String text) {
+        if (text == null || !text.contains("&")) return text;
+
+        String result = text;
+        String[] legacy = {
+                "&0", "&1", "&2", "&3", "&4", "&5", "&6", "&7", "&8", "&9",
+                "&a", "&b", "&c", "&d", "&e", "&f",
+                "&A", "&B", "&C", "&D", "&E", "&F",
+                "&k", "&K", "&l", "&L", "&m", "&M", "&n", "&N", "&o", "&O", "&r", "&R"
+        };
+        String[] mini = {
+                "<black>", "<dark_blue>", "<dark_green>", "<dark_aqua>", "<dark_red>", "<dark_purple>", "<gold>", "<gray>", "<dark_gray>", "<blue>",
+                "<green>", "<aqua>", "<red>", "<light_purple>", "<yellow>", "<white>",
+                "<green>", "<aqua>", "<red>", "<light_purple>", "<yellow>", "<white>",
+                "<obfuscated>", "<obfuscated>", "<b>", "<b>", "<strikethrough>", "<strikethrough>", "<u>", "<u>", "<i>", "<i>", "<reset>", "<reset>"
+        };
+
         for (int i = 0; i < legacy.length; i++) {
             result = result.replace(legacy[i], mini[i]);
         }
         return result;
     }
 
-    public Component parse(String message) {
-        if (message == null) {
-            return Component.empty();
-        }
-        if (isMiniMessage(message)) {
-            try {
-                String translated = translateLegacyToMiniMessage(message);
-                return miniMessage.deserialize(translated);
-            } catch (Exception e) {
-                return legacySerializer.deserialize(message);
-            }
-        }
-        return legacySerializer.deserialize(message);
-    }
-
     public String getMessage(String key) {
         FileConfiguration messages = plugin.getConfigManager().getMessages();
-        return messages.getString(key, "&cMessage not found: " + key);
+        return messages.getString(key, "<red>Message not found: " + key + "</red>");
     }
 
     public Component getMessageComponent(String key) {
@@ -141,6 +122,14 @@ public class MessageUtils {
 
     public void sendRawMessage(Player player, String message) {
         player.sendMessage(parse(prefix + message));
+    }
+
+    public void sendRaw(Player player, String message) {
+        player.sendMessage(parse(message));
+    }
+
+    public void sendRaw(CommandSender sender, String message) {
+        sender.sendMessage(parse(message));
     }
 
     public void sendTitle(Player player, String titleKey, String subtitleKey, String... placeholders) {

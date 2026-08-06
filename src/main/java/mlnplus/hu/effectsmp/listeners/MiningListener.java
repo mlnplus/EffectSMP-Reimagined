@@ -28,6 +28,7 @@ public class MiningListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
+        if (!plugin.isGameStarted()) return;
         Player player = event.getPlayer();
         Block block = event.getBlock();
 

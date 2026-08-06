@@ -37,14 +37,26 @@ public class EffectCommand implements CommandExecutor {
                 return activateAbility(player);
             }
             case "info" -> {
+                if (!plugin.isGameStarted()) {
+                    plugin.getMessageUtils().sendMessage(player, "game-not-started");
+                    return true;
+                }
                 plugin.getGuiManager().openInfoGUI(player);
                 return true;
             }
             case "effects" -> {
+                if (!plugin.isGameStarted()) {
+                    plugin.getMessageUtils().sendMessage(player, "game-not-started");
+                    return true;
+                }
                 plugin.getGuiManager().openEffectsGUI(player);
                 return true;
             }
             case "items" -> {
+                if (!plugin.isGameStarted()) {
+                    plugin.getMessageUtils().sendMessage(player, "game-not-started");
+                    return true;
+                }
                 plugin.getGuiManager().openItemsGUI(player);
                 return true;
             }
@@ -69,8 +81,11 @@ public class EffectCommand implements CommandExecutor {
             case "reload" -> {
                 return adminReload(player);
             }
-            case "start" -> {
+            case "start", "resume" -> {
                 return adminStart(player);
+            }
+            case "pause", "stop" -> {
+                return adminPause(player);
             }
             case "removecooldown", "rc" -> {
                 return removeCooldown(player, args);
@@ -86,6 +101,11 @@ public class EffectCommand implements CommandExecutor {
     }
 
     private boolean openMainGUI(Player player) {
+        if (!plugin.isGameStarted()) {
+            plugin.getMessageUtils().sendMessage(player, "game-not-started");
+            return true;
+        }
+
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
 
         if (data.getEffectHearts() < 1) {
@@ -98,6 +118,11 @@ public class EffectCommand implements CommandExecutor {
     }
 
     private boolean activateAbility(Player player) {
+        if (!plugin.isGameStarted()) {
+            plugin.getMessageUtils().sendMessage(player, "game-not-started");
+            return true;
+        }
+
         PlayerData data = plugin.getPlayerDataManager().getPlayerData(player.getUniqueId());
 
         if (data.getEffectHearts() < 1) {
@@ -264,7 +289,7 @@ public class EffectCommand implements CommandExecutor {
 
     private boolean adminSetEffect(Player player, String[] args) {
         boolean isAdmin = player.hasPermission("effectsmp.admin");
-        boolean isTester = player.hasPermission("effectsmp.teszter");
+        boolean isTester = player.hasPermission("effectsmp.tester");
 
         if (!isAdmin && !isTester) {
             plugin.getMessageUtils().sendMessage(player, "admin-no-permission");
@@ -325,7 +350,7 @@ public class EffectCommand implements CommandExecutor {
     }
 
     private boolean adminGiveItem(Player player, String[] args) {
-        if (!player.hasPermission("effectsmp.admin") && !player.hasPermission("effectsmp.teszter")) {
+        if (!player.hasPermission("effectsmp.admin") && !player.hasPermission("effectsmp.tester")) {
             plugin.getMessageUtils().sendMessage(player, "admin-no-permission");
             return true;
         }
@@ -378,7 +403,7 @@ public class EffectCommand implements CommandExecutor {
     }
 
     private boolean adminStart(Player player) {
-        if (!player.hasPermission("effectsmp.admin") && !player.hasPermission("effectsmp.teszter")) {
+        if (!player.hasPermission("effectsmp.admin") && !player.hasPermission("effectsmp.tester")) {
             plugin.getMessageUtils().sendMessage(player, "admin-no-permission");
             return true;
         }
@@ -394,7 +419,9 @@ public class EffectCommand implements CommandExecutor {
             if (online == null) continue;
             PlayerData data = plugin.getPlayerDataManager().getPlayerData(online.getUniqueId());
             if (data.getEffect() == null) {
-                plugin.getEffectAbilityManager().assignRandomEffect(online, false);
+                plugin.getEffectAbilityManager().assignStartEffect(online);
+            } else if (data.isPassiveEnabled() && data.getEffectHearts() >= 1) {
+                plugin.getEffectAbilityManager().applyPassiveEffect(online);
             }
         }
 
@@ -405,9 +432,35 @@ public class EffectCommand implements CommandExecutor {
         return true;
     }
 
+    private boolean adminPause(Player player) {
+        if (!player.hasPermission("effectsmp.admin") && !player.hasPermission("effectsmp.tester")) {
+            plugin.getMessageUtils().sendMessage(player, "admin-no-permission");
+            return true;
+        }
+
+        if (!plugin.isGameStarted()) {
+            plugin.getMessageUtils().sendMessage(player, "admin-already-paused");
+            return true;
+        }
+
+        plugin.setGameStarted(false);
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (online == null) continue;
+            plugin.getEffectAbilityManager().removePassiveEffect(online);
+            online.sendActionBar(net.kyori.adventure.text.Component.empty());
+        }
+
+        plugin.getMessageUtils().sendMessage(player, "admin-pause-success");
+        Bukkit.broadcast(plugin.getMessageUtils().parse(
+                plugin.getMessageUtils().getMessage("game-paused-broadcast")));
+
+        return true;
+    }
+
     private boolean removeCooldown(Player player, String[] args) {
         boolean isAdmin = player.hasPermission("effectsmp.admin");
-        boolean isTester = player.hasPermission("effectsmp.teszter");
+        boolean isTester = player.hasPermission("effectsmp.tester");
 
         if (!isAdmin && !isTester) {
             plugin.getMessageUtils().sendMessage(player, "admin-no-permission");
@@ -442,19 +495,32 @@ public class EffectCommand implements CommandExecutor {
                 plugin.getItemAbilityManager().clearAllItemCooldowns(uuid);
                 removedItem = true;
             }
-            case "effect", "effects" -> {
+            case "effect", "effects", "dash", "dashes" -> {
                 plugin.getEffectAbilityManager().clearAbilityCooldown(uuid);
+                plugin.getDashManager().resetDashes(uuid);
                 removedEffect = true;
             }
             case "all" -> {
                 plugin.getItemAbilityManager().clearAllItemCooldowns(uuid);
                 plugin.getEffectAbilityManager().clearAbilityCooldown(uuid);
+                plugin.getDashManager().resetDashes(uuid);
                 removedItem = true;
                 removedEffect = true;
             }
             default -> {
                 plugin.getMessageUtils().sendMessage(player, "usage-removecooldown");
                 return true;
+            }
+        }
+
+        if (target != null && target.isOnline()) {
+            org.bukkit.Material[] mats = {
+                org.bukkit.Material.WIND_CHARGE, org.bukkit.Material.MACE, org.bukkit.Material.NETHERITE_SWORD,
+                org.bukkit.Material.DIAMOND_SWORD, org.bukkit.Material.NETHERITE_HOE, org.bukkit.Material.DIAMOND_HOE,
+                org.bukkit.Material.TRIDENT, org.bukkit.Material.BOW, org.bukkit.Material.CROSSBOW
+            };
+            for (org.bukkit.Material m : mats) {
+                target.setCooldown(m, 0);
             }
         }
 
@@ -476,7 +542,7 @@ public class EffectCommand implements CommandExecutor {
     }
 
     private boolean craftReset(Player player, String[] args) {
-        if (!player.hasPermission("effectsmp.admin") && !player.hasPermission("effectsmp.teszter")) {
+        if (!player.hasPermission("effectsmp.admin") && !player.hasPermission("effectsmp.tester")) {
             plugin.getMessageUtils().sendMessage(player, "admin-no-permission");
             return true;
         }

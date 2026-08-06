@@ -1,484 +1,502 @@
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║                    EffectSMP Messages                            ║
-# ║         Supports legacy (&) and MiniMessage (<grad>)             ║
+# ║                 ⚡ EffectSMP: Reimagined ⚡                      ║
+# ║            Full Modernization with Kyori MiniMessage             ║
 # ╚══════════════════════════════════════════════════════════════════╝
 
-prefix: "&8「&d✦&8」&7 "
+prefix: "<dark_gray>「</dark_gray><gradient:#8A00E6:#DF00FF><b>Effect</b></gradient><gradient:#FF8C00:#FFC800><b>SMP</b></gradient><dark_gray>」</dark_gray> "
 
 # ─────────────────────────────────────────────────────────────────────
 #                          EFFECT MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
 effect-assigned-title: "%effect%"
-effect-assigned-subtitle: "You received your effect!"
-effect-assigned-chat: "&d▸ &fYou received: %effect%"
-effect-assigned-info: "&7Use the &e/e &7command!"
+effect-assigned-subtitle: "<gray>You received your effect!</gray>"
+effect-assigned-chat: "<gradient:#8A00E6:#DF00FF>▸</gradient> <white>You received:</white> %effect%"
+effect-assigned-info: "<gray>Use the </gray><gradient:#FF8C00:#FFC800>/e</gradient><gray> command!</gray>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          ABILITY MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-ability-cooldown: "&c✖ &fCooldown: &e%time%"
-ability-already-active: "&cYour ability is already active!"
-ability-ready: "&a⚡ Ability is ready!"
+ability-cooldown: "<red>✖</red> <white>Cooldown:</white> <gradient:#FF416C:#FF4B2B>%time%</gradient>"
+ability-already-active: "<red>✖ Your ability is already active!</red>"
+ability-ready: "<gradient:#38EF7D:#11998E>⚡ Ability is ready!</gradient>"
 
-ability-invisibility-activated: "&d▸ Invisibility ability &aactivated! &7Full invisibility for 15 seconds!"
-ability-invisibility-expired: "&d▸ Invisibility expired! &7You are visible again."
+ability-invisibility-activated: "<gradient:#8E9EAB:#EEF2F3>✧ Invisibility Ability</gradient> <green>activated!</green> <gray>Full invisibility for 10 seconds!</gray>"
+ability-invisibility-expired: "<gradient:#8E9EAB:#EEF2F3>✧ Invisibility expired!</gradient> <gray>You are visible again.</gray>"
 
-ability-hero-activated: "&d▸ Hero of the Village ability &aactivated! &7Hero level V for 2 minutes!"
+ability-hero-activated: "<gradient:#11998E:#38EF7D>❇ Hero of the Village Ability</gradient> <green>activated!</green> <gray>Hero V for 2 minutes!</gray>"
 
-ability-haste-activated: "&d▸ Haste ability &aactivated! &73x3 mining with pickaxe/shovel for 20 seconds!"
-ability-haste-expired: "&d▸ Haste 3x3 mining expired!"
+ability-haste-activated: "<gradient:#F7971E:#FFD200>⚡ Haste Ability</gradient> <green>activated!</green> <gray>3x3 area mining unlocked for 30 seconds!</gray>"
+ability-haste-expired: "<gradient:#F7971E:#FFD200>⚡ Haste 3x3 area mining expired!</gradient>"
 
-ability-fireres-activated: "&d▸ Fire Resistance ability &aactivated! &7%count% enemies burn in inextinguishable fire for 15 seconds!"
-ability-fireres-victim: "&c🔥 &lYOU ARE BURNING IN INEXTINGUISHABLE FIRE! &c🔥"
+ability-fireres-activated: "<gradient:#FF416C:#FF4B2B>🔥 Fire Resistance Ability</gradient> <green>activated!</green> <gray>%count% surrounding enemies ignited!</gray>"
+ability-fireres-victim: "<gradient:#FF416C:#FF4B2B>🔥 YOU ARE BURNING IN INEXTINGUISHABLE FIRE!</gradient>"
 
-ability-speed-info: "&b▸ Speed ability: &7Press &bShift &7to dash! (3x)"
-ability-speed-hint: "&7Dash is automatically available with 3+ hearts."
+ability-speed-info: "<gradient:#00C9FF:#92FE9D>➣ Speed Ability:</gradient> <gray>Press </gray><gradient:#00C9FF:#92FE9D>Shift</gradient> <gray>to Charge Dash! (3x)</gray>"
+ability-speed-hint: "<gray>Dash is automatically unlocked at 3+ Effect Hearts.</gray>"
 
-ability-dolphin-activated: "&d▸ Dolphin Grace ability &aactivated! &7Water Breathing and Conduit Power for 1 minute!"
+ability-dolphin-activated: "<gradient:#00B4DB:#0083B0>🌊 Dolphin Grace Ability</gradient> <green>activated!</green> <gray>Water Breathing & Conduit Power for 1 minute!</gray>"
 
-ability-health-activated: "&d▸ Health Boost ability &aactivated! &7+10 extra hearts for 1 minute!"
+ability-health-activated: "<gradient:#FF4D4D:#F9CB43>❤ Health Boost Ability</gradient> <green>activated!</green> <gray>+10 bonus hearts surge for 30 seconds!</gray>"
 
-ability-resistance-activated: "&6▸ Resistance ability &aactivated! &7FULL INVULNERABILITY for 5 seconds!"
-ability-resistance-expired: "&6▸ Invulnerability expired!"
+ability-resistance-activated: "<gradient:#4B6CB7:#182E6E>⛊ Resistance Ability</gradient> <green>activated!</green> <gray>FULL INVULNERABILITY for 20 seconds!</gray>"
+ability-resistance-expired: "<gradient:#4B6CB7:#182E6E>⛊ Invulnerability expired!</gradient>"
 
-ability-strength-activated: "&6▸ Strength ability &aactivated! &7Strength III and Extended Reach (+3 blocks) for 5 seconds!"
-ability-strength-expired: "&6▸ Strength + Extended Reach expired!"
+ability-strength-activated: "<gradient:#ED213A:#93291E>⚔ Strength Ability</gradient> <green>activated!</green> <gray>Strength III & +3 Block Reach for 15 seconds!</gray>"
+ability-strength-expired: "<gradient:#ED213A:#93291E>⚔ Strength surge expired!</gradient>"
 
-ability-regen-activated: "&6▸ Regeneration ability &aactivated! &7Regeneration II for 45 seconds for you and %count% trusted players!"
-ability-regen-received: "&d▸ %player% &ashared their Regeneration ability with you!"
+ability-regen-activated: "<gradient:#FF0844:#FFB199>💖 Regeneration Ability</gradient> <green>activated!</green> <gray>Sharing Regeneration II with %count% trusted players!</gray>"
+ability-regen-received: "<gradient:#FF0844:#FFB199>💖 %player%</gradient> <green>shared their Regeneration II ability with you!</green>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          DASH MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-dash-charged: "&b➣ Dash charged! %status%"
-dash-activated: "&b➣ Dash! %status%"
-dash-empty: "&cNo dash charges! &7Wait %time%s."
-dash-status-recharging: "&cRecharging..."
-
+dash-charged: "<gradient:#00C9FF:#92FE9D>⚡ Dash charged!</gradient> <gray>%status%</gray>"
+dash-activated: "<gradient:#00C9FF:#92FE9D>➣ Dash!</gradient> <gray>%status%</gray>"
+dash-empty: "<red>✖ No dash charges!</red> <gray>Wait %time%s.</gray>"
+dash-status-recharging: "<red>Recharging...</red>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          PASSIVE MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-passive-toggle-on: "&a✔ Passive effect enabled!"
-passive-toggle-off: "&c✖ Passive effect disabled!"
-passive-not-enough-hearts: "&cYou need at least 1 Effect Heart!"
+passive-toggle-on: "<gradient:#38EF7D:#11998E>✔ Passive effect enabled!</gradient>"
+passive-toggle-off: "<red>✖ Passive effect disabled!</red>"
+passive-not-enough-hearts: "<red>✖ You need at least 1 Effect Heart!</red>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          HEART MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-heart-used: "&a❤ You used an Effect Heart! &7Hearts: %hearts%"
-heart-lost: "&c❤ You lost an Effect Heart! &7Remaining: %hearts%"
-heart-gained: "&a❤ You gained an Effect Heart!"
-heart-depleted: "&4&l⚠ You have no more Effect Hearts! The /e command is unavailable until you get one!"
+heart-used: "<gradient:#FF4D4D:#F9CB43>❤ You used an Effect Heart!</gradient> <gray>Hearts: %hearts%</gray>"
+heart-lost: "<red>❤ You lost an Effect Heart!</red> <gray>Remaining: %hearts%</gray>"
+heart-gained: "<gradient:#FF4D4D:#F9CB43>❤ You gained an Effect Heart!</gradient>"
+heart-depleted: "<dark_red>⚠ ALL EFFECT HEARTS Depleted! Abilities are locked until you gain a Heart!</dark_red>"
 
-heart-level-up: "&a⬆ Effect level: &l2"
-heart-level-down: "&c⬇ Effect level: &l1"
+heart-level-up: "<gradient:#38EF7D:#11998E>⬆ Effect Level increased to:</gradient> <b><white>Level 2</white></b>"
+heart-level-down: "<red>⬇ Effect Level dropped to:</red> <b><white>Level 1</white></b>"
 
-heart-withdrawn: "&a✦ &f%amount% Effect Heart withdrawn!"
-heart-dropped: "&a✦ &f%amount% Effect Heart dropped! &7(Inventory full)"
-heart-not-enough: "&cNot enough Effect Hearts! &7(Have: %hearts%)"
-heart-downgrade-warning: "&e⚠ Your effect dropped to level 1! &7(Below 2 hearts)"
-heart-ability-lost: "&c⚠ You lost your active ability! &7(Need 3 hearts)"
-heart-passive-disabled: "&4⚠ No more Effect Hearts! Passive ability disabled!"
-heart-limit-reached: "&cReached maximum Effect Hearts! (3)"
+heart-withdrawn: "<gradient:#FF4D4D:#F9CB43>✦ %amount% Effect Heart withdrawn!</gradient>"
+heart-dropped: "<gradient:#FF4D4D:#F9CB43>✦ %amount% Effect Heart dropped!</gradient> <gray>(Inventory full)</gray>"
+heart-not-enough: "<red>✖ Not enough Effect Hearts!</red> <gray>(Current: %hearts%)</gray>"
+heart-downgrade-warning: "<gradient:#F7971E:#FFD200>⚠ Your effect dropped to Level 1!</gradient> <gray>(Under 2 Hearts)</gray>"
+heart-ability-lost: "<red>⚠ Active ability locked!</red> <gray>(Requires 3 Hearts)</gray>"
+heart-passive-disabled: "<dark_red>⚠ No Effect Hearts remaining! Passive effect disabled!</dark_red>"
+heart-limit-reached: "<red>✖ Reached maximum Effect Hearts! (3)</red>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          SHARD MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-shard-lost: "&b✧ You lost your Effect Shard!"
-shard-gained: "&a✧ You gained an Effect Shard!"
+shard-lost: "<gradient:#38EF7D:#11998E>✧ You lost your Effect Shard!</gradient>"
+shard-gained: "<gradient:#38EF7D:#11998E>✧ You gained an Effect Shard!</gradient>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          TRUST MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-trust-added: "&a✔ &f%player% &atrusted!"
-trust-added-mutual: "&a✔ &f%player% &7→ &aMutual trust!"
+trust-added: "<gradient:#38EF7D:#11998E>✔ Trusted player:</gradient> <white>%player%</white>"
+trust-added-mutual: "<gradient:#38EF7D:#11998E>✔ Mutual Trust Established with</gradient> <white>%player%</white><gradient:#38EF7D:#11998E>!</gradient>"
 
-trust-mutual-active-sender: "&a✦ &f%player% &atrusted! &7(Mutual trust active!)"
-trust-mutual-active-target: "&a✦ &f%player% &atrusted you! &7(Mutual trust active!)"
-trust-pending-sender: "&a✦ &f%player% &atrusted! &7(Wait for them to trust you!)"
-trust-pending-target: "&e✦ &f%player% &etrusted you! &7(/e trust %player%)"
-trust-removed: "&c✦ &f%player% &ctrust removed!"
+trust-mutual-active-sender: "<gradient:#38EF7D:#11998E>✦ Trusted player:</gradient> <white>%player%</white> <gray>(Mutual trust active! Friendly-fire protected)</gray>"
+trust-mutual-active-target: "<gradient:#38EF7D:#11998E>✦ %player% trusted you!</gradient> <gray>(Mutual trust active! Friendly-fire protected)</gray>"
+trust-pending-sender: "<gradient:#00C9FF:#92FE9D>✦ Trusted player:</gradient> <white>%player%</white> <gray>(Awaiting return trust from player)</gray>"
+trust-pending-target: "<gradient:#F7971E:#FFD200>✦ %player% trusted you!</gradient> <gray>Type </gray><gradient:#38EF7D:#11998E>/e trust %player%</gradient> <gray>to establish mutual trust!</gray>"
+trust-removed: "<red>✦ Removed trust for:</red> <white>%player%</white>"
 
-trust-not-found: "&cPlayer not found online!"
-trust-already-trusted: "&cYou already trusted this player!"
-trust-limit-reached: "&cYou reached the max trust limit (5 players)!"
-trust-not-trusted: "&cThis player is not trusted!"
-trust-self: "&cYou cannot trust yourself!"
+trust-not-found: "<red>✖ Player not found online!</red>"
+trust-already-trusted: "<red>✖ You already trust this player!</red>"
+trust-limit-reached: "<red>✖ Reached max trust limit (5 players)!</red>"
+trust-not-trusted: "<red>✖ This player is not on your trust list!</red>"
+trust-self: "<red>✖ You cannot trust yourself!</red>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          REROLL MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-reroll-in-progress: "&cReroll in progress! Wait for it to finish."
-reroll-no-effect: "&cYou don't have an effect to reroll!"
-reroll-op-error: "&cOP effects cannot be rerolled with a normal reroll!"
-reroll-success: "&d▸ You received your effect: %effect%"
+reroll-in-progress: "<red>✖ Reroll in progress! Please wait for animation to complete.</red>"
+reroll-no-effect: "<red>✖ You do not have an effect to reroll!</red>"
+reroll-op-error: "<red>✖ OP effects cannot be rerolled with a standard reroll! Use an OP Reroll.</red>"
+reroll-confirm-prompt: "<gradient:#F7971E:#FFD200>⚠ REROLL CONFIRMATION</gradient> <gray>Right Click again within 5 seconds to confirm!</gray>"
+reroll-success: "<gradient:#8A00E6:#DF00FF>▸ Effect updated:</gradient> %effect%"
 
 # ─────────────────────────────────────────────────────────────────────
 #                        ITEM ABILITY MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-mace-activated: "&5⚔ Effect Mace &aactivated! &7Creates a shockwave on landing!"
-mace-cooldown: "&cMace is on cooldown! &7(%time%)"
-mace-victim: "&5⚔ Shockwave!"
-mace-landing: "&5⚔ Shockwave activated!"
+mace-activated: "<gradient:#7F00FF:#E100FF>⚔ Effect Mace Activated!</gradient> <gray>Launch active — Shockwave on impact!</gray>"
+mace-cooldown: "<red>✖ Mace is on cooldown!</red> <gray>(%time%)</gray>"
+mace-victim: "<gradient:#7F00FF:#E100FF>⚔ SHOCKWAVE BLAST!</gradient>"
+mace-landing: "<gradient:#7F00FF:#E100FF>⚡ Mace Shockwave Triggered!</gradient>"
 
-sword-usage-hint: "&7Hold &eShift + Right Click &7for sword ability!"
-sword-activated: "&c⚔ Effect Sword &aactivated! &71.5x damage for 10 seconds!"
-sword-cooldown: "&cSword is on cooldown! &7(%time%)"
-sword-expired: "&c⚔ Effect Sword ability expired!"
+sword-usage-hint: "<gray>Hold </gray><gradient:#FF416C:#FF4B2B>Shift + Right Click</gradient> <gray>to trigger Critical Frenzy!</gray>"
+sword-activated: "<gradient:#FF416C:#FF4B2B>⚔ Effect Sword Activated!</gradient> <gray>1.5x damage + 2x attack speed for 10s!</gray>"
+sword-cooldown: "<red>✖ Sword is on cooldown!</red> <gray>(%time%)</gray>"
+sword-expired: "<gradient:#FF416C:#FF4B2B>⚔ Effect Sword Critical Frenzy expired!</gradient>"
 
-scythe-usage-hint: "&7Hold &eShift + Right Click &7for scythe ability!"
-scythe-activated: "&3⚰ Effect Scythe &aactivated! &7%count% nearby players frozen for 5 seconds!"
-scythe-no-enemies: "&3⚰ Effect Scythe &aactivated! &7No enemy players nearby."
-scythe-cooldown: "&cScythe is on cooldown! &7(%time%)"
-scythe-victim: "&b❄ &lYOU ARE FROZEN! &b❄"
-scythe-thaw: "&b❄ You thawed from the ice!"
+scythe-usage-hint: "<gray>Hold </gray><gradient:#00B4DB:#0083B0>Shift + Right Click</gradient> <gray>to trigger Frost Freeze!</gray>"
+scythe-activated: "<gradient:#00B4DB:#0083B0>⚰ Effect Scythe Activated!</gradient> <gray>%count% enemy players frozen in place for 5 seconds!</gray>"
+scythe-no-enemies: "<gradient:#00B4DB:#0083B0>⚰ Effect Scythe Activated!</gradient> <gray>No untrusted enemies within 15 blocks.</gray>"
+scythe-cooldown: "<red>✖ Scythe is on cooldown!</red> <gray>(%time%)</gray>"
+scythe-victim: "<gradient:#00B4DB:#0083B0>❄ YOU ARE FROZEN IN AN ICE DOME!</gradient>"
+scythe-thaw: "<gradient:#00B4DB:#0083B0>❄ You thawed from the ice!</gradient>"
 
-bow-hit-victim: "&5☠ Hit by a curse arrow!"
-bow-activated: "&6➹ Curse Arrow! &7%count% enemies cursed!"
+bow-hit-victim: "<gradient:#FF512F:#DD2476>☠ HIT BY A CURSED EFFECT ARROW!</gradient>"
+bow-activated: "<gradient:#FF512F:#DD2476>➹ Curse Arrow Blast!</gradient> <gray>%count% enemies afflicted with debuffs!</gray>"
 
+spear-cooldown: "<red>✖ Spear is on cooldown!</red> <gray>(%time%)</gray>"
+spear-charging-bar: "Spear Charge"
+item-spear-name: "<gradient:#F12711:#F5AF19>Effect Spear</gradient>"
+item-spear-lore-ability: "<gradient:#F12711:#F5AF19>Ability:</gradient>"
+item-spear-lore-1: "<gray>Hold right click while sneaking to charge</gray>"
+item-spear-lore-2: "<gray>a high-velocity sonic lunge!</gray>"
+item-spear-lore-cooldown: "<red>Cooldown: %time%</red>"
+item-spear-lore-usage: "<gradient:#F12711:#F5AF19>▸ Hold Right Click while sneaking to charge</gradient>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                        ITEM PROTECTION MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-item-clean-storage: "&cThis item cannot be put in storage!"
-item-clean-bundle: "&cThis item cannot be put in a bundle!"
-item-clean-flowerpot: "&cThis item cannot be put in a flower pot!"
-item-clean-itemframe: "&cThis item cannot be put in an item frame!"
-
+item-clean-storage: "<red>✖ Custom Effect items cannot be stored in blocks!</red>"
+item-clean-bundle: "<red>✖ Custom Effect items cannot be placed in bundles!</red>"
+item-clean-flowerpot: "<red>✖ Custom Effect items cannot be placed in flower pots!</red>"
+item-clean-itemframe: "<red>✖ Custom Effect items cannot be placed on item frames!</red>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          CRAFTING MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-craft-limit-reached: "&cThis item has already been crafted on the server!"
-craft-legendary-broadcast: "&d&l✦ LEGENDARY CRAFT ✦ &f%player% crafted the only &e%item%&f!"
+craft-limit-reached: "<red>✖ This legendary weapon has already been crafted on this server!</red>"
+craft-legendary-broadcast: "<gradient:#FF416C:#FF4B2B>✦ LEGENDARY CRAFT</gradient> <white>%player%</white> <gray>crafted the server's single</gray> %item%<gray>!</gray>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          ADMIN MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-admin-set-success: "&a✦ Effect set: %effect%"
-admin-set-other: "&a✦ &f%player% &aeffect set: %effect%"
-admin-set-target: "&d✦ New effect: %effect% &7(by admin)"
-admin-give-sender: "&a✦ &f%item% &agiven to: %player%"
-admin-give-target: "&a✦ You received an item: %item% &7(by admin)"
-admin-reload-success: "&a✦ EffectSMP config reloaded!"
-admin-start-success: "&a✦ EffectSMP started! Everyone received an effect!"
-admin-already-started: "&cThe game has already started!"
-admin-no-permission: "&cYou do not have permission for this!"
-admin-tester-self-only: "&7(As a tester you can only use this on yourself)"
+admin-set-success: "<gradient:#38EF7D:#11998E>✦ Effect set to:</gradient> %effect%"
+admin-set-other: "<gradient:#38EF7D:#11998E>✦ Set effect for</gradient> <white>%player%</white><gradient:#38EF7D:#11998E>:</gradient> %effect%"
+admin-set-target: "<gradient:#8A00E6:#DF00FF>✦ Admin assigned effect:</gradient> %effect%"
+admin-give-sender: "<gradient:#38EF7D:#11998E>✦ Gave item</gradient> <white>%item%</white> <gradient:#38EF7D:#11998E>to</gradient> <white>%player%</white>"
+admin-give-target: "<gradient:#38EF7D:#11998E>✦ Received item:</gradient> <white>%item%</white> <gray>(From Admin)</gray>"
+admin-reload-success: "<gradient:#38EF7D:#11998E>✦ EffectSMP configuration successfully reloaded!</gradient>"
+admin-start-success: "<gradient:#8A00E6:#DF00FF>✦ EffectSMP Started!</gradient> <gray>Initial effects distributed to all players!</gray>"
+admin-pause-success: "<gradient:#FF416C:#FF4B2B>✦ EffectSMP paused/stopped!</gradient> <gray>All effects and abilities have been temporarily disabled!</gray>"
+admin-already-started: "<red>✖ The game has already been started!</red>"
+admin-already-paused: "<red>✖ The game is currently not running / already paused!</red>"
+admin-no-permission: "<red>✖ You do not have permission for this command!</red>"
+admin-tester-self-only: "<gray>(Tester permission: limited to targeting self)</gray>"
 
-admin-cooldown-cleared-self: "&a✦ %type% cooldown cleared!"
-admin-cooldown-cleared-sender: "&a✦ &f%player% &a%type% cooldown cleared!"
-admin-cooldown-cleared-target: "&a✦ %type% cooldown cleared! &7(by admin)"
+admin-cooldown-cleared-self: "<gradient:#38EF7D:#11998E>✦ %type% cooldown reset!</gradient>"
+admin-cooldown-cleared-sender: "<gradient:#38EF7D:#11998E>✦ Reset %type% cooldown for</gradient> <white>%player%</white>"
+admin-cooldown-cleared-target: "<gradient:#38EF7D:#11998E>✦ Your %type% cooldown was reset by Admin!</gradient>"
 
-admin-craftreset-all: "&a✦ All crafting limits reset!"
-admin-craftreset-item: "&a✦ Crafting limit reset: &f%item%"
+admin-craftreset-all: "<gradient:#38EF7D:#11998E>✦ All server legendary weapon craft limits reset!</gradient>"
+admin-craftreset-item: "<gradient:#38EF7D:#11998E>✦ Crafting limit reset for:</gradient> <white>%item%</white>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                         BROADCAST MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-game-started-broadcast: "&d&l✦ EffectSMP ✦ &fThe game has started! Everyone received an effect!"
+game-started-broadcast: "<gradient:#8A00E6:#DF00FF><b>Effect</b></gradient><gradient:#FF8C00:#FFC800><b>SMP</b></gradient> <white>The game has officially begun! Check your effect in</white> <gradient:#FF8C00:#FFC800>/e</gradient><white>!</white>"
+game-paused-broadcast: "<gradient:#FF416C:#FF4B2B><b>Effect</b></gradient><gradient:#FF8C00:#FFC800><b>SMP</b></gradient> <white>The game has been paused! Abilities and effects are temporarily disabled.</white>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          ERROR MESSAGES
 # ─────────────────────────────────────────────────────────────────────
 
-unknown-command: "&cUnknown command! Use: /e"
-unknown-effect: "&cUnknown effect: %effect%"
-unknown-item: "&cUnknown item: %item%"
-player-not-found: "&cPlayer not found online!"
-invalid-number: "&cInvalid number!"
-not-enough-hearts: "&cNot enough Effect Hearts! &7(Have: %hearts%)"
-no-hearts-simple: "&cNo Effect Hearts!"
-no-hearts-menu: "&cNo Effect Hearts! Get one to access the menu!"
-not-enough-hearts-active: "&cNeed at least 3 Effect Hearts for active ability!"
-not-enough-hearts-item: "&cNeed at least 2 Effect Hearts to use custom items!"
-active-cooldown: "&cYour ability is on cooldown! &7(%time%)"
-no-effect: "&cYou have no effect!"
-only-players: "&cThis command is only for players!"
-must-be-positive: "&cAmount must be positive!"
+game-not-started: "<red>✖ The game is currently paused / not started!</red>"
+
+unknown-command: "<red>✖ Unknown subcommand!</red> <gray>Type </gray><gradient:#8A00E6:#DF00FF>/e</gradient> <gray>for help.</gray>"
+unknown-effect: "<red>✖ Unknown effect identifier:</red> <white>%effect%</white>"
+unknown-item: "<red>✖ Unknown item identifier:</red> <white>%item%</white>"
+player-not-found: "<red>✖ Target player is offline or not found!</red>"
+invalid-number: "<red>✖ Please provide a valid numerical value!</red>"
+not-enough-hearts: "<red>✖ Not enough Effect Hearts!</red> <gray>(Owned: %hearts%)</gray>"
+no-hearts-simple: "<red>✖ No Effect Hearts!</red>"
+no-hearts-menu: "<red>✖ No Effect Hearts! Acquire a heart to open the GUI.</red>"
+not-enough-hearts-active: "<red>✖ Requires 3 Effect Hearts to trigger active ability!</red>"
+not-enough-hearts-item: "<red>✖ Requires 2 Effect Hearts to use legendary custom weapons!</red>"
+active-cooldown: "<red>✖ Ability on cooldown!</red> <gray>(%time% remaining)</gray>"
+no-effect: "<red>✖ You do not have an assigned effect!</red>"
+only-players: "<red>✖ This command can only be executed in-game by a player!</red>"
+must-be-positive: "<red>✖ Amount must be a positive integer!</red>"
+
+# Command Usage Messages
+usage-set: "<red>✖ Usage: /e set <effect> [player]</red>"
+usage-give: "<red>✖ Usage: /e give <item> [player]</red>"
+usage-give-list: "<gray>Items: heart, shard, reroll, op_reroll, mace, sword, bow, scythe, spear</gray>"
+usage-removecooldown: "<red>✖ Usage: /e rc [item|effect|dash|all] [player]</red>"
+usage-craftreset: "<red>✖ Usage: /e craftreset [effect_sword|effect_mace|effect_bow|effect_scythe|effect_spear|all]</red>"
+usage-trust: "<red>✖ Usage: /e trust <player></red>"
+usage-untrust: "<red>✖ Usage: /e untrust <player></red>"
+invalid-limited-item: "<red>✖ Invalid weapon key!</red> <gray>(Valid items: effect_sword, effect_mace, effect_bow, effect_scythe, effect_spear, all)</gray>"
+
+# Cooldown Types
+cooldown-type-all: "All"
+cooldown-type-item: "Item"
+cooldown-type-effect: "Effect"
+
+# Heart & Shard Management
+heart-dropped: "<gradient:#38EF7D:#11998E>✦ %amount% Effect Heart(s) dropped naturally (full inventory)!</gradient>"
+heart-withdrawn: "<gradient:#38EF7D:#11998E>✦ %amount% Effect Heart(s) withdrawn into your inventory!</gradient>"
+heart-passive-disabled: "<red>✖ You lost all Effect Hearts! Your passive effect is now disabled.</red>"
+heart-ability-lost: "<red>⚠ Dropped below 3 hearts: Active ability disabled!</red>"
+heart-downgrade-warning: "<red>⚠ Dropped below 2 hearts: Enhanced passive reverted to basic tier!</red>"
+heart-limit-reached: "<red>✖ You have already reached the maximum 3 Effect Hearts limit!</red>"
+heart-used: "<gradient:#38EF7D:#11998E>✦ Successfully consumed an Effect Heart!</gradient>"
+heart-level-up: "<gradient:#38EF7D:#11998E>⚡ Level Up! Current Level:</gradient> <white>%level% Heart(s)</white>"
+heart-level-down: "<red>⚠ Lost an Effect Heart! Current level: %level% Heart(s)</red>"
+heart-depleted: "<red>☠ You lost your final Effect Heart!</red>"
+heart-lost: "<red>☠ You lost an Effect Heart on death!</red>"
+heart-gained: "<gradient:#38EF7D:#11998E>🗡 You killed %player% and gained an Effect Heart!</gradient>"
+shard-lost: "<red>☠ You lost an Effect Shard on death!</red>"
+shard-gained: "<gradient:#38EF7D:#11998E>🗡 You killed %player% and gained an Effect Shard!</gradient>"
+infinite-wind-charge-cannot-drop: "<red>✖ The Infinite Wind Charge item cannot be dropped!</red>"
+wind-charge-cooldown: "<red>✖ Wind Charge is on cooldown!</red> <gray>(%time% left)</gray>"
+wind-charged-armed: "<gradient:#7F00FF:#E100FF>🌀 Wind Charged Armed!</gradient> <gray>Press Shift + Right Click for Wind Burst!</gray>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          ACTION BAR
 # ─────────────────────────────────────────────────────────────────────
 
-actionbar-ability-active: "&d⚡ &fActive: &a%time%"
-actionbar-cooldown-ready: "&a⚡ ABILITY READY!"
+actionbar-active-format: "<gradient:#38EF7D:#11998E>⚡ Active</gradient> <white>%time%</white> %progress%"
+actionbar-cooldown-format: "<gradient:#FF416C:#FF4B2B>⏱ Cooldown</gradient> <white>%time%</white> %progress%"
+actionbar-ready-format: "<gradient:#38EF7D:#11998E>⚡ Ability Ready!</gradient> <gray>(/e activate)</gray>"
+actionbar-dash-format: "<gradient:#00C9FF:#92FE9D>⚡ Dash:</gradient> %charges%%time%"
+actionbar-locked-format: "<gray>🔒 (Requires 3</gray><red>❤</red><gray>)</gray>"
+actionbar-no-hearts: "<red>✖ No Hearts</red>"
+actionbar-ready-alert: "<gradient:#38EF7D:#11998E>⚡ ABILITY READY!</gradient>"
+actionbar-expired-alert: "<gradient:#FF416C:#FF4B2B>⏱ ABILITY EXPIRED!</gradient>"
 
-# ─────────────────────────────────────────────────────────────────────
-#                          DASH MESSAGES (Speed Effect)
-# ─────────────────────────────────────────────────────────────────────
-
-dash-empty: "&cNo charges! &7Wait %time% seconds!"
-dash-charged: "&a⚡ Dash charged! &7%status%"
-dash-activated: "&b➣ Dash! &7%status%"
-dash-status-recharging: "&8(Recharging...)"
-
-# ─────────────────────────────────────────────────────────────────────
-#                          USAGE MESSAGES
-# ─────────────────────────────────────────────────────────────────────
-
-usage-trust: "&cUsage: &7/e trust <player>"
-usage-untrust: "&cUsage: &7/e untrust <player>"
-usage-set: "&cUsage: &7/e set <effect> [player]"
-usage-give: "&cUsage: &7/e give <item> [player]"
-usage-give-list: "&7Items: heart, shard, reroll, op_reroll, mace, sword, bow, scythe, spear, wind_charge"
-usage-removecooldown: "&cUsage: &7/e removecooldown [item|effect|all] [player]"
-usage-craftreset: "&cUsage: &7/e craftreset [item|all]"
-invalid-limited-item: "&cInvalid item! &7(effect_sword, effect_mace, effect_bow, effect_scythe, effect_spear)"
+gui-effects-info-book-name: "<gradient:#00C9FF:#92FE9D>📖 Effects Library</gradient>"
+gui-effects-info-book-lore: "<gray>Browse details of all 11 obtainable effects!</gray>"
+gui-items-info-book-name: "<gradient:#F7971E:#FFD200>⚔ Custom Items Library</gradient>"
+gui-items-info-book-lore: "<gray>Browse custom item recipes and mechanics!</gray>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          ROLL ANIMATION
 # ─────────────────────────────────────────────────────────────────────
 
-roll-title-op: "&6&l%effect%"
-roll-title-normal: "&d&l%effect%"
-roll-subtitle-op: "&eYou received your effect!"
-roll-subtitle-normal: "&fYou received your effect!"
-roll-progress-filled-op: "&6▮"
-roll-progress-filled-normal: "&d▮"
-roll-progress-empty: "&7▯"
-roll-chat-border-op: "&6&m                                                "
-roll-chat-border-normal: "&d&m                                                "
-roll-chat-line-effect-op: "  &6&l%effect%"
-roll-chat-line-effect-normal: "  &d&l%effect%"
-roll-chat-line-passive: "  &e▸ Passive: %effect% effect"
-roll-chat-line-active: "  &e▸ Active: &7/e activate &f| &7From /e menu"
-roll-chat-line-passive-normal: "  &f▸ Passive: %effect% effect"
-roll-chat-line-active-normal: "  &f▸ Active: &7/e activate &f| &7From /e menu"
+roll-title-op: "%effect%"
+roll-title-normal: "%effect%"
+roll-subtitle-op: "<gray>You unlocked a</gray> <gradient:#FF416C:#FF4B2B>Legendary OP Effect!</gradient>"
+roll-subtitle-normal: "<gray>You unlocked a new effect!</gray>"
+roll-progress-filled-op: "<gradient:#FF416C:#FF4B2B>▮</gradient>"
+roll-progress-filled-normal: "<gradient:#8A00E6:#DF00FF>▮</gradient>"
+roll-progress-empty: "<dark_gray>▯</dark_gray>"
+roll-chat-border-op: "<dark_gray>────────────────────────────────</dark_gray>"
+roll-chat-border-normal: "<dark_gray>────────────────────────────────</dark_gray>"
+roll-chat-line-effect-op: "  ✦ %effect%"
+roll-chat-line-effect-normal: "  ✦ %effect%"
+roll-chat-line-passive: "  <gray>▸ Passive:</gray> %effect% <gray>bonus</gray>"
+roll-chat-line-active: "  <gray>▸ Active:</gray> <gradient:#FF416C:#FF4B2B>/e activate</gradient> <gray>or from</gray> <gradient:#8A00E6:#DF00FF>/e</gradient> <gray>GUI</gray>"
+roll-chat-line-passive-normal: "  <gray>▸ Passive:</gray> %effect% <gray>bonus</gray>"
+roll-chat-line-active-normal: "  <gray>▸ Active:</gray> <gradient:#8A00E6:#DF00FF>/e activate</gradient> <gray>or from</gray> <gradient:#8A00E6:#DF00FF>/e</gradient> <gray>GUI</gray>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          MAIN GUI
 # ─────────────────────────────────────────────────────────────────────
 
-gui-main-title: "&5&lEffect Menu"
+gui-main-title: "<gradient:#8A00E6:#DF00FF><b>Effect</b></gradient><gradient:#FF8C00:#FFC800><b>SMP</b></gradient> <white>Dashboard</white>"
 gui-main-filler-name: " "
-gui-passive-on: "&a&lENABLED"
-gui-passive-off: "&c&lDISABLED"
-gui-passive-name: "&e&l⚡ Passive Effect"
-gui-passive-lore-effect: "&7Effect: %effect%"
-gui-passive-lore-none: "&7Effect: &cNone"
-gui-passive-lore-status: "&fStatus: %status%"
-gui-passive-lore-click: "&a▸ Click to toggle!"
-gui-passive-lore-locked: "&c▸ Need 1 Effect Heart!"
+gui-passive-on: "<gradient:#38EF7D:#11998E>ACTIVE</gradient>"
+gui-passive-off: "<red>DISABLED</red>"
+gui-passive-name: "<gradient:#00C9FF:#92FE9D>🛡 Passive Effect</gradient>"
+gui-passive-lore-effect: "<gray>Effect:</gray> %effect%"
+gui-passive-lore-none: "<gray>Effect:</gray> <red>None</red>"
+gui-passive-lore-status: "<gray>State:</gray> %status%"
+gui-passive-lore-click: "<gradient:#38EF7D:#11998E>▸ Click to toggle state</gradient>"
+gui-passive-lore-locked: "<red>▸ Requires 1+ Effect Hearts</red>"
 
-gui-active-name: "&d&l⚡ Active Ability"
-gui-active-lore-desc-header: "&fAbility description:"
-gui-active-lore-cooldown: "&cCooldown: %time%"
-gui-active-lore-locked: "&c▸ Need 3 Effect Hearts!"
-gui-active-lore-cooldown-active: "&6▸ Cooldown: %time%"
-gui-active-lore-click: "&a▸ Click to activate!"
+gui-active-name: "<gradient:#8A00E6:#DF00FF>⚡ Active Ability</gradient>"
+gui-active-lore-desc-header: "<white>Ability Overview:</white>"
+gui-active-lore-cooldown: "<red>Cooldown: %time%</red>"
+gui-active-lore-locked: "<red>▸ Requires 3 Effect Hearts</red>"
+gui-active-lore-cooldown-active: "<gradient:#F7971E:#FFD200>▸ Cooldown: %time%</gradient>"
+gui-active-lore-click: "<gradient:#38EF7D:#11998E>▸ Click to activate ability</gradient>"
 
-gui-info-name: "&b&l📖 Information"
-gui-info-lore-1: "&7View your stats and"
-gui-info-lore-2: "&7trusted players."
-gui-info-lore-click: "&a▸ Click to open!"
+gui-info-name: "<gradient:#8A00E6:#DF00FF>📖 Player Profile & Stats</gradient>"
+gui-info-lore-1: "<gray>View detailed player statistics,</gray>"
+gui-info-lore-2: "<gray>mutual trust list, and info.</gray>"
+gui-info-lore-click: "<gradient:#38EF7D:#11998E>▸ Click to inspect dashboard</gradient>"
 
-gui-error-passive-need-heart: "&cNeed at least 1 Effect Heart!"
-gui-error-active-need-heart: "&cNeed at least 3 Effect Hearts for active ability!"
-gui-error-active-cooldown: "&cYour ability is on cooldown! &7(%time%)"
+gui-error-passive-need-heart: "<red>✖ Requires at least 1 Effect Heart!</red>"
+gui-error-active-need-heart: "<red>✖ Requires at least 3 Effect Hearts for active ability!</red>"
+gui-error-active-cooldown: "<red>✖ Ability on cooldown! (%time% remaining)</red>"
 
-active-desc-invisibility: "&7Full invisibility for 15s"
-active-desc-hero-of-village: "&7Hero of the Village 5 (2 min)"
-active-desc-haste: "&7Haste 3 + 3x3 mining (20s)"
-active-desc-fire-resistance: "&7Enemies burn in inextinguishable fire (15s)"
-active-desc-speed: "&7Dash ability (Shift, 3x charges)"
-active-desc-dolphin-grace: "&7Water Breathing + Conduit Power + Regen 3 (1 min)"
-active-desc-health-boost: "&7+10 hearts (1 min)"
-active-desc-resistance: "&7FULL INVULNERABILITY (5s)"
-active-desc-strength: "&7Strength 3 + Extended Reach +3 blocks (5s)"
-active-desc-regeneration: "&7Regen 2 for all trusted players (45s)"
+active-desc-invisibility: "<gray>True Invisibility to non-trusted players for 10s</gray>"
+active-desc-hero-of-village: "<gray>Villager discounts with Hero of the Village V (2 min)</gray>"
+active-desc-haste: "<gray>3x3 Area Block Mining speed surge for 30s</gray>"
+active-desc-fire-resistance: "<gray>Fire Immunity + Ignites surrounding enemies (15s)</gray>"
+active-desc-speed: "<gray>3x High-Speed Charge Dash (Shift to activate)</gray>"
+active-desc-dolphin-grace: "<gray>Water Breathing & Conduit Power surge (1 min)</gray>"
+active-desc-health-boost: "<gray>+10 Bonus Hearts Surge for 30s</gray>"
+active-desc-resistance: "<gray>FULL DAMAGE INVULNERABILITY for 20s</gray>"
+active-desc-strength: "<gray>Strength III + 3 Block Extra Reach for 15s</gray>"
+active-desc-regeneration: "<gray>Shares Regeneration II with trusted allies (45s)</gray>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          INFO GUI
 # ─────────────────────────────────────────────────────────────────────
 
-gui-info-title: "&b&lInformation"
-gui-back-name: "&c&l⬅ Back"
+gui-info-title: "<gradient:#8A00E6:#DF00FF>📊 Player Profile</gradient>"
+gui-back-name: "<red>⬅ Return Back</red>"
 gui-info-filler-name: " "
-gui-info-effect-name: "&d&l⚡ Effect"
-gui-info-effect-lore-effect: "&7Effect: %effect%"
-gui-info-effect-lore-op: "&6OP Effect"
-gui-info-effect-lore-normal: "&7Normal Effect"
-gui-info-effect-lore-none: "&cYou have no effect!"
+gui-info-effect-name: "<gradient:#8A00E6:#DF00FF>⚡ Current Effect</gradient>"
+gui-info-effect-lore-effect: "<gray>Assigned:</gray> %effect%"
+gui-info-effect-lore-op: "<gradient:#FF416C:#FF4B2B>✦ Legendary OP Tier</gradient>"
+gui-info-effect-lore-normal: "<gray>✦ Standard Tier</gray>"
+gui-info-effect-lore-none: "<red>No Effect Assigned</red>"
 
-gui-info-shard-name: "&b&l✧ Effect Shard"
-gui-info-shard-lore-status: "&fStatus: %status%"
-gui-info-shard-status-yes: "&a✔ Owned"
-gui-info-shard-status-no: "&c✖ Lost"
-gui-info-shard-lore-desc: "&7Lost on first death!"
+gui-info-shard-name: "<gradient:#38EF7D:#11998E>✧ Effect Shard</gradient>"
+gui-info-shard-lore-status: "<gray>Status:</gray> %status%"
+gui-info-shard-status-yes: "<gradient:#38EF7D:#11998E>✔ In Possession</gradient>"
+gui-info-shard-status-no: "<red>✖ Lost on First Death</red>"
+gui-info-shard-lore-desc: "<gray>Dropped permanently on player's first death!</gray>"
 
-gui-info-hearts-name: "&c&l❤ Effect Hearts"
-gui-info-hearts-lore-count: "&7Hearts: &f%count%"
-gui-info-hearts-lore-1: "&71 - Passive available"
-gui-info-hearts-lore-2: "&73+ - Active also available"
+gui-info-hearts-name: "<gradient:#FF4D4D:#F9CB43>❤ Effect Hearts</gradient>"
+gui-info-hearts-lore-count: "<gray>Heart Count:</gray> <b><white>%count%/3</white></b>"
+gui-info-hearts-lore-1: "<gray>❤️1 Heart: Passive Effect active</gray>"
+gui-info-hearts-lore-2: "<gray>❤️❤️❤️3 Hearts: Active Ability & Weapons unlocked</gray>"
 
-gui-info-stats-name: "&6&l⚔ Statistics"
-gui-info-stats-lore-kills: "&7Kills: &a%kills%"
-gui-info-stats-lore-deaths: "&7Deaths: &c%deaths%"
-gui-info-stats-lore-kd: "&7K/D: &e%kd%"
+gui-info-stats-name: "<gradient:#00C9FF:#92FE9D>⚔ Combat Statistics</gradient>"
+gui-info-stats-lore-kills: "<gray>Player Kills:</gray> <green>%kills%</green>"
+gui-info-stats-lore-deaths: "<gray>Total Deaths:</gray> <red>%deaths%</red>"
+gui-info-stats-lore-kd: "<gray>K/D Ratio:</gray> <yellow>%kd%</yellow>"
 
-gui-info-trust-name: "&a&l👥 Trusted Players"
-gui-info-trust-lore-count: "&7Mutual trust: &f%count%/5"
-gui-info-trust-none: "&7No active trusts"
-gui-info-trust-entry: "&a✔ %player%"
-gui-info-trust-lore-add: "&7/e trust <name> - Add trust"
-gui-info-trust-lore-remove: "&7/e untrust <name> - Remove trust"
-gui-info-effects-button-name: "&5&l⚡ Effects List"
-gui-info-effects-button-lore: "&7Click to view all effects!"
-gui-info-items-button-name: "&a&l⚔ Custom Items List"
-gui-info-items-button-lore: "&7Click to view custom items and recipes!"
-
+gui-info-trust-name: "<gradient:#38EF7D:#11998E>👥 Mutual Trust List</gradient>"
+gui-info-trust-lore-count: "<gray>Active Mutual Trusts:</gray> <b><white>%count%/5</white></b>"
+gui-info-trust-none: "<gray>No active mutual trusted players</gray>"
+gui-info-trust-entry: "<gradient:#38EF7D:#11998E>✔</gradient> <white>%player%</white>"
+gui-info-trust-lore-add: "<gray>Type </gray><gradient:#38EF7D:#11998E>/e trust <name></gradient> <gray>to add</gray>"
+gui-info-trust-lore-remove: "<gray>Type </gray><red>/e untrust <name></red> <gray>to remove</gray>"
+gui-info-effects-button-name: "<gradient:#00C9FF:#92FE9D>⚡ Effects Catalog</gradient>"
+gui-info-effects-button-lore: "<gradient:#38EF7D:#11998E>▸ Click to browse all 11 effects</gradient>"
+gui-info-items-button-name: "<gradient:#F7971E:#FFD200>⚔ Custom Items & Crafting</gradient>"
+gui-info-items-button-lore: "<gradient:#38EF7D:#11998E>▸ Click to inspect custom recipes</gradient>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          CUSTOM ITEMS
 # ─────────────────────────────────────────────────────────────────────
 
-item-heart-name: "&d&lEffect Heart"
-item-heart-lore-1: "&7A precious heart that powers"
-item-heart-lore-2: "&7your effect abilities."
-item-heart-lore-usage: "&e▸ Right Click to use"
+item-heart-name: "<gradient:#FF4D4D:#F9CB43>❤ Effect Heart</gradient>"
+item-heart-lore-1: "<gray>A glowing essence heart that powers</gray>"
+item-heart-lore-2: "<gray>passives, cooldowns, and active abilities.</gray>"
+item-heart-lore-usage: "<gradient:#38EF7D:#11998E>▸ Right Click to consume (+1 Heart)</gradient>"
 
-item-shard-name: "&b&l✧ Effect Shard"
-item-shard-lore-1: "&7A rare shard containing"
-item-shard-lore-2: "&7effect energy."
-item-shard-lore-usage: "&e▸ Used for crafting"
+item-shard-name: "<gradient:#38EF7D:#11998E>✧ Effect Shard</gradient>"
+item-shard-lore-1: "<gray>A crystalline shard extracted from</gray>"
+item-shard-lore-2: "<gray>ancient world loot or Wardens.</gray>"
+item-shard-lore-usage: "<gradient:#38EF7D:#11998E>▸ Core ingredient for custom items</gradient>"
 
-item-reroll-name: "&a&l⟳ Effect Reroll"
-item-reroll-lore-1: "&7You get a new normal effect,"
-item-reroll-lore-2: "&7but never your current one!"
-item-reroll-lore-usage: "&e▸ Right Click to use"
+item-reroll-name: "<gradient:#00C9FF:#92FE9D>🎲 Effect Reroll</gradient>"
+item-reroll-lore-1: "<gray>Randomly rolls a new Common or Rare</gray>"
+item-reroll-lore-2: "<gray>effect, excluding your current one.</gray>"
+item-reroll-lore-usage: "<gradient:#38EF7D:#11998E>▸ Right Click to initiate gacha roll</gradient>"
 
-item-op-reroll-name: "&6&l⟳ OP Effect Reroll"
-item-op-reroll-lore-1: "&7You get a strong OP effect:"
-item-op-reroll-lore-2: "&8• &cResistance &8| &4Strength &8| &dRegeneration"
-item-op-reroll-lore-usage: "&e▸ Right Click to use"
+item-op-reroll-name: "<gradient:#FF416C:#FF4B2B>🎲 OP Effect Reroll</gradient>"
+item-op-reroll-lore-1: "<gray>Randomly rolls a guaranteed</gray>"
+item-op-reroll-lore-2: "<gray>Epic or Legendary tier effect!</gray>"
+item-op-reroll-lore-usage: "<gradient:#38EF7D:#11998E>▸ Right Click to initiate OP roll</gradient>"
 
-item-mace-name: "&5&l⚔ Effect Mace"
-item-mace-lore-ability: "&dAbility:"
-item-mace-lore-1: "&7Launches you in air, shockwave"
-item-mace-lore-2: "&7on landing!"
-item-mace-lore-cooldown: "&cCooldown: %time%"
-item-mace-lore-usage: "&e▸ Right Click to use"
+item-mace-name: "<gradient:#7F00FF:#E100FF>⚔ Effect Mace</gradient>"
+item-mace-lore-ability: "<gradient:#7F00FF:#E100FF>Special Ability:</gradient>"
+item-mace-lore-1: "<gray>Launches wielder high into the air;</gray>"
+item-mace-lore-2: "<gray>creates a shockwave blast on impact!</gray>"
+item-mace-lore-cooldown: "<red>Cooldown: %time%</red>"
+item-mace-lore-usage: "<gradient:#38EF7D:#11998E>▸ Right Click to initiate air launch</gradient>"
 
-item-sword-name: "&c&l⚔ Effect Sword"
-item-sword-lore-ability: "&dAbility:"
-item-sword-lore-1: "&7For 10 seconds every hit"
-item-sword-lore-2: "&71.5x damage + 2x attack speed!"
-item-sword-lore-cooldown: "&cCooldown: %time%"
-item-sword-lore-usage: "&e▸ Shift + Right Click to use"
+item-sword-name: "<gradient:#FF416C:#FF4B2B>⚔ Effect Sword</gradient>"
+item-sword-lore-ability: "<gradient:#FF416C:#FF4B2B>Special Ability:</gradient>"
+item-sword-lore-1: "<gray>Triggers a 10s Critical State dealing</gray>"
+item-sword-lore-2: "<gray>1.5x damage with 2x attack speed!</gray>"
+item-sword-lore-cooldown: "<red>Cooldown: %time%</red>"
+item-sword-lore-usage: "<gradient:#38EF7D:#11998E>▸ Shift + Right Click to activate state</gradient>"
 
-item-bow-name: "&6&l➹ Effect Bow"
-item-bow-lore-ability: "&dAbility:"
-item-bow-lore-1: "&7Curse arrow - enemies are"
-item-bow-lore-2: "&7slowed, weakened and glowing!"
-item-bow-lore-chance: "&c10% chance for curse arrow"
-item-bow-lore-usage: "&e▸ Passive ability"
+item-bow-name: "<gradient:#FF512F:#DD2476>➹ Effect Bow</gradient>"
+item-bow-lore-ability: "<gradient:#FF512F:#DD2476>Special Ability:</gradient>"
+item-bow-lore-1: "<gray>Fires curse arrows that apply Slowness,</gray>"
+item-bow-lore-2: "<gray>Weakness, and Glowing to enemies.</gray>"
+item-bow-lore-chance: "<gradient:#F7971E:#FFD200>10% chance per arrow shot</gradient>"
+item-bow-lore-usage: "<gray>▸ Passive arrow effect</gray>"
 
-item-scythe-name: "&3&l⚰ Effect Scythe"
-item-scythe-lore-ability: "&dAbility:"
-item-scythe-lore-1: "&7Freezes all enemy players"
-item-scythe-lore-2: "&7for 5 seconds!"
-item-scythe-lore-cooldown: "&cCooldown: %time%"
-item-scythe-lore-usage: "&e▸ Shift + Right Click to use"
+item-scythe-name: "<gradient:#00B4DB:#0083B0>⚰ Effect Scythe</gradient>"
+item-scythe-lore-ability: "<gradient:#00B4DB:#0083B0>Special Ability:</gradient>"
+item-scythe-lore-1: "<gray>Summons an icy vortex that freezes all</gray>"
+item-scythe-lore-2: "<gray>nearby enemy players in place for 5s!</gray>"
+item-scythe-lore-cooldown: "<red>Cooldown: %time%</red>"
+item-scythe-lore-usage: "<gradient:#38EF7D:#11998E>▸ Shift + Right Click to freeze enemies</gradient>"
 
-version: 7
-
-# ─────────────────────────────────────────────────────────────────────
-#                         SPEAR MESSAGES
-# ─────────────────────────────────────────────────────────────────────
-spear-cooldown: "&cSpear is on cooldown! &7(%time%)"
-spear-charging-bar: "Spear Charge"
-item-spear-name: "&6&l➹ Effect Spear"
-item-spear-lore-ability: "&dAbility:"
-item-spear-lore-1: "&7Hold right click while shifting to charge"
-item-spear-lore-2: "&7a really big lunge!"
-item-spear-lore-cooldown: "&cCooldown: %time%"
-item-spear-lore-usage: "&e▸ Hold Right Click while shifting to charge"
+version: 9
 
 # ─────────────────────────────────────────────────────────────────────
 #                         GUI MESSAGES
 # ─────────────────────────────────────────────────────────────────────
-gui-effects-title: "&5&lEffects Description"
-gui-effects-passive-title: "&9&lPassive Ability:"
-gui-effects-active-title: "&d&lActive Ability:"
-gui-effects-cooldown-format: "&cCooldown: %time%"
-gui-effects-pass-invis: "&7Grants permanent invisibility (Invisibility I)."
-gui-effects-pass-hero: "&7Villagers offer trade discounts (Hero of the Village I)."
-gui-effects-pass-haste: "&7Increases mining speed (Haste I)."
-gui-effects-pass-fire: "&7Grants permanent fire resistance (Fire Resistance I)."
-gui-effects-pass-speed: "&7Increases movement speed (Speed I)."
-gui-effects-pass-dolphin: "&7Increases swimming speed (Dolphin Grace I)."
-gui-effects-pass-health: "&7Adds 2 permanent extra hearts (Health Boost I)."
-gui-effects-pass-resist: "&7Slightly reduces incoming damage (Resistance I)."
-gui-effects-pass-strength: "&7Increases melee attack damage (Strength I)."
-gui-effects-pass-regen: "&7Permanently regenerates health over time (Regeneration I)."
 
-gui-items-title: "&5&lCustom Items"
-gui-items-click-recipe: "&e▸ Click to view crafting recipe!"
-gui-items-click-how-to-get: "&e▸ Click to view how to get!"
+gui-effects-title: "<gradient:#00C9FF:#92FE9D>⚡ Effects Catalog</gradient>"
+gui-effects-passive-title: "<gradient:#00C9FF:#92FE9D>🛡 Passive Effect:</gradient>"
+gui-effects-active-title: "<gradient:#8A00E6:#DF00FF>⚡ Active Ability:</gradient>"
+gui-effects-cooldown-format: "<red>Cooldown: %time%</red>"
+gui-effects-pass-invis: "<gray>Permanent true invisibility (Invisibility I).</gray>"
+gui-effects-pass-hero: "<gray>Villager discounts across all trades (Hero V).</gray>"
+gui-effects-pass-haste: "<gray>Permanent mining speed boost (Haste I).</gray>"
+gui-effects-pass-fire: "<gray>Permanent fire & lava immunity (Fire Resistance I).</gray>"
+gui-effects-pass-speed: "<gray>Permanent movement speed boost (Speed I).</gray>"
+gui-effects-pass-dolphin: "<gray>Permanent swim speed boost (Dolphin Grace I).</gray>"
+gui-effects-pass-health: "<gray>Permanent +2 extra hearts (Health Boost I).</gray>"
+gui-effects-pass-resist: "<gray>Permanent damage reduction (Resistance I).</gray>"
+gui-effects-pass-strength: "<gray>Permanent melee attack damage boost (Strength I).</gray>"
+gui-effects-pass-regen: "<gray>Permanent health regeneration over time (Regeneration I).</gray>"
 
-gui-recipe-title: "&5&lCrafting Recipe"
-gui-recipe-arrow-name: "&aCrafts into:"
-gui-back-items-name: "&c&l⬅ Back"
-gui-shard-info-title: "&5&lShard Obtain Details"
+gui-items-title: "<gradient:#F7971E:#FFD200>⚔ Custom Items & Recipes</gradient>"
+gui-items-click-recipe: "<gradient:#38EF7D:#11998E>▸ Click to inspect crafting recipe</gradient>"
+gui-items-click-how-to-get: "<gradient:#38EF7D:#11998E>▸ Click to inspect obtain sources</gradient>"
 
-wind-charged-need-shift: "&cYou must sneak (Shift) to activate the Wind Charged ability!"
-wind-charged-activated: "&b&l⚡ Wind Charged activated! All enemies knocked back!"
-wind-charged-victim: "&b&l⚡ A wind burst sent you flying!"
-wind-charged-armed: "&b⚡ &fWind burst armed! &eSneak + Right Click &fto release!"
-active-desc-wind-charged: "&7Powerful wind burst that knocks back all enemies and launches you high"
-item-infinite-wind-charge-name: "&b&l⚡ Infinite Wind Charge"
-item-infinite-wind-charge-lore-1: "&7This wind charge is never consumed"
-item-infinite-wind-charge-lore-2: "&7and does not drop on death!"
-infinite-wind-charge-cannot-drop: "&c✖ &fYou cannot drop the Infinite Wind Charge!"
+gui-recipe-title: "<gradient:#F7971E:#FFD200>⚒ Crafting Grid Preview</gradient>"
+gui-recipe-arrow-name: "<gradient:#38EF7D:#11998E>Crafts Result ➔</gradient>"
+gui-back-items-name: "<red>⬅ Return Back</red>"
+gui-shard-info-title: "<gradient:#38EF7D:#11998E>🏛 Shard Discovery Guide</gradient>"
 
-rarity-common: "&7Common"
-rarity-rare: "&bRare"
-rarity-epic: "&dEpic"
-rarity-legendary: "&6Legendary"
+wind-charged-need-shift: "<red>✖ Sneak (Shift) while holding Wind Charge to activate!</red>"
+wind-charged-activated: "<gradient:#7F00FF:#E100FF>⚡ Wind Burst Released! Surrounding enemies blasted back!</gradient>"
+wind-charged-victim: "<gradient:#7F00FF:#E100FF>⚡ A massive wind shockwave launched you!</gradient>"
+wind-charged-armed: "<gradient:#7F00FF:#E100FF>⚡ Wind Burst Armed!</gradient> <gray>Sneak + Right Click to trigger!</gray>"
+active-desc-wind-charged: "<gray>Knocks back all enemies with massive wind burst & launches user</gray>"
+item-infinite-wind-charge-name: "<gradient:#7F00FF:#E100FF>🌀 Infinite Wind Charge</gradient>"
+item-infinite-wind-charge-lore-1: "<gray>This wind charge is never consumed</gray>"
+item-infinite-wind-charge-lore-2: "<gray>and never drops on player death!</gray>"
+infinite-wind-charge-cannot-drop: "<red>✖ You cannot drop the Infinite Wind Charge!</red>"
 
-gui-effects-rarity-format: "&7Rarity: %rarity%"
-gui-effects-pass-wind: "&7Infinite wind charge, sneak while landing to negate fall damage (Lvl 1), full fall immunity (Lvl 2)."
+rarity-common: "<gradient:#11998E:#38EF7D>COMMON</gradient>"
+rarity-rare: "<gradient:#00C9FF:#92FE9D>RARE</gradient>"
+rarity-epic: "<gradient:#A855F7:#EC4899>EPIC</gradient>"
+rarity-legendary: "<gradient:#FF416C:#FF4B2B>LEGENDARY</gradient>"
 
-gui-shard-info-ancient-name: "&3&lAncient City Chest"
-gui-shard-info-ancient-lore: "&7Spawn chance: &e7.5%"
-gui-shard-info-end-name: "&d&lEnd City Ship"
-gui-shard-info-end-lore: "&7Spawn chance: &e7.5%"
-gui-shard-info-mansion-name: "&2&lWoodland Mansion"
-gui-shard-info-mansion-lore: "&7Spawn chance: &e7.5%"
-gui-shard-info-warden-name: "&4&lWarden Drop"
-gui-shard-info-warden-lore: "&7Drop chance: &e15.0%"
+gui-effects-rarity-format: "<gray>Tier:</gray> %rarity%"
+gui-effects-pass-wind: "<gray>Infinite Wind Charge, fall damage negation on sneak (Lvl 1), complete fall immunity (Lvl 2+).</gray>"
+
+gui-shard-info-ancient-name: "<gradient:#00C9FF:#92FE9D>🏛 Ancient City Chest</gradient>"
+gui-shard-info-ancient-lore: "<gray>Loot Chance:</gray> <yellow>7.5%</yellow>"
+gui-shard-info-end-name: "<gradient:#A855F7:#EC4899>🚢 End City Ship Chest</gradient>"
+gui-shard-info-end-lore: "<gray>Loot Chance:</gray> <yellow>7.5%</yellow>"
+gui-shard-info-mansion-name: "<gradient:#38EF7D:#11998E>🏡 Woodland Mansion</gradient>"
+gui-shard-info-mansion-lore: "<gray>Loot Chance:</gray> <yellow>7.5%</yellow>"
+gui-shard-info-warden-name: "<gradient:#FF416C:#FF4B2B>👹 Warden Mob Drop</gradient>"
+gui-shard-info-warden-lore: "<gray>Drop Chance:</gray> <yellow>15.0%</yellow>"
 
 cooldown-type-all: "All"
 cooldown-type-item: "Item"
 cooldown-type-effect: "Effect"
 
-wind-charge-cooldown: "&c✖ &fInfinite Wind Charge on cooldown: &e%time%"
+wind-charge-cooldown: "<red>✖ Infinite Wind Charge on cooldown:</red> <gradient:#F7971E:#FFD200>%time%</gradient>"
 
-actionbar-active-format: "&a◆ &fActive &a%time% %progress%"
-actionbar-cooldown-format: "&c◆ &fCooldown &c%time% %progress%"
-actionbar-ready-format: "&a◆ &fReady! &7(/e activate)"
-actionbar-dash-format: "&a◆ &fDash: %charges%%time%"
-actionbar-locked-format: "&7🔒 &7(&f3 &c❤ &fneeded&7)"
-actionbar-no-hearts: "&c✖ &7No hearts!"
-actionbar-ready-alert: "&a&l⚡ ABILITY READY! ⚡"
-actionbar-expired-alert: "&c&l⏱ ABILITY EXPIRED! ⏱"
-
-gui-effects-info-book-name: "&d&lEFFECTS LIBRARY &7| &fLibrary"
-gui-effects-info-book-lore: "&7View the list of obtainable abilities!"
-gui-items-info-book-name: "&d&lCUSTOM ITEMS &7| &fCustom Items"
-gui-items-info-book-lore: "&7View the list of custom items and recipes!"
+actionbar-active-format: "<gradient:#38EF7D:#11998E>⚡ Active</gradient> <white>%time%</white> %progress%"
+actionbar-cooldown-format: "<gradient:#FF416C:#FF4B2B>⏱ Cooldown</gradient> <white>%time%</white> %progress%"
+actionbar-ready-format: "<gradient:#38EF7D:#11998E>⚡ Ability Ready!</gradient> <gray>(/e activate)</gray>"
+actionbar-dash-format: "<gradient:#00C9FF:#92FE9D>⚡ Dash:</gradient> %charges%%time%"
+actionbar-locked-format: "<gray>🔒 (Requires 3</gray><red>❤</red><gray>)</gray>"
+actionbar-no-hearts: "<red>✖ No Hearts</red>"
+actionbar-ready-alert: "<gradient:#38EF7D:#11998E>⚡ ABILITY READY!</gradient>"
+actionbar-expired-alert: "<gradient:#FF416C:#FF4B2B>⏱ ABILITY EXPIRED!</gradient>"

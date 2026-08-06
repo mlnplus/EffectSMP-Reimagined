@@ -16,6 +16,7 @@ public class CraftingListener implements Listener {
 
     @EventHandler
     public void onPrepareResult(PrepareItemCraftEvent event) {
+        if (!plugin.isGameStarted()) return;
         if (!plugin.getConfigManager().getConfig().getBoolean("settings.limited-crafting-enabled", true))
             return;
 

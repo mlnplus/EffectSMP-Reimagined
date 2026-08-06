@@ -32,7 +32,7 @@ public class PlayerListener implements Listener {
         data.setPlayerName(player.getName());
 
         if (plugin.isGameStarted() && data.getEffect() == null) {
-            plugin.getEffectAbilityManager().assignRandomEffect(player, false);
+            plugin.getEffectAbilityManager().assignStartEffect(player);
         }
 
         if (data.getEffect() != null && data.isPassiveEnabled() && data.getEffectHearts() >= 1) {
@@ -43,6 +43,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        plugin.getGuiManager().restorePlayerInventory(player);
         plugin.getPlayerDataManager().savePlayerData(player.getUniqueId());
         plugin.getEffectAbilityManager().removeRolling(player.getUniqueId());
         plugin.getItemAbilityManager().removeFreezeAttribute(player);
@@ -51,6 +52,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDeath(PlayerDeathEvent event) {
+        if (!plugin.isGameStarted()) return;
         Player player = event.getEntity();
         plugin.getEffectAbilityManager().removeStrengthReach(player);
         event.getDrops().removeIf(item -> plugin.getCustomItems().isInfiniteWindCharge(item));
