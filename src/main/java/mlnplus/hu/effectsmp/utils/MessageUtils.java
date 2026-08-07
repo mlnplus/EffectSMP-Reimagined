@@ -37,8 +37,8 @@ public class MessageUtils {
             return Component.empty();
         }
 
-        // Normalize legacy section symbols § to ampersands &
-        String clean = message.replace('§', '&');
+        // Strip Variation Selector 16 (\uFE0F) which causes glitchy emoji boxes in Minecraft font
+        String clean = message.replace('§', '&').replace("\uFE0F", "");
 
         // Convert legacy color codes (&0-&f, &l-&r) into MiniMessage tags
         clean = convertLegacyToMiniMessage(clean);

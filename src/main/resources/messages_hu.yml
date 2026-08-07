@@ -368,8 +368,8 @@ gui-info-shard-lore-desc: "<gray>Az első halálkor elvész!</gray>"
 
 gui-info-hearts-name: "<gradient:#FF4D4D:#F9CB43>❤ Effekt Szívek</gradient>"
 gui-info-hearts-lore-count: "<gray>Szívek száma:</gray> <b><white>%count%/3</white></b>"
-gui-info-hearts-lore-1: "<gray>❤️1 Szív: Passzív effekt aktív</gray>"
-gui-info-hearts-lore-2: "<gray>❤️❤️❤️3 Szív: Aktív képesség & Fegyverek elérhetők</gray>"
+gui-info-hearts-lore-1: "<gray>❤1 Szív: Passzív effekt aktív</gray>"
+gui-info-hearts-lore-2: "<gray>❤❤❤3 Szív: Aktív képesség & Fegyverek elérhetők</gray>"
 
 gui-info-stats-name: "<gradient:#00C9FF:#92FE9D>⚔ Harci Statisztikák</gradient>"
 gui-info-stats-lore-kills: "<gray>Ölések:</gray> <green>%kills%</green>"

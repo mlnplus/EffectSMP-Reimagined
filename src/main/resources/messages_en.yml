@@ -368,8 +368,8 @@ gui-info-shard-lore-desc: "<gray>Dropped permanently on player's first death!</g
 
 gui-info-hearts-name: "<gradient:#FF4D4D:#F9CB43>❤ Effect Hearts</gradient>"
 gui-info-hearts-lore-count: "<gray>Heart Count:</gray> <b><white>%count%/3</white></b>"
-gui-info-hearts-lore-1: "<gray>❤️1 Heart: Passive Effect active</gray>"
-gui-info-hearts-lore-2: "<gray>❤️❤️❤️3 Hearts: Active Ability & Weapons unlocked</gray>"
+gui-info-hearts-lore-1: "<gray>❤1 Heart: Passive Effect active</gray>"
+gui-info-hearts-lore-2: "<gray>❤❤❤3 Hearts: Active Ability & Weapons unlocked</gray>"
 
 gui-info-stats-name: "<gradient:#00C9FF:#92FE9D>⚔ Combat Statistics</gradient>"
 gui-info-stats-lore-kills: "<gray>Player Kills:</gray> <green>%kills%</green>"
