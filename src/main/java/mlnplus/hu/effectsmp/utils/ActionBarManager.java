@@ -49,24 +49,25 @@ public class ActionBarManager {
         // Effect Display Name
         actionBar.append(data.getEffect().getDisplayName());
 
-        actionBar.append(" <dark_gray>│</dark_gray> ");
+        actionBar.append(" <dark_gray>│</dark_gray>  ");
 
         // Hearts HUD with strictly matched tags
         if (data.getEffectHearts() >= 3) {
-            actionBar.append("<gradient:#FF4D4D:#F9CB43>").append(HEART).append(" <white>3</white></gradient>");
+            actionBar.append("<gradient:#FF4D4D:#F9CB43>").append(HEART).append(" 3</gradient>");
         } else if (data.getEffectHearts() == 2) {
-            actionBar.append("<gold>").append(HEART).append(" <white>2</white></gold>");
+            actionBar.append("<gold>").append(HEART).append(" 2</gold>");
         } else if (data.getEffectHearts() == 1) {
-            actionBar.append("<gold>").append(HEART).append(" <white>1</white></gold>");
+            actionBar.append("<gold>").append(HEART).append(" 1</gold>");
         } else {
             actionBar.append("<dark_gray>").append(HEART).append(" 0</dark_gray>");
         }
 
-        actionBar.append(" <dark_gray>│</dark_gray> ");
+        actionBar.append(" <dark_gray>│</dark_gray>  ");
 
         if (data.isAbilityActive()) {
             long remaining = data.getRemainingAbilityDuration();
-            String progressBar = createMiniProgressBar(remaining, getAbilityDuration(data), "<gradient:#10B981:#059669>", "<dark_green>");
+            String progressBar = createMiniProgressBar(remaining, getAbilityDuration(data),
+                    "<gradient:#10B981:#059669>", "<dark_green>");
             String activeText = msg.getMessage("actionbar-active-format")
                     .replace("%time%", msg.formatTimeShort(remaining))
                     .replace("%progress%", progressBar);
@@ -74,7 +75,8 @@ public class ActionBarManager {
         } else if (data.isAbilityOnCooldown()) {
             long remaining = data.getRemainingCooldown();
             long total = data.getEffect().getCooldownSeconds() * 1000L;
-            String progressBar = createMiniProgressBar(total - remaining, total, "<gradient:#EF4444:#F59E0B>", "<dark_red>");
+            String progressBar = createMiniProgressBar(total - remaining, total, "<gradient:#EF4444:#F59E0B>",
+                    "<dark_red>");
             String cooldownText = msg.getMessage("actionbar-cooldown-format")
                     .replace("%time%", msg.formatTimeShort(remaining))
                     .replace("%progress%", progressBar);
@@ -84,7 +86,8 @@ public class ActionBarManager {
                 int charges = plugin.getDashManager().getRemainingDashes(player.getUniqueId());
                 String readyColor = "<gradient:#3B82F6:#06B6D4>";
                 String emptyColor = "<dark_gray>";
-                String chargeDisplay = readyColor + "⚡".repeat(charges) + "</gradient>" + emptyColor + "⚡".repeat(3 - charges) + "</dark_gray>";
+                String chargeDisplay = readyColor + "⚡".repeat(charges) + "</gradient>" + emptyColor
+                        + "⚡".repeat(3 - charges) + "</dark_gray>";
 
                 String timeDisplay = "";
                 if (charges < 3) {
@@ -135,7 +138,8 @@ public class ActionBarManager {
             for (int i = 0; i < filled; i++) {
                 bar.append("▮");
             }
-            bar.append(startColor.startsWith("<gradient") ? "</gradient>" : (endColor.startsWith("<") ? endColor.replace("<", "</") : "</reset>"));
+            bar.append(startColor.startsWith("<gradient") ? "</gradient>"
+                    : (endColor.startsWith("<") ? endColor.replace("<", "</") : "</reset>"));
         }
         if (length - filled > 0) {
             bar.append("<dark_gray>");
