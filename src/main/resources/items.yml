@@ -132,18 +132,18 @@ effect_spear:
   enabled: true
   material: NETHERITE_SPEAR
   custom_model_data: 1009
-  cooldown: 150 # Cooldown in seconds
+  cooldown: 25 # Cooldown in seconds
   min_hearts: 2
   charge_max_ticks: 20
-  launch_power_base: 3.0
-  launch_power_max: 6.5
-  flight_ticks: 25
-  flight_velocity: 3.2
-  impact_damage: 50.0
-  true_damage: 12.0
-  knockback_multiplier: 2.5
-  knockback_y: 1.2
-  radius: 4.0
+  launch_power_base: 1.8
+  launch_power_max: 3.2
+  flight_ticks: 15
+  flight_velocity: 2.2
+  impact_damage: 16.0
+  true_damage: 0.0
+  knockback_multiplier: 1.5
+  knockback_y: 0.6
+  radius: 3.0
   enchants:
     sharpness: 5
     impaling: 5

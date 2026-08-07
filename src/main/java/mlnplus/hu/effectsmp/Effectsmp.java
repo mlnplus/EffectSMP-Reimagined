@@ -154,6 +154,13 @@ public final class Effectsmp extends JavaPlugin {
 
         actionBarManager.startTask();
 
+        // Auto-save task every 5 minutes (6000L ticks) for seamless data protection
+        getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
+            if (playerDataManager != null) {
+                playerDataManager.saveAll();
+            }
+        }, 6000L, 6000L);
+
         this.gameStarted = configManager.isGameStarted();
 
         // Safety fallback to print banner after 1.5 seconds if update check hangs
@@ -189,12 +196,28 @@ public final class Effectsmp extends JavaPlugin {
     }
 
     public void reload() {
+        if (playerDataManager != null) {
+            playerDataManager.saveAll();
+        }
+
         configManager.reload();
         messageUtils.reload();
         customItems.registerRecipes();
+
+        if (isGameStarted() && effectAbilityManager != null) {
+            for (org.bukkit.entity.Player online : org.bukkit.Bukkit.getOnlinePlayers()) {
+                if (online == null) continue;
+                mlnplus.hu.effectsmp.data.PlayerData pdata = playerDataManager.getPlayerData(online.getUniqueId());
+                if (pdata != null && pdata.isPassiveEnabled() && pdata.getEffectHearts() >= 1) {
+                    effectAbilityManager.removePassiveEffect(online);
+                    effectAbilityManager.applyPassiveEffect(online);
+                }
+            }
+        }
+
         String lang = configManager != null ? configManager.getConfig().getString("language", "en") : "en";
         boolean isHu = "hu".equalsIgnoreCase(lang);
-        getLogger().info(isHu ? "\u00A7aEffectSMP konfiguráció újratöltve!" : "\u00A7aEffectSMP Config reloaded!");
+        getLogger().info(isHu ? "\u00A7aEffectSMP konfiguráció újratöltve és játékos adatok elmentve!" : "\u00A7aEffectSMP Config reloaded and player data saved!");
     }
 
     public static Effectsmp getInstance() {

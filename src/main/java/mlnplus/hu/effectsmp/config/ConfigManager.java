@@ -40,72 +40,66 @@ public class ConfigManager {
         }
     }
 
+    private YamlConfiguration loadAndMigrateYaml(File file, String resourceName) {
+        if (!file.exists()) {
+            try {
+                plugin.saveResource(resourceName, false);
+            } catch (Exception e) {
+                plugin.getLogger().warning("Could not save default resource " + resourceName + ": " + e.getMessage());
+            }
+        }
+
+        YamlConfiguration existingConfig = loadUTF8Yaml(file);
+
+        try (java.io.InputStream defaultStream = plugin.getResource(resourceName)) {
+            if (defaultStream != null) {
+                try (InputStreamReader reader = new InputStreamReader(defaultStream, StandardCharsets.UTF_8)) {
+                    YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(reader);
+                    boolean modified = false;
+
+                    for (String key : defaultConfig.getKeys(true)) {
+                        if (!existingConfig.contains(key)) {
+                            existingConfig.set(key, defaultConfig.get(key));
+                            modified = true;
+                        }
+                    }
+
+                    if (modified) {
+                        existingConfig.save(file);
+                        plugin.getLogger().info("Updated " + file.getName() + " with new update options. Existing settings preserved.");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            plugin.getLogger().warning("Could not auto-migrate options for " + file.getName() + ": " + e.getMessage());
+        }
+
+        return existingConfig;
+    }
+
     private void loadConfigs() {
         configFile = new File(plugin.getDataFolder(), "config.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("config.yml", false);
-        }
-        config = loadUTF8Yaml(configFile);
+        config = loadAndMigrateYaml(configFile, "config.yml");
 
         String lang = config.getString("language", "en");
         String messageFileName = "messages_" + lang + ".yml";
-        checkAndLoadMessages(messageFileName);
+        messagesFile = new File(plugin.getDataFolder(), messageFileName);
+
+        if (plugin.getResource(messageFileName) == null) {
+            messageFileName = "messages_en.yml";
+            messagesFile = new File(plugin.getDataFolder(), messageFileName);
+        }
+        messages = loadAndMigrateYaml(messagesFile, messageFileName);
 
         itemsFile = new File(plugin.getDataFolder(), "items.yml");
-        if (!itemsFile.exists()) {
-            plugin.saveResource("items.yml", false);
-        }
-        items = loadUTF8Yaml(itemsFile);
+        items = loadAndMigrateYaml(itemsFile, "items.yml");
 
         effectsFile = new File(plugin.getDataFolder(), "effects.yml");
-        if (!effectsFile.exists()) {
-            plugin.saveResource("effects.yml", false);
-        }
-        effects = loadUTF8Yaml(effectsFile);
-    }
-
-    @SuppressWarnings("null")
-    private void checkAndLoadMessages(String messageFileName) {
-        messagesFile = new File(plugin.getDataFolder(), messageFileName);
-        boolean updateNeeded = false;
-        if (messagesFile.exists()) {
-            FileConfiguration temp = loadUTF8Yaml(messagesFile);
-            if (temp.getInt("version", 0) < 7) {
-                updateNeeded = true;
-                File backupFile = new File(plugin.getDataFolder(), messageFileName + ".old");
-                if (backupFile.exists()) {
-                    backupFile.delete();
-                }
-                messagesFile.renameTo(backupFile);
-                plugin.getLogger().info("Outdated " + messageFileName + " backed up as " + messageFileName + ".old and updated to version 7.");
-            }
-        }
-        if (!messagesFile.exists() || updateNeeded) {
-            try {
-                plugin.saveResource(messageFileName, true);
-                messagesFile = new File(plugin.getDataFolder(), messageFileName);
-            } catch (IllegalArgumentException e) {
-                plugin.getLogger().warning(
-                        "Language file " + messageFileName + " not found in JAR. Falling back to messages_en.yml");
-                messageFileName = "messages_en.yml";
-                messagesFile = new File(plugin.getDataFolder(), messageFileName);
-                if (!messagesFile.exists()) {
-                    plugin.saveResource("messages_en.yml", false);
-                }
-            }
-        }
-        messages = loadUTF8Yaml(messagesFile);
+        effects = loadAndMigrateYaml(effectsFile, "effects.yml");
     }
 
     public void reload() {
-        config = loadUTF8Yaml(configFile);
-
-        String lang = config.getString("language", "en");
-        String messageFileName = "messages_" + lang + ".yml";
-        checkAndLoadMessages(messageFileName);
-
-        items = loadUTF8Yaml(itemsFile);
-        effects = loadUTF8Yaml(effectsFile);
+        loadConfigs();
     }
 
     public FileConfiguration getConfig() {

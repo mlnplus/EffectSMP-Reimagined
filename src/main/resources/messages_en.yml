@@ -120,6 +120,7 @@ reroll-in-progress: "<red>✖ Reroll in progress! Please wait for animation to c
 reroll-no-effect: "<red>✖ You do not have an effect to reroll!</red>"
 reroll-op-error: "<red>✖ OP effects cannot be rerolled with a standard reroll! Use an OP Reroll.</red>"
 reroll-confirm-prompt: "<gradient:#F7971E:#FFD200>⚠ REROLL CONFIRMATION</gradient> <gray>Right Click again within 5 seconds to confirm!</gray>"
+reroll-op-confirm-prompt: "<gradient:#FF416C:#FF4B2B>⚠ OP EFFECT REROLL CONFIRMATION</gradient> <gray>Warning! You have an OP effect. Right Click again within 5 seconds if you are sure you want to reroll it into a normal effect!</gray>"
 reroll-success: "<gradient:#8A00E6:#DF00FF>▸ Effect updated:</gradient> %effect%"
 
 # ─────────────────────────────────────────────────────────────────────
@@ -194,6 +195,13 @@ admin-cooldown-cleared-target: "<gradient:#38EF7D:#11998E>✦ Your %type% cooldo
 
 admin-craftreset-all: "<gradient:#38EF7D:#11998E>✦ All server legendary weapon craft limits reset!</gradient>"
 admin-craftreset-item: "<gradient:#38EF7D:#11998E>✦ Crafting limit reset for:</gradient> <white>%item%</white>"
+admin-resetshard-self: "<gradient:#38EF7D:#11998E>✦ Your Effect Shard status has been reset!</gradient>"
+admin-resetshard-sender: "<gradient:#38EF7D:#11998E>✦ Reset Effect Shard status for:</gradient> <white>%player%</white>"
+admin-resetshard-target: "<gradient:#38EF7D:#11998E>✦ Your Effect Shard status was reset by an Admin!</gradient>"
+admin-resetshard-all: "<gradient:#38EF7D:#11998E>✦ Reset Effect Shard status for all online players!</gradient>"
+admin-reset-confirm-prompt: "<gradient:#FF416C:#FF4B2B>⚠ FULL GAME STOP & RESET CONFIRMATION</gradient> <gray>This stops the plugin and RESETS ALL PLAYER DATA! Type within 10s: </gray><gradient:#FF8C00:#FFC800>/e reset confirm</gradient>"
+admin-reset-confirm-expired: "<red>✖ No active reset request or confirmation expired! Type /e reset again.</red>"
+admin-reset-success: "<gradient:#FF416C:#FF4B2B>✦ Game fully stopped and all player data reset to default!</gradient>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                         BROADCAST MESSAGES
@@ -201,6 +209,7 @@ admin-craftreset-item: "<gradient:#38EF7D:#11998E>✦ Crafting limit reset for:<
 
 game-started-broadcast: "<gradient:#8A00E6:#DF00FF><b>Effect</b></gradient><gradient:#FF8C00:#FFC800><b>SMP</b></gradient> <white>The game has officially begun! Check your effect in</white> <gradient:#FF8C00:#FFC800>/e</gradient><white>!</white>"
 game-paused-broadcast: "<gradient:#FF416C:#FF4B2B><b>Effect</b></gradient><gradient:#FF8C00:#FFC800><b>SMP</b></gradient> <white>The game has been paused! Abilities and effects are temporarily disabled.</white>"
+game-stopped-broadcast: "<gradient:#FF416C:#FF4B2B><b>Effect</b></gradient><gradient:#FF8C00:#FFC800><b>SMP</b></gradient> <white>The game has been stopped and all player data reset to default!</white>"
 
 # ─────────────────────────────────────────────────────────────────────
 #                          ERROR MESSAGES
@@ -229,6 +238,7 @@ usage-give: "<red>✖ Usage: /e give <item> [player]</red>"
 usage-give-list: "<gray>Items: heart, shard, reroll, op_reroll, mace, sword, bow, scythe, spear</gray>"
 usage-removecooldown: "<red>✖ Usage: /e rc [item|effect|dash|all] [player]</red>"
 usage-craftreset: "<red>✖ Usage: /e craftreset [effect_sword|effect_mace|effect_bow|effect_scythe|effect_spear|all]</red>"
+usage-resetshard: "<red>✖ Usage: /e resetshard <player|all></red>"
 usage-trust: "<red>✖ Usage: /e trust <player></red>"
 usage-untrust: "<red>✖ Usage: /e untrust <player></red>"
 invalid-limited-item: "<red>✖ Invalid weapon key!</red> <gray>(Valid items: effect_sword, effect_mace, effect_bow, effect_scythe, effect_spear, all)</gray>"

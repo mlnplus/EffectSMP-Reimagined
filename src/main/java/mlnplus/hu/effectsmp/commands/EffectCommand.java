@@ -10,12 +10,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @SuppressWarnings("null")
 public class EffectCommand implements CommandExecutor {
 
     private final Effectsmp plugin;
+    private final Map<UUID, Long> resetConfirmations = new HashMap<>();
 
     public EffectCommand(Effectsmp plugin) {
         this.plugin = plugin;
@@ -84,14 +87,20 @@ public class EffectCommand implements CommandExecutor {
             case "start", "resume" -> {
                 return adminStart(player);
             }
-            case "pause", "stop" -> {
+            case "pause", "pausegame" -> {
                 return adminPause(player);
+            }
+            case "stop", "reset" -> {
+                return adminStopAndReset(player, args);
             }
             case "removecooldown", "rc" -> {
                 return removeCooldown(player, args);
             }
             case "craftreset" -> {
                 return craftReset(player, args);
+            }
+            case "resetshard", "shardreset", "resetshards" -> {
+                return adminResetShard(player, args);
             }
             default -> {
                 plugin.getMessageUtils().sendMessage(player, "unknown-command");
@@ -417,10 +426,10 @@ public class EffectCommand implements CommandExecutor {
 
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (online == null) continue;
-            PlayerData data = plugin.getPlayerDataManager().getPlayerData(online.getUniqueId());
-            if (data.getEffect() == null) {
+            PlayerData pdata = plugin.getPlayerDataManager().getPlayerData(online.getUniqueId());
+            if (pdata.getEffect() == null) {
                 plugin.getEffectAbilityManager().assignStartEffect(online);
-            } else if (data.isPassiveEnabled() && data.getEffectHearts() >= 1) {
+            } else if (pdata.isPassiveEnabled() && pdata.getEffectHearts() >= 1) {
                 plugin.getEffectAbilityManager().applyPassiveEffect(online);
             }
         }
@@ -454,6 +463,55 @@ public class EffectCommand implements CommandExecutor {
         plugin.getMessageUtils().sendMessage(player, "admin-pause-success");
         Bukkit.broadcast(plugin.getMessageUtils().parse(
                 plugin.getMessageUtils().getMessage("game-paused-broadcast")));
+
+        return true;
+    }
+
+    private boolean adminStopAndReset(Player player, String[] args) {
+        if (!player.hasPermission("effectsmp.admin") && !player.hasPermission("effectsmp.tester")) {
+            plugin.getMessageUtils().sendMessage(player, "admin-no-permission");
+            return true;
+        }
+
+        UUID uuid = player.getUniqueId();
+        boolean isConfirm = args.length >= 2 && args[1].equalsIgnoreCase("confirm");
+
+        if (!isConfirm) {
+            resetConfirmations.put(uuid, System.currentTimeMillis());
+            plugin.getMessageUtils().sendMessage(player, "admin-reset-confirm-prompt");
+            player.playSound(player.getLocation(), org.bukkit.Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 0.5f);
+            return true;
+        }
+
+        Long lastTime = resetConfirmations.remove(uuid);
+        if (lastTime == null || (System.currentTimeMillis() - lastTime > 10000L)) {
+            plugin.getMessageUtils().sendMessage(player, "admin-reset-confirm-expired");
+            return true;
+        }
+
+        plugin.setGameStarted(false);
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (online == null) continue;
+            plugin.getEffectAbilityManager().removePassiveEffect(online);
+            plugin.getItemAbilityManager().clearAllItemCooldowns(online.getUniqueId());
+            plugin.getItemAbilityManager().removeFreezeAttribute(online);
+            online.sendActionBar(net.kyori.adventure.text.Component.empty());
+        }
+
+        plugin.getPlayerDataManager().resetAll();
+        plugin.getConfigManager().resetAllGlobalCraftedItems();
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (online == null) continue;
+            PlayerData pdata = plugin.getPlayerDataManager().getPlayerData(online.getUniqueId());
+            pdata.setPlayerName(online.getName());
+            plugin.getPlayerDataManager().savePlayerData(online.getUniqueId());
+        }
+
+        plugin.getMessageUtils().sendMessage(player, "admin-reset-success");
+        Bukkit.broadcast(plugin.getMessageUtils().parse(
+                plugin.getMessageUtils().getMessage("game-stopped-broadcast")));
 
         return true;
     }
@@ -568,6 +626,67 @@ public class EffectCommand implements CommandExecutor {
             plugin.getConfigManager().setGlobalItemCrafted(target, false);
             plugin.getMessageUtils().sendMessage(player, "admin-craftreset-item",
                     "%item%", target);
+        }
+
+        return true;
+    }
+
+    private boolean adminResetShard(Player player, String[] args) {
+        boolean isAdmin = player.hasPermission("effectsmp.admin");
+        boolean isTester = player.hasPermission("effectsmp.tester");
+
+        if (!isAdmin && !isTester) {
+            plugin.getMessageUtils().sendMessage(player, "admin-no-permission");
+            return true;
+        }
+
+        if (args.length < 2) {
+            plugin.getMessageUtils().sendMessage(player, "usage-resetshard");
+            return true;
+        }
+
+        String targetStr = args[1].toLowerCase();
+
+        if (targetStr.equals("all")) {
+            if (isTester && !isAdmin) {
+                plugin.getMessageUtils().sendMessage(player, "admin-tester-self-only");
+                return true;
+            }
+
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                if (online == null) continue;
+                PlayerData pdata = plugin.getPlayerDataManager().getPlayerData(online.getUniqueId());
+                pdata.setHasEffectShard(true);
+                pdata.setFirstDeathOccurred(false);
+                plugin.getPlayerDataManager().savePlayerData(online.getUniqueId());
+            }
+            plugin.getMessageUtils().sendMessage(player, "admin-resetshard-all");
+            return true;
+        }
+
+        Player target;
+        if (isTester && !isAdmin) {
+            target = player;
+            plugin.getMessageUtils().sendMessage(player, "admin-tester-self-only");
+        } else {
+            target = Bukkit.getPlayer(args[1]);
+            if (target == null) {
+                plugin.getMessageUtils().sendMessage(player, "player-not-found");
+                return true;
+            }
+        }
+
+        PlayerData pdata = plugin.getPlayerDataManager().getPlayerData(target.getUniqueId());
+        pdata.setHasEffectShard(true);
+        pdata.setFirstDeathOccurred(false);
+        plugin.getPlayerDataManager().savePlayerData(target.getUniqueId());
+
+        if (target.equals(player)) {
+            plugin.getMessageUtils().sendMessage(player, "admin-resetshard-self");
+        } else {
+            plugin.getMessageUtils().sendMessage(player, "admin-resetshard-sender",
+                    "%player%", target.getName());
+            plugin.getMessageUtils().sendMessage(target, "admin-resetshard-target");
         }
 
         return true;

@@ -45,11 +45,18 @@ public class DatabaseManager {
                 if (!plugin.getDataFolder().exists()) {
                     plugin.getDataFolder().mkdirs();
                 }
+                if (dbFile.exists()) {
+                    try {
+                        File backupFile = new File(plugin.getDataFolder(), "database.db.bak");
+                        java.nio.file.Files.copy(dbFile.toPath(), backupFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                    } catch (Exception ignored) {}
+                }
                 this.connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
-                plugin.getLogger().info("Connected to local SQLite database: database.db");
+                plugin.getLogger().info("Connected to local SQLite database: database.db (Backup saved to database.db.bak)");
             }
 
             createTables();
+            checkAndMigrateSchema();
             migrateLegacyYaml();
             return true;
         } catch (Exception e) {
@@ -96,6 +103,33 @@ public class DatabaseManager {
                     "data_key VARCHAR(64) PRIMARY KEY, " +
                     "data_value TEXT" +
                     ")");
+        }
+    }
+
+    private void checkAndMigrateSchema() {
+        Connection conn = getConnection();
+        if (conn == null) return;
+
+        String[] columnDefs = {
+            "name VARCHAR(32)",
+            "effect VARCHAR(32)",
+            "passive_enabled INT DEFAULT 1",
+            "effect_hearts INT DEFAULT 3",
+            "has_effect_shard INT DEFAULT 1",
+            "kills INT DEFAULT 0",
+            "deaths INT DEFAULT 0",
+            "first_death_occurred INT DEFAULT 0",
+            "last_ability_cooldown BIGINT DEFAULT 0",
+            "ability_active_until BIGINT DEFAULT 0",
+            "trusted_players TEXT"
+        };
+
+        for (String colDef : columnDefs) {
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute("ALTER TABLE player_data ADD COLUMN " + colDef);
+            } catch (SQLException ignored) {
+                // Column already exists, safe to ignore
+            }
         }
     }
 
@@ -322,6 +356,16 @@ public class DatabaseManager {
                 }
                 plugin.getLogger().info("Migrated " + count + " legacy player YAML files to database.");
             }
+        }
+    }
+
+    public synchronized void resetAllPlayerData() {
+        Connection conn = getConnection();
+        if (conn == null) return;
+        try (Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate("DELETE FROM player_data");
+        } catch (SQLException e) {
+            plugin.getLogger().severe("Error resetting all player data: " + e.getMessage());
         }
     }
 }

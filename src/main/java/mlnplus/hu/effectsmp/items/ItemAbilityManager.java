@@ -474,15 +474,14 @@ public class ItemAbilityManager {
         long elapsed = (start != null) ? (System.currentTimeMillis() - start) : 1000;
 
         double ratio = Math.min(1.0, elapsed / 1000.0);
-        // Extremely powerful launch thrust (up to 4.5 initial multiplier)
-        double initialPower = 3.0 + (ratio * 3.5);
+        double initialPower = 1.8 + (ratio * 1.4);
 
         Location loc = player.getLocation();
         if (loc == null) return;
 
         Vector direction = loc.getDirection().normalize();
-        if (direction.getY() < 0.3) {
-            direction.setY(0.3);
+        if (direction.getY() < 0.2) {
+            direction.setY(0.2);
             direction.normalize();
         }
 
@@ -492,19 +491,17 @@ public class ItemAbilityManager {
         spearLunging.add(uuid);
         recordLunge(player);
 
-        // Sonic Rocket Flight Task: maintains hyper-velocity (3.2 per tick) for 25 ticks (1.25 seconds = 80-120+ blocks!)
         Set<UUID> damagedEntities = getSpearLungeDamaged(uuid);
         new BukkitRunnable() {
             int ticks = 0;
 
             @Override
             public void run() {
-                if (!player.isOnline() || ticks >= 25 || !spearLunging.contains(uuid)) {
+                if (!player.isOnline() || ticks >= 15 || !spearLunging.contains(uuid)) {
                     spearLunging.remove(uuid);
                     if (player.isOnline()) {
                         player.setFallDistance(0.0f);
-                        // Add 5 seconds of resistance against fall damage after flight
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 100, 4, false, false, false));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 80, 4, false, false, false));
                     }
                     cancel();
                     return;
@@ -512,20 +509,21 @@ public class ItemAbilityManager {
 
                 Location currentLoc = player.getLocation();
                 if (currentLoc != null && currentLoc.getWorld() != null) {
-                    // Continuous rocket thrust per tick to overcome air friction and launch 80-120+ blocks!
-                    if (ticks < 20) {
-                        Vector forwardVelocity = currentLoc.getDirection().normalize().multiply(3.2);
+                    if (ticks < 12) {
+                        Vector forwardVelocity = currentLoc.getDirection().normalize().multiply(2.0);
                         if (forwardVelocity.getY() < 0.15) forwardVelocity.setY(0.15);
                         player.setVelocity(forwardVelocity);
                     }
 
                     player.setFallDistance(0.0f);
 
-                    currentLoc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, currentLoc, 6, 0.5, 0.5, 0.5, 0.1);
-                    currentLoc.getWorld().spawnParticle(Particle.CRIT, currentLoc, 10, 0.5, 0.5, 0.5, 0.1);
-                    currentLoc.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, currentLoc, 1, 0, 0, 0, 0);
+                    currentLoc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, currentLoc, 3, 0.3, 0.3, 0.3, 0.05);
+                    currentLoc.getWorld().spawnParticle(Particle.CRIT, currentLoc, 5, 0.3, 0.3, 0.3, 0.05);
+                    if (ticks % 3 == 0) {
+                        currentLoc.getWorld().spawnParticle(Particle.SONIC_BOOM, currentLoc, 1, 0, 0, 0, 0);
+                    }
 
-                    for (Entity entity : currentLoc.getWorld().getNearbyEntities(currentLoc, 4.0, 4.0, 4.0)) {
+                    for (Entity entity : currentLoc.getWorld().getNearbyEntities(currentLoc, 3.0, 3.0, 3.0)) {
                         if (entity instanceof org.bukkit.entity.LivingEntity living && !entity.equals(player)) {
                             UUID targetUuid = entity.getUniqueId();
                             if (damagedEntities.contains(targetUuid)) continue;
@@ -536,22 +534,20 @@ public class ItemAbilityManager {
                                 }
                             }
 
-                            // OVERPOWERED SPEAR IMPACT DAMAGE: 50.0 Raw Damage (25 Hearts) + 12.0 True Health Bypass Damage!
-                            living.damage(50.0, player);
-                            double newHealth = Math.max(0.5, living.getHealth() - 12.0);
-                            living.setHealth(newHealth);
+                            // Balanced Spear Impact Damage: 8.0 to 16.0 raw physical damage (Armor & Resistance reduced properly)
+                            double impactDamage = 8.0 + (ratio * 8.0);
+                            living.damage(impactDamage, player);
 
                             damagedEntities.add(targetUuid);
 
-                            // Launch target into the air with heavy shockwave impulse
-                            Vector knockback = living.getLocation().toVector().subtract(currentLoc.toVector()).normalize().multiply(2.5).setY(1.2);
+                            Vector knockback = living.getLocation().toVector().subtract(currentLoc.toVector()).normalize().multiply(1.5).setY(0.6);
                             living.setVelocity(knockback);
 
                             Location eloc = living.getLocation();
                             if (eloc != null) {
-                                eloc.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, eloc, 2);
-                                eloc.getWorld().playSound(eloc, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.5f, 0.8f);
-                                eloc.getWorld().playSound(eloc, Sound.ENTITY_GENERIC_EXPLODE, 1.5f, 0.7f);
+                                eloc.getWorld().spawnParticle(Particle.EXPLOSION, eloc, 3, 0.2, 0.2, 0.2, 0.05);
+                                eloc.getWorld().playSound(eloc, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.2f);
+                                eloc.getWorld().playSound(eloc, Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.0f, 0.8f);
                             }
                         }
                     }
@@ -561,9 +557,8 @@ public class ItemAbilityManager {
             }
         }.runTaskTimer(plugin, 0L, 1L);
 
-        loc.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, loc, 2, 0.5, 0.5, 0.5, 0.2);
-        loc.getWorld().playSound(loc, Sound.ENTITY_WARDEN_SONIC_BOOM, 2.0f, 0.7f);
-        loc.getWorld().playSound(loc, Sound.ITEM_TRIDENT_RIPTIDE_3, 2.0f, 0.6f);
+        loc.getWorld().spawnParticle(Particle.EXPLOSION, loc, 3, 0.3, 0.3, 0.3, 0.1);
+        loc.getWorld().playSound(loc, Sound.ITEM_TRIDENT_RIPTIDE_3, 1.5f, 0.8f);
     }
 
     public void startVanillaSpearChargeAnimation(Player player) {

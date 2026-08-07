@@ -70,4 +70,9 @@ public class PlayerDataManager {
     public Collection<PlayerData> getAllCachedData() {
         return playerDataCache.values();
     }
+
+    public void resetAll() {
+        playerDataCache.clear();
+        plugin.getDatabaseManager().resetAllPlayerData();
+    }
 }

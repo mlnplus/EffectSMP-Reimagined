@@ -211,16 +211,14 @@ public class ItemListener implements Listener {
             return;
         }
 
-        if (data.getEffect().isOP()) {
-            plugin.getMessageUtils().sendMessage(player, "reroll-op-error");
-            return;
-        }
+        boolean isOp = data.getEffect().isOP();
 
         UUID uuid = player.getUniqueId();
         Long lastConfirm = rerollConfirmations.get(uuid);
         if (lastConfirm == null || (System.currentTimeMillis() - lastConfirm > 5000L)) {
             rerollConfirmations.put(uuid, System.currentTimeMillis());
-            plugin.getMessageUtils().sendMessage(player, "reroll-confirm-prompt");
+            String promptKey = isOp ? "reroll-op-confirm-prompt" : "reroll-confirm-prompt";
+            plugin.getMessageUtils().sendMessage(player, promptKey);
             player.playSound(player.getLocation(), org.bukkit.Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 0.5f);
             return;
         }

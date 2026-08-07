@@ -18,7 +18,8 @@ public class EffectTabCompleter implements TabCompleter {
 
     private static final List<String> MAIN_COMMANDS = Arrays.asList(
             "activate", "info", "effects", "items", "withdraw", "trust", "untrust", "toggle",
-            "set", "give", "reload", "start", "pause", "stop", "resume", "removecooldown", "rc", "craftreset");
+            "set", "give", "reload", "start", "pause", "stop", "reset", "resume", "removecooldown", "rc", "craftreset",
+            "resetshard", "shardreset", "resetshards");
 
     private static final List<String> ITEMS = Arrays.asList(
             "heart", "shard", "reroll", "op_reroll", "mace", "sword", "bow", "scythe", "spear");
@@ -50,7 +51,7 @@ public class EffectTabCompleter implements TabCompleter {
 
             if (!isAdmin && !isTester) {
                 completions.removeAll(
-                        Arrays.asList("set", "give", "reload", "start", "pause", "stop", "resume", "removecooldown", "rc", "craftreset"));
+                        Arrays.asList("set", "give", "reload", "start", "pause", "stop", "resume", "removecooldown", "rc", "craftreset", "resetshard", "shardreset", "resetshards"));
             } else if (isTester && !isAdmin) {
                 completions.remove("reload");
             }
@@ -64,6 +65,26 @@ public class EffectTabCompleter implements TabCompleter {
                             .map(Player::getName)
                             .filter(name -> name.toLowerCase().startsWith(input))
                             .collect(Collectors.toList());
+                }
+                case "stop", "reset" -> {
+                    if (isAdmin || isTester) {
+                        if ("confirm".startsWith(input)) {
+                            completions = List.of("confirm");
+                        }
+                    }
+                }
+                case "resetshard", "shardreset", "resetshards" -> {
+                    if (isAdmin || isTester) {
+                        List<String> targets = new ArrayList<>();
+                        targets.add("all");
+                        targets.addAll(Bukkit.getOnlinePlayers().stream()
+                                .filter(p -> p != null && p.getName() != null)
+                                .map(Player::getName)
+                                .toList());
+                        completions = targets.stream()
+                                .filter(name -> name.toLowerCase().startsWith(input))
+                                .collect(Collectors.toList());
+                    }
                 }
                 case "set" -> {
                     if (isAdmin || isTester) {

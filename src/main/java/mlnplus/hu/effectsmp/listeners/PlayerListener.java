@@ -55,6 +55,8 @@ public class PlayerListener implements Listener {
         if (!plugin.isGameStarted()) return;
         Player player = event.getEntity();
         plugin.getEffectAbilityManager().removeStrengthReach(player);
+        plugin.getItemAbilityManager().clearAllItemCooldowns(player.getUniqueId());
+        plugin.getItemAbilityManager().removeFreezeAttribute(player);
         event.getDrops().removeIf(item -> plugin.getCustomItems().isInfiniteWindCharge(item));
 
         Player killer = player.getKiller();
