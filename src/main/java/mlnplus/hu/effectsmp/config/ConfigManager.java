@@ -58,7 +58,7 @@ public class ConfigManager {
                     boolean modified = false;
 
                     for (String key : defaultConfig.getKeys(true)) {
-                        if (!existingConfig.contains(key)) {
+                        if (!defaultConfig.isConfigurationSection(key) && !existingConfig.contains(key)) {
                             existingConfig.set(key, defaultConfig.get(key));
                             modified = true;
                         }
@@ -81,15 +81,21 @@ public class ConfigManager {
         configFile = new File(plugin.getDataFolder(), "config.yml");
         config = loadAndMigrateYaml(configFile, "config.yml");
 
+        // Always migrate both default message files so they stay up-to-date with new jar versions
+        File msgsEnFile = new File(plugin.getDataFolder(), "messages_en.yml");
+        loadAndMigrateYaml(msgsEnFile, "messages_en.yml");
+
+        File msgsHuFile = new File(plugin.getDataFolder(), "messages_hu.yml");
+        loadAndMigrateYaml(msgsHuFile, "messages_hu.yml");
+
         String lang = config.getString("language", "en");
         String messageFileName = "messages_" + lang + ".yml";
         messagesFile = new File(plugin.getDataFolder(), messageFileName);
 
-        if (plugin.getResource(messageFileName) == null) {
-            messageFileName = "messages_en.yml";
-            messagesFile = new File(plugin.getDataFolder(), messageFileName);
+        if (!messagesFile.exists()) {
+            messagesFile = msgsEnFile;
         }
-        messages = loadAndMigrateYaml(messagesFile, messageFileName);
+        messages = loadUTF8Yaml(messagesFile);
 
         itemsFile = new File(plugin.getDataFolder(), "items.yml");
         items = loadAndMigrateYaml(itemsFile, "items.yml");
