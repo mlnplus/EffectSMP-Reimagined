@@ -78,7 +78,7 @@ public class PlayerListener implements Listener {
                     player.getWorld().dropItemNaturally(player.getLocation(), shard);
 
                     plugin.getMessageUtils().sendMessage(player, "shard-lost");
-                    plugin.getMessageUtils().sendMessage(killer, "shard-gained");
+                    plugin.getMessageUtils().sendMessage(killer, "shard-gained", "%player%", player.getName());
                 }
             }
 
@@ -91,7 +91,8 @@ public class PlayerListener implements Listener {
 
                 plugin.getMessageUtils().sendMessage(player, "heart-lost",
                         "%hearts%", String.valueOf(data.getEffectHearts()));
-                plugin.getMessageUtils().sendMessage(killer, "heart-gained");
+                plugin.getMessageUtils().sendMessage(killer, "heart-gained",
+                        "%player%", player.getName());
 
                 if (data.getEffectHearts() == 0) {
                     data.setPassiveEnabled(false);
@@ -102,7 +103,8 @@ public class PlayerListener implements Listener {
                 } else if (oldHearts >= 2 && data.getEffectHearts() < 2) {
                     plugin.getEffectAbilityManager().removePassiveEffect(player);
                     plugin.getEffectAbilityManager().applyPassiveEffect(player);
-                    plugin.getMessageUtils().sendMessage(player, "heart-level-down");
+                    plugin.getMessageUtils().sendMessage(player, "heart-level-down",
+                            "%level%", String.valueOf(data.getEffectHearts()));
                 }
             }
         }

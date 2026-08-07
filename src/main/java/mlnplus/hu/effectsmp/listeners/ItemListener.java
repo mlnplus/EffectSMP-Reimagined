@@ -186,7 +186,8 @@ public class ItemListener implements Listener {
             plugin.getEffectAbilityManager().applyPassiveEffect(player);
 
             if (oldHearts < 2 && data.getEffectHearts() >= 2) {
-                plugin.getMessageUtils().sendMessage(player, "heart-level-up");
+                plugin.getMessageUtils().sendMessage(player, "heart-level-up",
+                        "%level%", String.valueOf(data.getEffectHearts()));
             }
         }
 
