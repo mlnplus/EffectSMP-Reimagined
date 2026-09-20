@@ -151,17 +151,23 @@ public class ItemProtectionListener implements Listener {
 
             if (event.getRawSlot() < topInv.getSize()) {
                 if (plugin.getCustomItems().isCustomItem(cursorItem)) {
-                    event.setCancelled(true);
-                    plugin.getMessageUtils().sendMessage(player, "item-clean-storage");
-                    return;
+                    String itemType = plugin.getCustomItems().getItemType(cursorItem);
+                    if (!plugin.getCustomItems().isItemStorable(itemType)) {
+                        event.setCancelled(true);
+                        plugin.getMessageUtils().sendMessage(player, "item-clean-storage");
+                        return;
+                    }
                 }
             }
 
             if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
                 if (plugin.getCustomItems().isCustomItem(currentItem)) {
-                    event.setCancelled(true);
-                    plugin.getMessageUtils().sendMessage(player, "item-clean-storage");
-                    return;
+                    String itemType = plugin.getCustomItems().getItemType(currentItem);
+                    if (!plugin.getCustomItems().isItemStorable(itemType)) {
+                        event.setCancelled(true);
+                        plugin.getMessageUtils().sendMessage(player, "item-clean-storage");
+                        return;
+                    }
                 }
             }
 
@@ -170,9 +176,12 @@ public class ItemProtectionListener implements Listener {
                 if (hotbarSlot >= 0 && hotbarSlot < 9) {
                     ItemStack hotbarItem = player.getInventory().getItem(hotbarSlot);
                     if (event.getRawSlot() < topInv.getSize() && plugin.getCustomItems().isCustomItem(hotbarItem)) {
-                        event.setCancelled(true);
-                        plugin.getMessageUtils().sendMessage(player, "item-clean-storage");
-                        return;
+                        String itemType = plugin.getCustomItems().getItemType(hotbarItem);
+                        if (!plugin.getCustomItems().isItemStorable(itemType)) {
+                            event.setCancelled(true);
+                            plugin.getMessageUtils().sendMessage(player, "item-clean-storage");
+                            return;
+                        }
                     }
                 }
             }
@@ -215,6 +224,10 @@ public class ItemProtectionListener implements Listener {
             return;
 
         if (!plugin.getCustomItems().isCustomItem(event.getOldCursor()))
+            return;
+
+        String itemType = plugin.getCustomItems().getItemType(event.getOldCursor());
+        if (plugin.getCustomItems().isItemStorable(itemType))
             return;
 
         int topSize = topInv.getSize();
@@ -315,15 +328,23 @@ public class ItemProtectionListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onHopperPickup(InventoryPickupItemEvent event) {
-        if (plugin.getCustomItems().isCustomItem(event.getItem().getItemStack())) {
-            event.setCancelled(true);
+        ItemStack item = event.getItem().getItemStack();
+        if (plugin.getCustomItems().isCustomItem(item)) {
+            String itemType = plugin.getCustomItems().getItemType(item);
+            if (!plugin.getCustomItems().isItemStorable(itemType)) {
+                event.setCancelled(true);
+            }
         }
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onHopperMove(InventoryMoveItemEvent event) {
-        if (plugin.getCustomItems().isCustomItem(event.getItem())) {
-            event.setCancelled(true);
+        ItemStack item = event.getItem();
+        if (plugin.getCustomItems().isCustomItem(item)) {
+            String itemType = plugin.getCustomItems().getItemType(item);
+            if (!plugin.getCustomItems().isItemStorable(itemType)) {
+                event.setCancelled(true);
+            }
         }
     }
 

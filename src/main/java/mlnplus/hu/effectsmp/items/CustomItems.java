@@ -99,6 +99,26 @@ public class CustomItems {
                 return defaultCmd;
         }
 
+        public int getItemMaxStackSize(String itemKey, int defaultMaxStack) {
+                org.bukkit.configuration.file.FileConfiguration config = plugin.getConfigManager().getItemsConfig();
+                if (config != null && config.contains(itemKey + ".max_stack_size")) {
+                        return config.getInt(itemKey + ".max_stack_size", defaultMaxStack);
+                }
+                return defaultMaxStack;
+        }
+
+        public boolean isItemStorable(String itemKey) {
+                if (itemKey == null) return false;
+                org.bukkit.configuration.file.FileConfiguration config = plugin.getConfigManager().getItemsConfig();
+                if (config != null && config.contains(itemKey + ".storable")) {
+                        return config.getBoolean(itemKey + ".storable");
+                }
+                return switch (itemKey) {
+                        case "effect_heart", "effect_shard" -> true;
+                        default -> false;
+                };
+        }
+
         public ItemStack createEffectHeart() {
                 ItemStack item = new ItemStack(getItemMaterial("effect_heart", Material.NETHER_STAR));
                 ItemMeta meta = item.getItemMeta();
@@ -115,7 +135,7 @@ public class CustomItems {
 
                 meta.setCustomModelData(getItemCustomModelData("effect_heart", CMD_EFFECT_HEART));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_heart");
-                meta.setMaxStackSize(1);
+                meta.setMaxStackSize(getItemMaxStackSize("effect_heart", 64));
 
                 item.setItemMeta(meta);
                 return item;
@@ -137,7 +157,7 @@ public class CustomItems {
 
                 meta.setCustomModelData(getItemCustomModelData("effect_shard", CMD_EFFECT_SHARD));
                 meta.getPersistentDataContainer().set(ITEM_KEY, PersistentDataType.STRING, "effect_shard");
-                meta.setMaxStackSize(1);
+                meta.setMaxStackSize(getItemMaxStackSize("effect_shard", 64));
 
                 item.setItemMeta(meta);
                 return item;

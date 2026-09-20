@@ -76,19 +76,19 @@ public final class Effectsmp extends JavaPlugin {
         printBoxedLine(" &e\u2726 &fVersion: &b" + getPluginMeta().getVersion(), width, c1, R);
         if (isHu) {
             printBoxedLine(" &e\u2726 &fNyelv: &7Magyar (HU)", width, c1, R);
-            if (gameStarted) {            printBoxedLine(" &e\u2726 &fWebsite: &bmlnplus.hu", width, c1, R);
+            if (gameStarted) {            printBoxedLine(" &e\u2726 &fWebsite: &bmln.plus", width, c1, R);
 
                 printBoxedLine(" &e\u2726 &fStátusz: &aJáték elindítva, effektek aktívak! &7(v" + getPluginMeta().getVersion() + ")", width, c1, R);
-            } else {            printBoxedLine(" &e\u2726 &fWebsite: &bmlnplus.hu", width, c1, R);
+            } else {            printBoxedLine(" &e\u2726 &fWebsite: &bmln.plus", width, c1, R);
 
                 printBoxedLine(" &e\u2726 &fStátusz: &cKészenlét - Játék még nincs elindítva! (/e start)", width, c1, R);
             }
         } else {
             printBoxedLine(" &e\u2726 &fLanguage: &7English (EN)", width, c1, R);
-            if (gameStarted) {            printBoxedLine(" &e\u2726 &fWebsite: &bmlnplus.hu", width, c1, R);
+            if (gameStarted) {            printBoxedLine(" &e\u2726 &fWebsite: &bmln.plus", width, c1, R);
 
                 printBoxedLine(" &e\u2726 &fStatus: &aGame started, effects active! &7(v" + getPluginMeta().getVersion() + ")", width, c1, R);
-            } else {            printBoxedLine(" &e\u2726 &fWebsite: &bmlnplus.hu", width, c1, R);
+            } else {            printBoxedLine(" &e\u2726 &fWebsite: &bmln.plus", width, c1, R);
 
                 printBoxedLine(" &e\u2726 &fStatus: &cWaiting - Game is not started yet! (/e start)", width, c1, R);
             }

@@ -29,7 +29,7 @@ public class CraftingListener implements Listener {
 
         String itemId = plugin.getCustomItems().getItemType(result);
         if (isLimitedItem(itemId)) {
-            if (plugin.getConfigManager().isGlobalItemCrafted(itemId)) {
+            if (plugin.getConfigManager().hasReachedCraftLimit(itemId)) {
                 event.getInventory().setResult(null);
             }
         }
@@ -46,13 +46,13 @@ public class CraftingListener implements Listener {
 
         String itemId = plugin.getCustomItems().getItemType(result);
         if (isLimitedItem(itemId)) {
-            if (plugin.getConfigManager().isGlobalItemCrafted(itemId)) {
+            if (plugin.getConfigManager().hasReachedCraftLimit(itemId)) {
                 event.setCancelled(true);
                 if (event.getWhoClicked() instanceof org.bukkit.entity.Player player) {
                     plugin.getMessageUtils().sendMessage(player, "craft-limit-reached");
                 }
             } else {
-                plugin.getConfigManager().setGlobalItemCrafted(itemId, true);
+                plugin.getConfigManager().incrementGlobalItemCraftCount(itemId);
 
                 if (event.getWhoClicked() instanceof org.bukkit.entity.Player player) {
                     String itemName = getDisplayName(itemId);
@@ -68,7 +68,7 @@ public class CraftingListener implements Listener {
         if (itemId == null)
             return false;
         return switch (itemId) {
-            case "effect_sword", "effect_mace", "effect_bow", "effect_scythe" -> true;
+            case "effect_sword", "effect_mace", "effect_bow", "effect_scythe", "effect_spear" -> true;
             default -> false;
         };
     }
@@ -79,6 +79,7 @@ public class CraftingListener implements Listener {
             case "effect_mace" -> "item-mace-name";
             case "effect_bow" -> "item-bow-name";
             case "effect_scythe" -> "item-scythe-name";
+            case "effect_spear" -> "item-spear-name";
             default -> null;
         };
 

@@ -4,6 +4,7 @@
 # Reroll - Normal effect reroll
 reroll:
   enabled: true
+  storable: false
   material: ENDER_EYE
   custom_model_data: 1003
   shape:
@@ -19,6 +20,7 @@ reroll:
 # OP Reroll - OP effect (Resistance, Strength, Regeneration)
 op_reroll:
   enabled: true
+  storable: false
   material: NETHER_STAR
   custom_model_data: 1004
   shape:
@@ -34,6 +36,8 @@ op_reroll:
 # Effect Mace - Wind charge launcher
 effect_mace:
   enabled: true
+  craft_limit: 1
+  storable: false
   material: MACE
   custom_model_data: 1005
   cooldown: 60 # Cooldown in seconds
@@ -59,6 +63,8 @@ effect_mace:
 # Effect Sword - Critical hit mode
 effect_sword:
   enabled: true
+  craft_limit: 1
+  storable: false
   material: NETHERITE_SWORD
   custom_model_data: 1006
   cooldown: 150 # Cooldown in seconds
@@ -84,6 +90,8 @@ effect_sword:
 # Effect Bow - Explosion arrows
 effect_bow:
   enabled: true
+  craft_limit: 1
+  storable: false
   material: BOW
   custom_model_data: 1007
   debuff_radius: 5.0
@@ -109,6 +117,8 @@ effect_bow:
 # Effect Scythe - Freeze enemies
 effect_scythe:
   enabled: true
+  craft_limit: 1
+  storable: false
   material: NETHERITE_HOE
   custom_model_data: 1008
   cooldown: 150 # Cooldown in seconds
@@ -130,6 +140,8 @@ effect_scythe:
 # Effect Spear - Charge big lunge
 effect_spear:
   enabled: true
+  craft_limit: 1
+  storable: false
   material: NETHERITE_SPEAR
   custom_model_data: 1009
   cooldown: 25 # Cooldown in seconds
@@ -160,6 +172,8 @@ effect_spear:
 # Effect Heart - Extra life / currency
 effect_heart:
   enabled: true
+  max_stack_size: 64
+  storable: false
   material: NETHER_STAR
   custom_model_data: 1001
   shape:
@@ -174,5 +188,14 @@ effect_heart:
 # Effect Shard - Currency item
 effect_shard:
   enabled: true
+  max_stack_size: 64
+  storable: false
   material: PRISMARINE_SHARD
   custom_model_data: 1002
+  shape:
+    - " A "
+    - "ADA"
+    - " A "
+  ingredients:
+    A: AMETHYST_SHARD
+    D: DIAMOND

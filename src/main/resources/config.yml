@@ -26,8 +26,11 @@ settings:
   # Maximum hearts a player can have (0 for unlimited)
   max-hearts: 3
   
-  # Limit crafting of special weapons to 1 per server
+  # Limit crafting of special weapons per server (true/false)
   limited-crafting-enabled: true
+
+  # Default maximum crafts per server if not specified per item (0 for unlimited)
+  default-craft-limit: 1
 
   # Allowed rarities for initial start roll (common, rare, epic, legendary)
   start-roll-rarities:

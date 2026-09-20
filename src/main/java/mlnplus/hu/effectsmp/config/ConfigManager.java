@@ -132,6 +132,37 @@ public class ConfigManager {
         plugin.getDatabaseManager().setServerData("game-started", String.valueOf(started));
     }
 
+    public int getGlobalItemCraftCount(String itemId) {
+        String countStr = plugin.getDatabaseManager().getServerData("global-crafted-count:" + itemId, "");
+        if (!countStr.isEmpty()) {
+            try {
+                return Integer.parseInt(countStr);
+            } catch (NumberFormatException ignored) {}
+        }
+        // Fallback for legacy database records
+        return isGlobalItemCrafted(itemId) ? 1 : 0;
+    }
+
+    public void incrementGlobalItemCraftCount(String itemId) {
+        int current = getGlobalItemCraftCount(itemId);
+        int updated = current + 1;
+        plugin.getDatabaseManager().setServerData("global-crafted-count:" + itemId, String.valueOf(updated));
+        setGlobalItemCrafted(itemId, true);
+    }
+
+    public int getGlobalItemCraftLimit(String itemId) {
+        if (items != null && items.contains(itemId + ".craft_limit")) {
+            return items.getInt(itemId + ".craft_limit", 1);
+        }
+        return config.getInt("settings.default-craft-limit", 1);
+    }
+
+    public boolean hasReachedCraftLimit(String itemId) {
+        int limit = getGlobalItemCraftLimit(itemId);
+        if (limit <= 0) return false;
+        return getGlobalItemCraftCount(itemId) >= limit;
+    }
+
     public boolean isGlobalItemCrafted(String itemId) {
         String dataStr = plugin.getDatabaseManager().getServerData("global-crafted-items", "");
         if (dataStr.isEmpty()) return false;
@@ -152,12 +183,16 @@ public class ConfigManager {
             }
         } else {
             craftedItems.remove(itemId);
+            plugin.getDatabaseManager().setServerData("global-crafted-count:" + itemId, "0");
         }
         plugin.getDatabaseManager().setServerData("global-crafted-items", String.join(",", craftedItems));
     }
 
     public void resetAllGlobalCraftedItems() {
         plugin.getDatabaseManager().setServerData("global-crafted-items", "");
+        for (String id : List.of("effect_sword", "effect_mace", "effect_bow", "effect_scythe", "effect_spear")) {
+            plugin.getDatabaseManager().setServerData("global-crafted-count:" + id, "0");
+        }
     }
 
     public String getDatabaseType() {
